@@ -1,8 +1,17 @@
 #include <iostream>
+#include <Windows.h>
+using namespace std;
 
 int main() {
-	std::cout << "Hello World" << std::endl;
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Position;
+	Position.X = 0;
+	Position.Y = 0;
 
-	system("pause");
+	
+	cout << "Hello World";
+	SetConsoleCursorPosition(hOut, Position);
+	cout << "test";
+
 	return 0;
 }
