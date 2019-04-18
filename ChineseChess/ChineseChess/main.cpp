@@ -1,5 +1,7 @@
 #include <iostream>
 #include <Windows.h>
+#include"OperatingChess.h"
+#include"ChessWalking.h"
 using namespace std;
 int main() {
 	HANDLE hOut;
