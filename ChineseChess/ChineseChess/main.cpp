@@ -1,7 +1,10 @@
 #include <iostream>
+#include <Windows.h>
 
 int main() {
-	std::cout << "Hello World" << std::endl;
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hOut, FOREGROUND_GREEN);
 
 	system("pause");
 	return 0;
