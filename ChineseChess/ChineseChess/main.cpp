@@ -1,17 +1,11 @@
 #include <iostream>
 #include <Windows.h>
-using namespace std;
 
 int main() {
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD Position;
-	Position.X = 0;
-	Position.Y = 0;
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hOut, FOREGROUND_GREEN);
 
-	
-	cout << "Hello World";
-	SetConsoleCursorPosition(hOut, Position);
-	cout << "test";
-
+	system("pause");
 	return 0;
 }
