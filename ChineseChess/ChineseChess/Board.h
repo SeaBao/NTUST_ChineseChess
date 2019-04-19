@@ -1,10 +1,10 @@
 #pragma once
+using namespace std;
 class Board
 {
 public:
 	Board();
-
-	void GameOver();
+	void PrintMap();
 	~Board();
 };
 
