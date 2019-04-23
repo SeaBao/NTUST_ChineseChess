@@ -1,4 +1,6 @@
 #include <iostream>
+#include<stdio.h>
+#include<conio.h>
 #include <Windows.h>
 #include "OperatingChess.h"
 #include "ChessWalking.h"
@@ -35,7 +37,8 @@ int main() {
 
 	Board board;
 	board.ReadFile("Board.txt");
-
-	cin.get();
+	OperatingChess start;
+	start.gameStart();
+	
 	return 0;
 }
