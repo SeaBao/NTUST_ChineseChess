@@ -23,9 +23,8 @@ void SetWindow(int Width, int Height)
 }
 
 int main() {
-	
-	system("title NTUST Chinese Chess Ver. 0.0.1");
-	SetWindow(101, 31);
+	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
+	SetWindow(81, 26);
 
 	Board board;
 	board.PrintMap();

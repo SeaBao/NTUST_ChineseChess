@@ -1,4 +1,4 @@
-#include "Board.h"
+ï»¿#include "Board.h"
 #include <Windows.h>
 #include <iostream>
 
@@ -8,24 +8,25 @@ void SetCursorPosistion(int x, int y) {
 	COORD Position;
 	Position.X = x;
 	Position.Y = y;
-
 	SetConsoleCursorPosition(hOut, Position);
 }
 
 
 Board::Board()
 {
+	chessMap = vector<vector<int>>(Height, vector<int>(Width, 0));
 }
 
 void Board::PrintMap()
 {
+	system("cls");
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);
 	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;                   // Width of each character in the font
-	cfi.dwFontSize.Y = 24;                  // Height
+	cfi.dwFontSize.X = 0;
+	cfi.dwFontSize.Y = 30;
 	cfi.FontFamily = FF_DONTCARE;
 	cfi.FontWeight = FW_NORMAL;
 	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
@@ -35,20 +36,20 @@ void Board::PrintMap()
 	cursorInfo.bVisible = false;
 	SetConsoleCursorInfo(hOut, &cursorInfo);
 
-	int boardWidth = 100;
-	int boardHeight = 30;
+	int boardWidth = 80;
+	int boardHeight = 25;
 
 	SetCursorPosistion(0, 0);
-	cout << "ùÝ";
+	cout << "â•”";
 	for (int i = 0; i < boardWidth  -2; i++) {
-		cout << "ùù";
+		cout << "â•";
 	}
-	cout << "ùß" << endl;
+	cout << "â•—" << endl;
 
 	for (int i = 0; i < boardHeight - 2; i++) {
 		for (int j = 0; j < boardWidth; j++) {
 			if (j == 0 || j == boardWidth - 1) {
-				cout << "ùø";
+				cout << "â•‘";
 
 				if (j == boardWidth - 1) {
 					cout << endl;
@@ -60,25 +61,105 @@ void Board::PrintMap()
 		}
 	}
 
-	cout << "ùã";
+	cout << "â•š";
 	for (int i = 0; i < boardWidth - 2; i++) {
-		cout << "ùù";
+		cout << "â•";
 	}
-	cout << "ùå" << endl;
-	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | FOREGROUND_RED);
-	SetCursorPosistion(35, 1);
-	cout << "¢°  ¢±  ¢²  ¢³  ¢´  ¢µ  ¢¶  ¢·  ¢¸";
+	cout << "â•" << endl;
+	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
+	SetCursorPosistion(boardWidth / 3, 1);
+	cout << "ï¼‘  ï¼’  ï¼“  ï¼”  ï¼•  ï¼–  ï¼—  ï¼˜  ï¼™";
 
-	for (int i = 0; i < 25; i++) {		
-		for (int j = 0; j < 34; j++) {
-			SetCursorPosistion(35 + j, 2 + i);
-			cout << " ";
+	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+	for (int i = 0; i < Height; i++) {		
+		for (int j = 0; j < Width * 2; j+=2) {
+			SetCursorPosistion(boardWidth / 3 + j, 2 + i);
+			if (j == 0) {
+				if (i == 0) {
+					cout << "â•” ";
+				}
+				else if (i == Height - 1) {
+					cout << "â•š ";
+				}
+				else {
+					cout << "â•‘ ";
+				}
+			}
+			else if (j + 2 >= Width * 2) {
+				if (i == 0) {
+					cout << "â•— ";
+				}
+				else if (i == Height - 1) {
+					cout << "â• ";
+				}
+				else {
+					cout << "â•‘ ";
+				}
+			}
+			else {
+				if (i == 9 || i == 11) {
+					cout << "  ";
+				}
+				else if (i == 10) {
+					cout << "  ";
+				}
+				else if (i == 0 || i == Height - 1) {
+					cout << "â• ";
+				}
+				else if (j % 4 == 0) {
+					if (i % 2 == 0) {
+						if (i == 8) {
+							cout << "â”´ ";
+						}
+						else if (i == 12) {
+							cout << "â”¬ ";
+						}
+						else {
+							cout << "â”¼ ";
+						}
+					}
+					else {
+						cout << "â”‚ ";
+					}
+				}
+				else if (i % 2 == 0) {
+					cout << "â”€ ";
+				}
+				else {
+					cout << "  ";
+				}
+			}
 		}
 	}
+	SetCursorPosistion(boardWidth / 3 + 6, 2 + 10);
+	cout << "æ¥š æ²³";
+	SetCursorPosistion(boardWidth / 3 + 22, 2 + 10);
+	cout << "æ¼¢ ç•Œ";
+	SetCursorPosistion(boardWidth / 3 + 14, 2 + 1);
+	cout << "â•²";
+	SetCursorPosistion(boardWidth / 3 + 14, 2 + 3);
+	cout << "â•±";
+	SetCursorPosistion(boardWidth / 3 + 18, 2 + 1);
+	cout << "â•±";
+	SetCursorPosistion(boardWidth / 3 + 18, 2 + 3);
+	cout << "â•²";
 
+	SetCursorPosistion(boardWidth / 3 + 14, 2 + 17);
+	cout << "â•²";
+	SetCursorPosistion(boardWidth / 3 + 14, 2 + 19);
+	cout << "â•±";
+	SetCursorPosistion(boardWidth / 3 + 18, 2 + 17);
+	cout << "â•±";
+	SetCursorPosistion(boardWidth / 3 + 18, 2 + 19);
+	cout << "â•²";
+
+
+	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
+	SetCursorPosistion(boardWidth / 3, 23);
+	cout << "ä¹  å…«  ä¸ƒ  å…­  äº”  å››  ä¸‰  äºŒ  ä¸€";
+	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
 }
 
-
-Board::~Board()
+void Board::SetChess(int x, int y)
 {
 }
