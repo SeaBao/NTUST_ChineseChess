@@ -27,6 +27,12 @@ int main() {
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
 	SetWindow(81, 26);
 
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO	cursorInfo;
+	GetConsoleCursorInfo(hOut, &cursorInfo);
+	cursorInfo.bVisible = true;
+	SetConsoleCursorInfo(hOut, &cursorInfo);
+
 	Board board;
 	board.ReadFile("Board.txt");
 

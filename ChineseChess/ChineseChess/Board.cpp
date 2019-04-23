@@ -52,11 +52,6 @@ void Board::PrintMap()
 	cfi.FontWeight = FW_NORMAL;
 	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
 
-	CONSOLE_CURSOR_INFO	cursorInfo;
-	GetConsoleCursorInfo(hOut, &cursorInfo);
-	cursorInfo.bVisible = false;
-	SetConsoleCursorInfo(hOut, &cursorInfo);
-
 	int boardWidth = 80;
 	int boardHeight = 25;
 
