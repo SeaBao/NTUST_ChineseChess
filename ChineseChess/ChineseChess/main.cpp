@@ -23,11 +23,12 @@ void SetWindow(int Width, int Height)
 }
 
 int main() {
+	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
 	SetWindow(81, 26);
 
 	Board board;
-	board.PrintMap();
+	board.ReadFile("Board.txt");
 
 	cin.get();
 	return 0;
