@@ -43,8 +43,6 @@ void OperatingChess::gameStart()
 
 		}
 		command = _getch();
-		
-		wcout << Board::ConvertToBoardPoint().x << " " << Board::ConvertToBoardPoint().y << endl;
 	}
 }
 
