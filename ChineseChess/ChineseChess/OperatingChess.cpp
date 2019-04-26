@@ -20,47 +20,31 @@ void OperatingChess::gameStart()
 		hin = GetStdHandle(STD_OUTPUT_HANDLE);
 		if (command == 75)//left
 		{
-			pos.X = pos.X - 4;
-			SetConsoleCursorPosition(hin, pos);
-			if (Board::ConvertToBoardPoint().x <= -1)
-			{
-				pos.X = pos.X + 4;
+			if (Board::ConvertToBoardPoint().x != 0) {
+				pos.X -= 4;
+				SetConsoleCursorPosition(hin, pos);
 			}
-
-		
-			SetConsoleCursorPosition(hin, pos);
 		}
 		else if (command == 72)//up
 		{
-			pos.Y = pos.Y - 2;
-	
-			SetConsoleCursorPosition(hin, pos);
-			if (Board::ConvertToBoardPoint().y <= -1)
-			{
-				pos.Y = pos.Y + 2;
+			if (Board::ConvertToBoardPoint().y != 0) {
+				pos.Y -= 2;
+				SetConsoleCursorPosition(hin, pos);
 			}
-			SetConsoleCursorPosition(hin, pos);
 		}
 		else if (command == 77)//right
 		{
-			pos.X = pos.X + 4;
-			SetConsoleCursorPosition(hin, pos);
-			if (Board::ConvertToBoardPoint().x <= -1)
-			{
-				pos.X = pos.X - 4;
+			if (Board::ConvertToBoardPoint().x != 8) {
+				pos.X += 4;
+				SetConsoleCursorPosition(hin, pos);
 			}
-			SetConsoleCursorPosition(hin, pos);
 		}
 		else if (command == 80)//down
 		{
-			pos.Y = pos.Y + 2;
-
-			SetConsoleCursorPosition(hin, pos);
-			if (Board::ConvertToBoardPoint().y <= -1)
-			{
-				pos.Y = pos.Y - 2;
+			if (Board::ConvertToBoardPoint().y != 10) {
+				pos.Y += 2;
+				SetConsoleCursorPosition(hin, pos);
 			}
-			SetConsoleCursorPosition(hin, pos);
 		}
 		else if (command == 13)
 		{
