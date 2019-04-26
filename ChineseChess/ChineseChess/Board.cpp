@@ -209,6 +209,11 @@ void Board::ReadFile(string path)
 	PrintMap();
 }
 
+vector<Chess>& Board::operator[](int row)
+{
+	return chessMap[row];
+}
+
 Chess& Board::GetChessByPoint(int x, int y)
 {
 	if (x < 0 || x >= (int)chessMap[0].size() || y < 0 || y >= (int)chessMap.size()) {
