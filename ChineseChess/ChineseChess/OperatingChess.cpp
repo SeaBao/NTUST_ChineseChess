@@ -18,30 +18,57 @@ void OperatingChess::gameStart()
 	{
 		//Board::CurrentBoard.PrintMap();
 		hin = GetStdHandle(STD_OUTPUT_HANDLE);
-		if (command == 75)
+		if (command == 75)//left
 		{
 			pos.X = pos.X - 4;
 			SetConsoleCursorPosition(hin, pos);
-		}
-		else if (command == 72)
-		{
-			pos.Y = pos.Y - 2;
+			if (Board::ConvertToBoardPoint().x <= -1)
+			{
+				pos.X = pos.X + 4;
+			}
+
+		
 			SetConsoleCursorPosition(hin, pos);
 		}
-		else if (command == 77)
+		else if (command == 72)//up
+		{
+			pos.Y = pos.Y - 2;
+	
+			SetConsoleCursorPosition(hin, pos);
+			if (Board::ConvertToBoardPoint().y <= -1)
+			{
+				pos.Y = pos.Y + 2;
+			}
+			SetConsoleCursorPosition(hin, pos);
+		}
+		else if (command == 77)//right
 		{
 			pos.X = pos.X + 4;
 			SetConsoleCursorPosition(hin, pos);
+			if (Board::ConvertToBoardPoint().x <= -1)
+			{
+				pos.X = pos.X - 4;
+			}
+			SetConsoleCursorPosition(hin, pos);
 		}
-		else if (command == 80)
+		else if (command == 80)//down
 		{
 			pos.Y = pos.Y + 2;
+
+			SetConsoleCursorPosition(hin, pos);
+			if (Board::ConvertToBoardPoint().y <= -1)
+			{
+				pos.Y = pos.Y - 2;
+			}
 			SetConsoleCursorPosition(hin, pos);
 		}
 		else if (command == 13)
 		{
-
+			HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
+			cout << "test";
 		}
+		
 		command = _getch();
 	}
 }

@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\ChineseChess"
+    "\\ChineseChess",
+    "\\ChineseChess\\ChineseChess"
   ],
-  "SelectedNode": "\\ChineseChess\\ChineseChess.sln",
+  "SelectedNode": "\\ChineseChess\\ChineseChess\\main.cpp",
   "PreviewInSolutionExplorer": false
 }
