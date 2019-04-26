@@ -5,6 +5,7 @@ using namespace std;
 class Chess
 {
 public:
+	Chess();
 	Chess(int ID, wchar_t text, bool team);
 	int GetID();
 	wchar_t GetText();

@@ -8,13 +8,20 @@ using namespace std;
 class Board
 {
 public:
-	Board();
+	typedef struct ChessPos {
+		ChessPos();
+		Chess Chess;
+		POINT Point;
+	} ChessPos;
 
+	Board();
 	static Board CurrentBoard;
 	static POINT ConvertToBoardPoint();
 
 	void PrintMap();
 	void ReadFile(string path);
+	Chess& GetChessByPoint(int x, int y);
+	vector<ChessPos> SearchByChessName(int ID);
 private:
 	const int BoardWidth = 17, BoardHeight = 21, WindowWidth = 80, WindowHeight = 25;
 	vector<vector<Chess>> chessMap;

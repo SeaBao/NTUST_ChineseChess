@@ -209,6 +209,33 @@ void Board::ReadFile(string path)
 	PrintMap();
 }
 
+Chess& Board::GetChessByPoint(int x, int y)
+{
+	if (x < 0 || x >= (int)chessMap[0].size() || y < 0 || y >= (int)chessMap.size()) {
+		throw exception("The Coordinate is invalid.");
+	}
+	else {
+		return chessMap[y][x];
+	}
+}
+
+vector<Board::ChessPos> Board::SearchByChessName(int ID)
+{
+	vector<Board::ChessPos> arr;
+	for (size_t y = 0; y < chessMap.size(); y++) {
+		for (size_t x = 0; x < chessMap[y].size(); x++) {
+			if (chessMap[y][x].GetID() == ID) {
+				Board::ChessPos cp;
+				cp.Chess = chessMap[y][x];
+				cp.Point.x = x;
+				cp.Point.y = y;
+				arr.push_back(cp);
+			}
+		}
+	}
+ 	return arr;
+}
+
 // Intent: Convert current console cursor position to Board coordinate for easy programming.
 // Post: If Point's X and Y are both -1 means the current cursor position is invalid on the board.
 POINT Board::ConvertToBoardPoint()
@@ -227,4 +254,10 @@ POINT Board::ConvertToBoardPoint()
 		return p;
 	}	
 	return p;
+}
+
+Board::ChessPos::ChessPos()
+{
+	Point.x = -1;
+	Point.y = -1;
 }

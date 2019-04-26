@@ -7,6 +7,13 @@ vector<Chess> chessList = {
 };
 
 
+Chess::Chess()
+{
+	ID = chessList[0].GetID();
+	Text = chessList[0].GetText();
+	Team = false;
+}
+
 Chess::Chess(int id, wchar_t text, bool team)
 {
 	ID = id;
