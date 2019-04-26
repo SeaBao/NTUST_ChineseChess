@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <fstream>
 
+Board Board::CurrentBoard = Board();
+
 void SetCursorPosistion(int x, int y) {
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -35,7 +37,7 @@ size_t split(const std::string& txt, std::vector<std::string>& strs, char ch)
 
 Board::Board()
 {
-	chessMap = vector<vector<Chess>>(11, vector<Chess>(9, Chess::GetChessByID(0)));
+	chessMap = vector<vector<Chess>>(11, vector<Chess>(9, Chess(0, L'\0', false)));
 }
 
 void Board::PrintMap()
@@ -52,22 +54,19 @@ void Board::PrintMap()
 	cfi.FontWeight = FW_NORMAL;
 	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
 
-	int boardWidth = 80;
-	int boardHeight = 25;
-
 	SetCursorPosistion(0, 0);
 	wcout << L"╔";
-	for (int i = 0; i < boardWidth  -2; i++) {
+	for (int i = 0; i < WindowWidth -2; i++) {
 		wcout << L"═";
 	}
 	wcout << L"╗" << endl;
 
-	for (int i = 0; i < boardHeight - 2; i++) {
-		for (int j = 0; j < boardWidth; j++) {
-			if (j == 0 || j == boardWidth - 1) {
+	for (int i = 0; i < WindowHeight - 2; i++) {
+		for (int j = 0; j < WindowWidth; j++) {
+			if (j == 0 || j == WindowWidth - 1) {
 				wcout << L"║";
 
-				if (j == boardWidth - 1) {
+				if (j == WindowWidth - 1) {
 					wcout << endl;
 				}
 			}
@@ -78,34 +77,34 @@ void Board::PrintMap()
 	}
 
 	wcout << L"╚";
-	for (int i = 0; i < boardWidth - 2; i++) {
+	for (int i = 0; i < WindowWidth - 2; i++) {
 		wcout << L"═";
 	}
 	wcout << L"╝" << endl;
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
-	SetCursorPosistion(boardWidth / 3, 1);
+	SetCursorPosistion(WindowWidth / 3, 1);
 	wcout << L"１  ２  ３  ４  ５  ６  ７  ８  ９";
 
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
-	for (int i = 0; i < Height; i++) {		
-		for (int j = 0; j < Width * 2; j+=2) {
-			SetCursorPosistion(boardWidth / 3 + j, 2 + i);
+	for (int i = 0; i < BoardHeight; i++) {		
+		for (int j = 0; j < BoardWidth * 2; j+=2) {
+			SetCursorPosistion(WindowWidth / 3 + j, 2 + i);
 			if (j == 0) {
 				if (i == 0) {
 					wcout << L"╔ ";
 				}
-				else if (i == Height - 1) {
+				else if (i == BoardHeight - 1) {
 					wcout << L"╚ ";
 				}
 				else {
 					wcout << L"║ ";
 				}
 			}
-			else if (j + 2 >= Width * 2) {
+			else if (j + 2 >= BoardWidth * 2) {
 				if (i == 0) {
 					wcout << L"╗ ";
 				}
-				else if (i == Height - 1) {
+				else if (i == BoardHeight - 1) {
 					wcout << L"╝ ";
 				}
 				else {
@@ -119,7 +118,7 @@ void Board::PrintMap()
 				else if (i == 10) {
 					wcout << L"  ";
 				}
-				else if (i == 0 || i == Height - 1) {
+				else if (i == 0 || i == BoardHeight - 1) {
 					wcout << L"═ ";
 				}
 				else if (j % 4 == 0) {
@@ -147,31 +146,31 @@ void Board::PrintMap()
 			}
 		}
 	}
-	SetCursorPosistion(boardWidth / 3 + 6, 2 + 10);
+	SetCursorPosistion(WindowWidth / 3 + 6, 2 + 10);
 	wcout << L"楚 河";
-	SetCursorPosistion(boardWidth / 3 + 22, 2 + 10);
+	SetCursorPosistion(WindowWidth / 3 + 22, 2 + 10);
 	wcout << L"漢 界";
-	SetCursorPosistion(boardWidth / 3 + 14, 2 + 1);
+	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 1);
 	wcout << L"╲";
-	SetCursorPosistion(boardWidth / 3 + 14, 2 + 3);
+	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 3);
 	wcout << L"╱";
-	SetCursorPosistion(boardWidth / 3 + 18, 2 + 1);
+	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 1);
 	wcout << L"╱";
-	SetCursorPosistion(boardWidth / 3 + 18, 2 + 3);
+	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 3);
 	wcout << L"╲";
 
-	SetCursorPosistion(boardWidth / 3 + 14, 2 + 17);
+	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 17);
 	wcout << L"╲";
-	SetCursorPosistion(boardWidth / 3 + 14, 2 + 19);
+	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 19);
 	wcout << L"╱";
-	SetCursorPosistion(boardWidth / 3 + 18, 2 + 17);
+	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 17);
 	wcout << L"╱";
-	SetCursorPosistion(boardWidth / 3 + 18, 2 + 19);
+	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 19);
 	wcout << L"╲";
 
 
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
-	SetCursorPosistion(boardWidth / 3, 23);
+	SetCursorPosistion(WindowWidth / 3, 23);
 	wcout << L"九  八  七  六  五  四  三  二  一";
 
 	SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
@@ -181,7 +180,7 @@ void Board::PrintMap()
 				continue;
 			}
 			
-			SetCursorPosistion(boardWidth / 3 + 4 * x, 2 + 2 * y);
+			SetCursorPosistion(WindowWidth / 3 + 4 * x, 2 + 2 * y);
 			wcout << chessMap[y][x].GetText();
 		}
 	}
@@ -199,7 +198,7 @@ void Board::ReadFile(string path)
 		vector<string> splitStrArr;
 		split(line, splitStrArr, ' ');
 
-		for (int i=0; i < splitStrArr.size(); i++) {
+		for (size_t i=0; i < splitStrArr.size(); i++) {
 			int id = atoi(splitStrArr[i].c_str());
 			Chess myChess = Chess::GetChessByID(id);
 			chessMap[row][i] = myChess;
@@ -208,4 +207,24 @@ void Board::ReadFile(string path)
 	}
 
 	PrintMap();
+}
+
+// Intent: Convert current console cursor position to Board coordinate for easy programming.
+// Post: If Point's X and Y are both -1 means the current cursor position is invalid on the board.
+POINT Board::ConvertToBoardPoint()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+
+	POINT p;
+	p.x = (csbi.dwCursorPosition.X - 26) / 4;
+	p.y = csbi.dwCursorPosition.Y / 2 - 1;
+
+	if (csbi.dwCursorPosition.X < Board::CurrentBoard.WindowWidth / 3 || csbi.dwCursorPosition.X > Board::CurrentBoard.WindowWidth / 3 + Board::CurrentBoard.BoardWidth * 2 
+		|| p.y < 0 || csbi.dwCursorPosition.Y - 1 > Board::CurrentBoard.BoardHeight) {
+		p.x = -1;
+		p.y = -1;
+		return p;
+	}	
+	return p;
 }
