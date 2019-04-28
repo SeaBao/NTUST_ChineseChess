@@ -64,9 +64,35 @@ void OperatingChess::gameStart()
 		}
 		else if (command == 13)
 		{
-			HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-			SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
-			cout << "test";
+			auto temp1 =Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
+			
+			if (temp1.GetID() != 0)
+			{
+					 if (isChoosed == 1 && temp1.GetID() == previousChessID)
+					{
+						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+						SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
+						wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
+						SetConsoleCursorPosition(hin, pos);
+						isChoosed = 0;
+					}
+					else if (isChoosed && temp1.GetID() != previousChessID)
+					{
+
+					}
+					else if (!isChoosed)
+					{
+						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+						SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
+						wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
+						previousChessID = temp1.GetID();
+						isChoosed = 1;
+						SetConsoleCursorPosition(hin, pos);
+					}
+
+			}
+			
+			
 		}
 		
 		command = _getch();

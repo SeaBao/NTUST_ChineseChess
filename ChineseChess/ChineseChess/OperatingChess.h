@@ -6,6 +6,8 @@ class OperatingChess
 {
 private:
 	char command;
+	bool isChoosed;
+	int previousChessID;
 	HANDLE hin;
 	DWORD WriteWord;
 	COORD pos;
