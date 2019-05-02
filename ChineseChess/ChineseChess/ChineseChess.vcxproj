@@ -116,14 +116,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Chess.cpp" />
     <ClCompile Include="ChessWalking.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="OperatingChess.cpp" />
+    <ClCompile Include="Regret.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Chess.h" />
     <ClInclude Include="ChessWalking.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="OperatingChess.h" />
+    <ClInclude Include="Regret.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Board.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

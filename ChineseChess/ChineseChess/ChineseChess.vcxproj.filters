@@ -27,6 +27,15 @@
     <ClCompile Include="ChessWalking.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="Chess.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Regret.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
@@ -38,5 +47,19 @@
     <ClInclude Include="ChessWalking.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="Chess.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Regret.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Board.txt">
+      <Filter>資源檔</Filter>
+    </Text>
   </ItemGroup>
 </Project>

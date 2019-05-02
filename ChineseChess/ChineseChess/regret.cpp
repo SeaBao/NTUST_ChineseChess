@@ -1,11 +1,6 @@
-#include "regret.h"
+#include "Regret.h"
 
-regret::regret()
-{
-	cout << "test\n";
-}
-
-regret::~regret()
+Regret::~Regret()
 {
 
 }

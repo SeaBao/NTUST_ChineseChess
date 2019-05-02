@@ -1,8 +1,8 @@
-#include <iostream>
-using namespace std;
-class regret
+#pragma once
+class Regret
 {
+private:
+
 public:
-	regret();
-	~regret();
+	~Regret();
 };
