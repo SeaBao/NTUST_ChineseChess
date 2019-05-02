@@ -57,7 +57,7 @@ void OperatingChess::gameStart()
 						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 						SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
 						wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-						ChessWalking now(temp1.GetID(),);
+						ChessWalking now(temp1.GetID(),temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
 					}
