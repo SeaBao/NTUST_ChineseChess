@@ -1,5 +1,4 @@
 #include "Utility.h"
-#include <Windows.h>
 
 void SetCursorPosistion(int x, int y) {
 	HANDLE hOut;
@@ -43,4 +42,19 @@ void SetWindow(int Width, int Height)
 	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleScreenBufferSize(Handle, coord);
 	SetConsoleWindowInfo(Handle, TRUE, &Rect);
+}
+
+COORD GetCursorPosition()
+{
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);;
+	CONSOLE_SCREEN_BUFFER_INFO cbsi;
+	if (GetConsoleScreenBufferInfo(hOut, &cbsi))
+	{
+		return cbsi.dwCursorPosition;
+	}
+	else
+	{
+		COORD invalid = { -1, -1 };
+		return invalid;
+	}
 }

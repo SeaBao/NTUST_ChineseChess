@@ -20,6 +20,7 @@ public:
 
 	void PrintMap();
 	void ReadFile(string path);
+	void WriteFile(string path);
 	vector<Chess>& operator[](int row);
 	Chess& GetChessByPoint(int x, int y);
 	vector<ChessPos> SearchByChessName(int ID);

@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 #include <fstream>
 
 Board Board::CurrentBoard = Board();
@@ -141,6 +142,25 @@ void Board::ReadFile(string path)
 	}
 
 	PrintMap();
+}
+
+void Board::WriteFile(string path)
+{
+	ofstream outStream;
+	outStream.open(path);
+
+	if (outStream.is_open()) {
+		stringstream ss;
+		for (int y = 0; y < chessMap.size(); y++) {
+			for (int x = 0; x < chessMap[y].size(); x++) {
+				ss << chessMap[y][x].GetID() << " ";
+			}
+			ss << endl;
+		}
+
+		outStream << ss.str();
+		outStream.close();
+	}
 }
 
 vector<Chess>& Board::operator[](int row)

@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-	int WindowHeight = 25, WindowWidth = 80;
+	int WindowHeight = 24, WindowWidth = 80;
 	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
 	SetWindow(WindowWidth + 1, WindowHeight + 1);
@@ -59,9 +59,6 @@ int main() {
 			}
 		}
 	}
-	
-	
-
 
 	Board::CurrentBoard.ReadFile("Board.txt");
 	OperatingChess start;
