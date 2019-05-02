@@ -7,6 +7,7 @@ using namespace std;
 class Menu
 {
 public:
+	Menu();
 	void printMenu();
 	void printWord(int y);
 	void EnterOne();//Ä~Äò¹CÀ¸
