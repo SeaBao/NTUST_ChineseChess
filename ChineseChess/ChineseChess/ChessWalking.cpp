@@ -161,11 +161,11 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 				if (Board::CurrentBoard[previousCursonY][previousCursonX + 1].GetID() == 0)
 				{
 				
-					if (y - previousCursonY < 0&&previousCursonY==7&&y!=4)
+					if (y - previousCursonY < 0&&previousCursonY==6&&y!=4)
 					{
 						return 0;
 					}
-					else if (y - previousCursonY > 0 && previousCursonY == 4 && y != 7)
+					else if (y - previousCursonY > 0 && previousCursonY == 4 && y != 6)
 					{
 						return 0;
 					}
@@ -182,26 +182,65 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 			{
 				if (Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
 				{
-					printText(y, x, text, pos, temp);
-					return 1;
+
+					if (y - previousCursonY < 0 && previousCursonY == 6 && y != 4)
+					{
+						return 0;
+					}
+					else if (y - previousCursonY > 0 && previousCursonY == 4 && y != 6)
+					{
+						return 0;
+					}
+					else
+					{
+						printText(y, x, text, pos, temp);
+						return 1;
+					}
+
 				}
 				else return 0;
 			}
 			if (y - previousCursonY == 2)
 			{
-				if (Board::CurrentBoard[previousCursonY +1][previousCursonX].GetID() == 0)
+				if (Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
 				{
-					printText(y, x, text, pos, temp);
-					return 1;
+
+					if (y - previousCursonY < 0 && previousCursonY == 7 && y != 4)
+					{
+						return 0;
+					}
+					else if (y - previousCursonY > 0 && previousCursonY == 4 && y != 7)
+					{
+						return 0;
+					}
+					else
+					{
+						printText(y, x, text, pos, temp);
+						return 1;
+					}
+
 				}
 				else return 0;
 			}
 			else if (y - previousCursonY == -2)
 			{
-				if (Board::CurrentBoard[previousCursonY -1][previousCursonX].GetID() == 0)
+				if (Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
 				{
-					printText(y, x, text, pos, temp);
-					return 1;
+
+					if (y - previousCursonY < 0 && previousCursonY == 7 && y != 4)
+					{
+						return 0;
+					}
+					else if (y - previousCursonY > 0 && previousCursonY == 4 && y != 7)
+					{
+						return 0;
+					}
+					else
+					{
+						printText(y, x, text, pos, temp);
+						return 1;
+					}
+
 				}
 				else return 0;
 			}

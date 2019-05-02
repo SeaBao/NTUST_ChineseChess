@@ -1,6 +1,8 @@
 #include "OperatingChess.h"
 #include <windows.h>
 #include <iostream>
+#include "ChessWalking.h"
+#include "Chess.h"
 #include "Board.h"
 
 OperatingChess::OperatingChess()
@@ -49,6 +51,7 @@ void OperatingChess::gameStart()
 		else if (command == 13)//ENTER
 		{
 			Board temp2;
+			
 			auto temp1 =Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
 			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
 			if (temp1.GetID() != 0)
