@@ -1,4 +1,5 @@
 #include "OperatingChess.h"
+#include "ChessWalking.h"
 #include "Board.h"
 #include "Menu.h"
 #include <windows.h>
@@ -117,7 +118,7 @@ void OperatingChess::gameStart()
 		}
 		else if (command == 27)//esc
 		{
-			Menu temp();
+			Menu temp;
 			
 		}
 		
