@@ -48,8 +48,10 @@ void OperatingChess::gameStart()
 		}
 		else if (command == 13)//ENTER
 		{
-			auto temp1 =Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
 			
+			Board temp2;
+			auto temp1 =Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
+			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
 			if (temp1.GetID() != 0)
 			{
 					 if (isChoosed == 1 && previousCursonX == Board::ConvertToBoardPoint().x &&previousCursonY == Board::ConvertToBoardPoint().y)
@@ -57,13 +59,20 @@ void OperatingChess::gameStart()
 						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 						SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
 						wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-						ChessWalking now(temp1.GetID(),temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
+						
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
 					}
-					else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))
+					else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))//旗子碰撞 林志浩
 					{
-
+						 cout << "?";
+						 pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
+						 HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+						 SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
+						 SetConsoleCursorPosition(hin, pos);
+						 //wcout << "";
+						
+						 isChoosed = 0;
 					}
 					else if (!isChoosed)
 					{
@@ -74,9 +83,34 @@ void OperatingChess::gameStart()
 						previousCursonX = Board::ConvertToBoardPoint().x;
 						previousCursonY = Board::ConvertToBoardPoint().y;
 						isChoosed = 1;
+						
+						//now.printWhereCanGO();
 						SetConsoleCursorPosition(hin, pos);
 					}
 
+			}
+			//走路
+			else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))
+			{
+				int tempX =pos.X;
+				int tempY = pos.Y;
+				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
+				if(now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(),temp1))
+				{
+					pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
+					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
+					SetConsoleCursorPosition(hin, pos);
+					wcout << "  ";
+					Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
+					pos.X = tempX;
+					pos.Y = tempY;
+					SetConsoleCursorPosition(hin, pos);
+					isChoosed = 0;
+				}
+				
+				
+				
 			}
 			
 			
