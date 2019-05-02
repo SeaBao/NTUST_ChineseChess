@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "Board.h"
 
+
 void Menu::printMenu()
 {
 	COORD pos;

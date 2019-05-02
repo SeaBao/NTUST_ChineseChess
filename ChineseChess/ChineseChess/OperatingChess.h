@@ -8,7 +8,6 @@ class OperatingChess
 private:
 	char command;
 	bool isChoosed;
-	int previousChessID;
 	int previousCursonX;
 	int previousCursonY;
 	HANDLE hin;
