@@ -163,6 +163,14 @@ void Board::WriteFile(string path)
 	}
 }
 
+COORD Board::ConvertToConsolePoint(int x, int y)
+{
+	COORD p;
+	p.X = x * 4 + 26;
+	p.Y = (y + 1) * 2;
+	return p;
+}
+
 vector<Chess>& Board::operator[](int row)
 {
 	return chessMap[row];

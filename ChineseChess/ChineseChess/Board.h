@@ -21,6 +21,7 @@ public:
 	void PrintMap();
 	void ReadFile(string path);
 	void WriteFile(string path);
+	COORD ConvertToConsolePoint(int x, int y);
 	vector<Chess>& operator[](int row);
 	Chess& GetChessByPoint(int x, int y);
 	vector<ChessPos> SearchByChessName(int ID);
