@@ -48,7 +48,6 @@ void OperatingChess::gameStart()
 		}
 		else if (command == 13)//ENTER
 		{
-			
 			Board temp2;
 			auto temp1 =Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
 			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
@@ -95,7 +94,7 @@ void OperatingChess::gameStart()
 				int tempX =pos.X;
 				int tempY = pos.Y;
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
-				if(now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(),temp1))
+				if(now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(),temp1))
 				{
 					pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
 					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
