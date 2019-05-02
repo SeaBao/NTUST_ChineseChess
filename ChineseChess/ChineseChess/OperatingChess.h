@@ -2,14 +2,13 @@
 #include<stdio.h>
 #include<conio.h>
 #include <windows.h>
-#include "ChessWalking.h"
+#include "Menu.h"
 class OperatingChess
 {
 private:
 	char command;
 	bool isChoosed;
-	int previousCursonX;
-	int previousCursonY;
+	int previousChessID;
 	HANDLE hin;
 	DWORD WriteWord;
 	COORD pos;
