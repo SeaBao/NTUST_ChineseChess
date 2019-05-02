@@ -11,6 +11,86 @@ Board Board::CurrentBoard = Board();
 Board::Board()
 {
 	chessMap = vector<vector<Chess>>(11, vector<Chess>(9, Chess(0, L'\0', false)));
+
+	for (int y = 0; y < 21; y++) {
+		vector<wstring> tempArr;
+		for (int x = 0; x < 33; x++) {
+			if (y == 0) {
+				if (x == 0) {
+					tempArr.push_back(L"╔ ");
+				}
+				else if (x == 32) {
+					tempArr.push_back(L"╗ ");
+				}
+				else {
+					tempArr.push_back(L"═ ");
+				}
+			}
+			else if (y == 20) {
+				if (x == 0) {
+					tempArr.push_back(L"╚ ");
+				}
+				else if (x == 32) {
+					tempArr.push_back(L"╝ ");
+				}
+				else {
+					tempArr.push_back(L"═ ");
+				}
+			}
+			else {
+				if (x == 0 || x == 32) {
+					tempArr.push_back(L"║ ");
+				}
+				else {
+					if (y == 9 || y == 10 || y == 11) {
+						tempArr.push_back(L"  ");
+					}
+					else if (y % 2 == 0 && x != 1 && x != 31) {
+						if (x % 4 == 0) {;
+							if (y == 8) {
+								tempArr.push_back(L"┴ ");
+							}
+							else if (y == 12) {
+								tempArr.push_back(L"┬ ");
+							}
+							else {
+								tempArr.push_back(L"┼ ");
+							}
+						}
+						else {
+							tempArr.push_back(L"─ ");
+						}
+					}
+					else {
+						if (x % 4 == 0) {
+							tempArr.push_back(L"│ ");
+						}
+						else {
+							tempArr.push_back(L"  ");
+						}
+					}
+				}
+			}
+		}
+		boardMap.push_back(tempArr);
+	}
+
+	/*boardMap[10][6] = L"楚";
+	boardMap[10][7] = L"  ";
+	boardMap[10][8] = L"河";
+	boardMap[10][19] = L"漢";
+	boardMap[10][20] = L"  ";
+	boardMap[10][21] = L"界";*/
+
+	boardMap[1][14] = L"╲ ";
+	boardMap[1][18] = L"╱ ";
+	boardMap[3][14] = L"╱ ";
+	boardMap[3][18] = L"╲ ";
+
+	boardMap[17][14] = L"╲ ";
+	boardMap[17][18] = L"╱ ";
+	boardMap[19][14] = L"╱ ";
+	boardMap[19][18] = L"╲ ";
 }
 
 void Board::PrintMap()
@@ -21,88 +101,12 @@ void Board::PrintMap()
 	wcout << L"１  ２  ３  ４  ５  ６  ７  ８  ９";
 
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
-	for (int i = 0; i < BoardHeight; i++) {		
-		for (int j = 0; j < BoardWidth * 2; j+=2) {
-			SetCursorPosistion(WindowWidth / 3 + j, 2 + i);
-			if (j == 0) {
-				if (i == 0) {
-					wcout << L"╔ ";
-				}
-				else if (i == BoardHeight - 1) {
-					wcout << L"╚ ";
-				}
-				else {
-					wcout << L"║ ";
-				}
-			}
-			else if (j + 2 >= BoardWidth * 2) {
-				if (i == 0) {
-					wcout << L"╗ ";
-				}
-				else if (i == BoardHeight - 1) {
-					wcout << L"╝ ";
-				}
-				else {
-					wcout << L"║ ";
-				}
-			}
-			else {
-				if (i == 9 || i == 11) {
-					wcout << L"  ";
-				}
-				else if (i == 10) {
-					wcout << L"  ";
-				}
-				else if (i == 0 || i == BoardHeight - 1) {
-					wcout << L"═ ";
-				}
-				else if (j % 4 == 0) {
-					if (i % 2 == 0) {
-						if (i == 8) {
-							wcout << L"┴ ";
-						}
-						else if (i == 12) {
-							wcout << L"┬ ";
-						}
-						else {
-							wcout << L"┼ ";
-						}
-					}
-					else {
-						wcout << L"│ ";
-					}
-				}
-				else if (i % 2 == 0) {
-					wcout << L"─ ";
-				}
-				else {
-					wcout << L"  ";
-				}
-			}
+	for (size_t y = 0; y < boardMap.size(); y++) {
+		for (size_t x = 0; x < boardMap[0].size(); x++) {
+			SetCursorPosistion(WindowWidth / 3 + x, 2 + y);
+			wcout << boardMap[y][x];
 		}
 	}
-	SetCursorPosistion(WindowWidth / 3 + 6, 2 + 10);
-	wcout << L"楚 河";
-	SetCursorPosistion(WindowWidth / 3 + 22, 2 + 10);
-	wcout << L"漢 界";
-	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 1);
-	wcout << L"╲";
-	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 3);
-	wcout << L"╱";
-	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 1);
-	wcout << L"╱";
-	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 3);
-	wcout << L"╲";
-
-	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 17);
-	wcout << L"╲";
-	SetCursorPosistion(WindowWidth / 3 + 14, 2 + 19);
-	wcout << L"╱";
-	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 17);
-	wcout << L"╱";
-	SetCursorPosistion(WindowWidth / 3 + 18, 2 + 19);
-	wcout << L"╲";
-
 
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
 	SetCursorPosistion(WindowWidth / 3, 23);
@@ -151,8 +155,8 @@ void Board::WriteFile(string path)
 
 	if (outStream.is_open()) {
 		stringstream ss;
-		for (int y = 0; y < chessMap.size(); y++) {
-			for (int x = 0; x < chessMap[y].size(); x++) {
+		for (size_t y = 0; y < chessMap.size(); y++) {
+			for (size_t x = 0; x < chessMap[y].size(); x++) {
 				ss << chessMap[y][x].GetID() << " ";
 			}
 			ss << endl;
