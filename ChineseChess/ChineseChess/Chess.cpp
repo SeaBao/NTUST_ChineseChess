@@ -27,6 +27,10 @@ int Chess::GetID()
 	return ID;
 }
 
+bool Chess::GetTeam() {
+	return Team;
+}
+
 wchar_t Chess::GetText()
 {
 	return Text;

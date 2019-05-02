@@ -8,6 +8,7 @@ public:
 	Chess();
 	Chess(int ID, wchar_t text, bool team);
 	int GetID();
+	bool GetTeam();
 	wchar_t GetText();
 	static Chess GetChessByID(int id);
 private:

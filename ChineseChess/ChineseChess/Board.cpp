@@ -1,39 +1,11 @@
 ﻿#include "Board.h"
+#include "Utility.h"
 #include <Windows.h>
 #include <iostream>
 #include <algorithm>
 #include <fstream>
 
 Board Board::CurrentBoard = Board();
-
-void SetCursorPosistion(int x, int y) {
-	HANDLE hOut;
-	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD Position;
-	Position.X = x;
-	Position.Y = y;
-	SetConsoleCursorPosition(hOut, Position);
-}
-
-size_t split(const std::string& txt, std::vector<std::string>& strs, char ch)
-{
-	size_t pos = txt.find(ch);
-	size_t initialPos = 0;
-	strs.clear();
-
-	while (pos != std::string::npos) {
-		strs.push_back(txt.substr(initialPos, pos - initialPos));
-		initialPos = pos + 1;
-
-		pos = txt.find(ch, initialPos);
-	}
-
-	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
-
-	return strs.size();
-}
-
-
 
 Board::Board()
 {
@@ -42,45 +14,7 @@ Board::Board()
 
 void Board::PrintMap()
 {
-	system("cls");
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	CONSOLE_FONT_INFOEX cfi;
-	cfi.cbSize = sizeof(cfi);
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;
-	cfi.dwFontSize.Y = 30;
-	cfi.FontFamily = FF_DONTCARE;
-	cfi.FontWeight = FW_NORMAL;
-	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
-
-	SetCursorPosistion(0, 0);
-	wcout << L"╔";
-	for (int i = 0; i < WindowWidth -2; i++) {
-		wcout << L"═";
-	}
-	wcout << L"╗" << endl;
-
-	for (int i = 0; i < WindowHeight - 2; i++) {
-		for (int j = 0; j < WindowWidth; j++) {
-			if (j == 0 || j == WindowWidth - 1) {
-				wcout << L"║";
-
-				if (j == WindowWidth - 1) {
-					wcout << endl;
-				}
-			}
-			else {
-				wcout << L" ";
-			}
-		}
-	}
-
-	wcout << L"╚";
-	for (int i = 0; i < WindowWidth - 2; i++) {
-		wcout << L"═";
-	}
-	wcout << L"╝" << endl;
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
 	SetCursorPosistion(WindowWidth / 3, 1);
 	wcout << L"１  ２  ３  ４  ５  ６  ７  ８  ９";
@@ -196,7 +130,7 @@ void Board::ReadFile(string path)
 	int row = 0;
 	while (getline(file, line)) {
 		vector<string> splitStrArr;
-		split(line, splitStrArr, ' ');
+		Split(line, splitStrArr, ' ');
 
 		for (size_t i=0; i < splitStrArr.size(); i++) {
 			int id = atoi(splitStrArr[i].c_str());
