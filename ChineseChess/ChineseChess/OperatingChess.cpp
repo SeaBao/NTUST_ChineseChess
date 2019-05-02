@@ -114,6 +114,11 @@ void OperatingChess::gameStart()
 			
 			
 		}
+		else if (command == 27)//esc
+		{
+			Menu temp;
+			temp.printMenu();
+		}
 		
 		command = _getch();
 	}
