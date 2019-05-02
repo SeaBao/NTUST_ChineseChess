@@ -3,30 +3,14 @@
 #include "OperatingChess.h"
 #include "ChessWalking.h"
 #include "Board.h"
-#include "Menu.h"
+#include "Utility.h"
 using namespace std;
 
-void SetWindow(int Width, int Height)
-{
-	_COORD coord;
-	coord.X = Width;
-	coord.Y = Height;
-
-	_SMALL_RECT Rect;
-	Rect.Top = 0;
-	Rect.Left = 0;
-	Rect.Bottom = Height - 1;
-	Rect.Right = Width - 1;
-
-	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleScreenBufferSize(Handle, coord);
-	SetConsoleWindowInfo(Handle, TRUE, &Rect);
-}
-
 int main() {
+	int WindowHeight = 24, WindowWidth = 80;
 	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
-	SetWindow(81, 26);
+	SetWindow(WindowWidth + 1, WindowHeight + 1);
 
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO	cursorInfo;
@@ -34,9 +18,50 @@ int main() {
 	cursorInfo.bVisible = true;
 	SetConsoleCursorInfo(hOut, &cursorInfo);
 
+	CONSOLE_FONT_INFOEX cfi;
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = 0;
+	cfi.dwFontSize.Y = 30;
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
+	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
+
+	for (int y = 0; y <= WindowHeight; y++) {
+		for (int x = 0; x < WindowWidth; x++) {
+			SetCursorPosistion(x, y);
+			if (y == 0) {
+				if (x == 0) {
+					wcout << L"שÝ ";
+				}
+				else if (x == WindowWidth - 1) {
+					wcout << L"שß ";
+				}
+				else {
+					wcout << L"שש ";
+				}
+			}
+			else if (y == WindowHeight) {
+				if (x == 0) {
+					wcout << L"שד ";
+				}
+				else if (x == WindowWidth - 1) {
+					wcout << L"שו ";
+				}
+				else {
+					wcout << L"שש ";
+				}
+			}
+			else {
+				if (x == 0 || x == WindowWidth - 1) {
+					wcout << L"שר ";
+				}
+			}
+		}
+	}
+
 	Board::CurrentBoard.ReadFile("Board.txt");
 	OperatingChess start;
 	start.gameStart();
-	
 	return 0;
 }

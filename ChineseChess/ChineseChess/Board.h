@@ -17,9 +17,12 @@ public:
 	Board();
 	static Board CurrentBoard;
 	static POINT ConvertToBoardPoint();
+	static COORD ConvertToConsolePoint(int x, int y);
 
 	void PrintMap();
 	void ReadFile(string path);
+	void WriteFile(string path);
+	
 	vector<Chess>& operator[](int row);
 	Chess& GetChessByPoint(int x, int y);
 	vector<ChessPos> SearchByChessName(int ID);
