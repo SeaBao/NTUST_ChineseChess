@@ -180,6 +180,11 @@ void Board::WriteFile(string path)
 	}
 }
 
+wstring Board::GetGraphicStr(int x, int y)
+{
+	return boardMap[y * 2][x * 4];
+}
+
 COORD Board::ConvertToConsolePoint(int x, int y)
 {
 	COORD p;
