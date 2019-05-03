@@ -34,7 +34,10 @@
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
-      <Filter>標頭檔</Filter>
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="regret.cpp">
+      <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +57,10 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
-      <Filter>來源檔案</Filter>
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="regret.h">
+      <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
