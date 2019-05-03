@@ -7,7 +7,7 @@
 #include<math.h>
 using namespace std;
 
-void printText(int y, int x, wchar_t text, COORD post, Chess temp)
+void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 {
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	HANDLE hin;
@@ -16,6 +16,9 @@ void printText(int y, int x, wchar_t text, COORD post, Chess temp)
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleCursorPosition(hin, post);
 	wcout << text;
+}
+ChessWalking::ChessWalking()
+{
 }
 ChessWalking::ChessWalking(int id, bool blackorred, int x, int y)
 {
@@ -234,7 +237,7 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 			}
 			else if (y - previousCursonY == -2)
 			{
-				if (Board::CurrentBoard[previousCursonY-1][previousCursonX - 1].GetID() == 0)
+				if (Board::CurrentBoard[previousCursonY-1][previousCursonX ].GetID() == 0)
 				{
 
 					
@@ -566,7 +569,7 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 		}
 		else if (y - previousCursonY == -2)
 		{
-			if (Board::CurrentBoard[previousCursonY - 1][previousCursonX - 1].GetID() == 0)
+			if (Board::CurrentBoard[previousCursonY - 1][previousCursonX ].GetID() == 0)
 			{
 
 
@@ -697,50 +700,29 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 	}
 
 }
-void ChessWalking::printWhereCanGO()
+void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCursonY)
 {
 
 	if (blackOrRed == true)
 	{
 		if (ID == 1)
 		{
-			hin = GetStdHandle(STD_OUTPUT_HANDLE);
-			pos = GetCursorPosition();
-			pos.X = pos.X - 2;
-			if (Board::CurrentBoard[currentY][currentX + 1].GetID() == 0 && (currentX + 1 >= 3 && currentX + 1 <= 5))
+			for (int x = 0; x <= 8; x++)
 			{
-				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-				SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0xff);
-				pos.X = pos.X + 4;
-				SetConsoleCursorPosition(hin, pos);
-				wcout << " ";
+				for (int y = 0; y <= 10; y++)
+				{
+					if (Board::CurrentBoard[y][x].GetID() == 0 && (x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
+					{
+						Board temp;
+						pos = temp.ConvertToConsolePoint(x, y);
+						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+						SetConsoleTextAttribute(hOut, BACKGROUND_RED |BACKGROUND_BLUE  | 0x90);
+						SetConsoleCursorPosition(hin, pos);
+						wcout << Board::CurrentBoard.GetGraphicStr(x, y);
+					}
+					
+				}
 			}
-			else if (Board::CurrentBoard[currentY + 1][currentX].GetID() == 0 && currentY + 1 != -1 && currentY + 1 <= 2)
-			{
-
-				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-				SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0xff);
-				pos.Y = pos.Y + 2;
-				SetConsoleCursorPosition(hin, pos);
-				wcout << " ";
-			}
-			else if (Board::CurrentBoard[currentY][currentX - 1].GetID() == 0 && (currentX - 1 >= 3 && currentX - 1 <= 5))
-			{
-				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-				SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0xff);
-				pos.X = pos.X - 4;
-				SetConsoleCursorPosition(hin, pos);
-				wcout << " ";
-			}
-			else if (Board::CurrentBoard[currentY - 1][currentX].GetID() == 0 && currentY - 1 != -1 && currentY - 1 <= 2)
-			{
-				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-				SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0xff);
-				pos.Y = pos.Y - 2;
-				SetConsoleCursorPosition(hin, pos);
-				wcout << " ";
-			}
-
 		}
 		else if (ID == 2)
 		{
