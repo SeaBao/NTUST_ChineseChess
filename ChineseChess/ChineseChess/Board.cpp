@@ -102,6 +102,10 @@ Board::Board()
 void Board::PrintMap()
 {
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(hOut, &csbi);
+	auto cursorPos = csbi.dwCursorPosition;
+
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
 	SetCursorPosistion(WindowWidth / 3, 1);
 	wcout << L"１  ２  ３  ４  ５  ６  ７  ８  ９";
@@ -129,6 +133,9 @@ void Board::PrintMap()
 			wcout << chessMap[y][x].GetText();
 		}
 	}
+
+	
+	SetCursorPosistion(cursorPos.X, cursorPos.Y);
 }
 
 void Board::ReadFile(string path)

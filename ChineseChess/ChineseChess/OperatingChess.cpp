@@ -8,7 +8,8 @@
 OperatingChess::OperatingChess()
 {
 	command = _getch();
-	pos.X = 42, pos.Y = 2; // 將位置設在 (5,5) 之地方。
+	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,10).X;
+	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,10).Y;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
