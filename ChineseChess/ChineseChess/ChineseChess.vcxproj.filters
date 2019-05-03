@@ -33,6 +33,9 @@
     <ClCompile Include="Utility.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>標頭檔</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
@@ -49,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>來源檔案</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
