@@ -91,6 +91,8 @@ void OperatingChess::gameStart()
 			{
 				int tempX = pos.X;
 				int tempY = pos.Y;
+				int powBarrierX;
+				int powBarrierY;
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				int x = Board::ConvertToBoardPoint().x, y = Board::ConvertToBoardPoint().y, currentx = Board::ConvertToBoardPoint().x, currenty = Board::ConvertToBoardPoint().y;
 				
@@ -102,7 +104,7 @@ void OperatingChess::gameStart()
 						{
 							if (currentx - previousCursonX > 0)
 							{
-								for (int i = previousCursonX + 1; i <= 10; i++)
+								for (int i = previousCursonX+1; i <= 8; i++)
 								{
 									if (Board::CurrentBoard[currenty][i].GetID() != 0)
 									{
@@ -113,9 +115,15 @@ void OperatingChess::gameStart()
 											y = currenty;
 											break;
 										}
-										if (obstacleFirst == 0)obstacleFirst = 1;
+										if (obstacleFirst == 0)
+										{
+											powBarrierX = i;
+											powBarrierY = currenty;
+											obstacleFirst = 1;
+										}
 									}
 								}
+								if (x >= currentx)flag = 1;
 							}
 							else if (currentx - previousCursonX < 0)
 							{
@@ -130,7 +138,12 @@ void OperatingChess::gameStart()
 											y = currenty;
 											break;
 										}
-										if (obstacleFirst == 0)obstacleFirst = 1;
+										if (obstacleFirst == 0)
+										{
+											powBarrierX = i;
+											powBarrierY = currenty;
+											obstacleFirst = 1;
+										}
 									}
 								}
 							}
@@ -150,7 +163,13 @@ void OperatingChess::gameStart()
 											y = i;
 											break;
 										}
-										if (obstacleFirst == 0)obstacleFirst = 1;
+										if (obstacleFirst == 0)
+										{
+											powBarrierX = currentx;
+											powBarrierY =i;
+											obstacleFirst = 1;
+										}
+
 									}
 								}
 							}
@@ -169,19 +188,23 @@ void OperatingChess::gameStart()
 											y = i;
 											break;
 										}
-										if (obstacleFirst == 0)obstacleFirst = 1;
+										if (obstacleFirst == 0) {
+											powBarrierX = currentx;
+											powBarrierY = i;
+											obstacleFirst = 1;
+										}
 									}
 								}
 							}
 						}
 						else
 						{
-							x = -1;
-							y = -1;
+							
+							flag = 1;
 						}
 					}
 				
-				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y))
+				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y,flag))
 				{
 				
 					if (temp3.GetID() != 0)//當前游標有棋子的話
@@ -194,24 +217,32 @@ void OperatingChess::gameStart()
 
 								
 								
-
+							
 
 									Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x] = previousChess;
-									int tempX = pos.X;
-									int tempY = pos.Y;
-									temp.printText(Board::ConvertToBoardPoint().y, Board::ConvertToBoardPoint().x, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), pos, previousChess);
-									pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
-									Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
-									HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-									SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
-									SetConsoleCursorPosition(hin, pos);
+									if ((previousChess.GetID() == 6 || previousChess.GetID() == 13) && Board::ConvertToBoardPoint().x == powBarrierX && Board::ConvertToBoardPoint().y == powBarrierY)
+									{
 
-									wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
-									pos.X = tempX;
-									pos.Y = tempY;
-									SetConsoleCursorPosition(hin, pos);
-									isChoosed = 0;
-								
+									}
+									else
+									{
+										int tempX = pos.X;
+										int tempY = pos.Y;
+										temp.printText(Board::ConvertToBoardPoint().y, Board::ConvertToBoardPoint().x, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), pos, previousChess);
+										pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
+										Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
+										HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetConsoleCursorPosition(hin, pos);
+
+										wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
+										pos.X = tempX;
+										pos.Y = tempY;
+										SetConsoleCursorPosition(hin, pos);
+										isChoosed = 0;
+
+									}
+									
 
 
 							}
