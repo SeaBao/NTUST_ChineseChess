@@ -37,6 +37,7 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 	Board temp1;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
 	pos = temp1.ConvertToConsolePoint(x, y);
+
 	if (id == 1)
 	{
 		if (Board::CurrentBoard[y][x].GetID() == 0 && (x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
@@ -698,7 +699,6 @@ int ChessWalking::walk(int id, int x, int y, int previousCursonX, int previousCu
 		}
 		else return 0;
 	}
-
 }
 void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCursonY)
 {

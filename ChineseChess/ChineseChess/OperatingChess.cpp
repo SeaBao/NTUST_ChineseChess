@@ -172,10 +172,6 @@ void OperatingChess::gameStart()
 							 }
 							 
 						 }
-					    
-
-						 
-						
 					}
 					else if (!isChoosed)
 					{
@@ -195,7 +191,6 @@ void OperatingChess::gameStart()
 				
 						SetConsoleCursorPosition(hin, pos);
 					}
-
 			}
 			//¨«¸ô
 			else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))
@@ -205,7 +200,7 @@ void OperatingChess::gameStart()
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				if(now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(),temp1))
 				{
-
+					
 					pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
 					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE| 0x00);
@@ -219,11 +214,8 @@ void OperatingChess::gameStart()
 					isChoosed = 0;
 				}
 				
-				
-				
+				Board::CurrentBoard.WriteFile("test.txt");
 			}
-			
-			
 		}
 		else if (command == 27)//esc
 		{
@@ -234,7 +226,6 @@ void OperatingChess::gameStart()
 		command = _getch();
 	}
 }
-
 
 OperatingChess::~OperatingChess()
 {
