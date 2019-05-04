@@ -2,8 +2,10 @@
 #include "ChessWalking.h"
 #include "Board.h"
 #include "Menu.h"
+#include "Regret.h"
 #include <windows.h>
 #include <iostream>
+#include <sstream>
 
 OperatingChess::OperatingChess()
 {
@@ -15,6 +17,9 @@ OperatingChess::OperatingChess()
 
 void OperatingChess::gameStart()
 {
+	
+	//Regret clean;
+	//clean.cleanStoreFile();
 	
 	while (command != EOF)
 	{
@@ -108,6 +113,11 @@ void OperatingChess::gameStart()
 					pos.Y = tempY;
 					SetConsoleCursorPosition(hin, pos);
 					isChoosed = 0;
+
+					/*Regret temp;
+					temp.roundCount++;
+					temp.recordSteps();*/
+
 				}
 				
 				
@@ -118,10 +128,26 @@ void OperatingChess::gameStart()
 		}
 		else if (command == 27)//esc
 		{
+			Board temp1 = Board::CurrentBoard;
+			temp1.WriteFile("store.txt");
 			Menu temp;
-			
+			temp.printMenu();
 		}
 		
+		else if (command == ',')//<
+		{
+			/*Regret temp;
+			if (temp.roundCount > 1)
+			{
+				temp.readStore();
+			}*/
+		}
+		else if (command == '.')//>
+		{
+			//Regret temp;
+
+		}
+
 		command = _getch();
 	}
 }
