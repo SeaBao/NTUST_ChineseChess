@@ -11,6 +11,8 @@ private:
 	char command;
 	bool isChoosed;
 	int previousCursonX;
+	int CurrentCursonX;
+	int CurrentCursonY;
 	int previousCursonY;
 	HANDLE hin;
 	DWORD WriteWord;
@@ -18,7 +20,22 @@ private:
 	Chess previousChess;
 public:
 	OperatingChess();
-	
+	int GetPreviousCursonX()
+	{
+		return previousCursonX;
+	}
+	int GetPreviousCursonY()
+	{
+		return previousCursonY;
+	}
+	int GetCurrentCursonX()
+	{
+		return CurrentCursonX;
+	}
+	int GetCurrentCursonY()
+	{
+		return CurrentCursonY;
+	}
 	void gameStart();
 	~OperatingChess();
 };

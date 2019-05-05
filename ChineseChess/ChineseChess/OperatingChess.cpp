@@ -236,7 +236,8 @@ void OperatingChess::gameStart()
 				
 				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y,flag))
 				{
-				
+					CurrentCursonX = Board::ConvertToBoardPoint().x;
+					CurrentCursonY = Board::ConvertToBoardPoint().y;
 					if (temp3.GetID() != 0)//當前游標有棋子的話
 					{
 
