@@ -74,8 +74,32 @@ void LogPanel::AddLog(wchar_t ChessName, int fromX, int fromY, int toX, int toY,
 	}
 	SetConsoleTextAttribute(hOut, whiteText);
 	wcout << L"：";
+	wcout << ChessName << " ";
 
-	wcout << ChessName << " " << fromX << " " << fromY << " " << toX << " " << toY;
+	wchar_t digitArr[] = { L'１', L'２', L'３', L'４', L'５', L'６', L'７', L'８', L'９' };
+	wchar_t chineseArr[] = { L'九', L'八', L'七', L'六', L'五', L'四', L'三', L'二', L'一' };
+	if (toY == fromY) {
+		wcout << (Team ? digitArr[fromX] : chineseArr[fromX]) << L" 平 " << (Team ? digitArr[toX] : chineseArr[toX]);
+	}
+	else {
+		if (toY - fromY > 0) {
+			if (Team) {
+				wcout << digitArr[fromX] << L" 進 " << digitArr[abs(toY - fromY) - 1];
+			}
+			else {
+				wcout << chineseArr[fromX] << L" 退 " << chineseArr[8 - abs(toY - fromY) + 1];
+			}
+
+		}
+		else {
+			if (Team) {
+				wcout << digitArr[fromX] << L" 退 " << digitArr[abs(toY - fromY) - 1];
+			}
+			else {
+				wcout << chineseArr[fromX] << L" 進 " << chineseArr[8 - abs(toY - fromY) + 1];
+			}
+		}
+	}
 
 	SetCursorPosistion(cursorPos.X, cursorPos.Y);
 }

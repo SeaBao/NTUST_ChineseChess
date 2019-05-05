@@ -127,12 +127,12 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						}
 					}
 				}
-				if (hasAObstacleY == y && y != 5)
+				if (hasAObstacleY == y)
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
 				}
-				else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) && y != 5)
+				else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
@@ -164,12 +164,12 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						}
 					}
 				}
-				if (hasAObstacleX == x && y != 5)
+				if (hasAObstacleX == x)
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
 				}
-				else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY && y != 5)
+				else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
 				{
 
 					printText(y, x, text, pos, temp);
@@ -181,7 +181,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 5)
 	{
-		 if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2&& y != 5)
+		 if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2)
 			{
 			 if (x - previousCursonX == -2&& Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
 			 {
@@ -331,7 +331,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 							}
 						}
 					}
-					if (hasAObstacleY == y && y != 5)
+					if (hasAObstacleY == y)
 					{
 						printText(y, x, text, pos, temp);
 						return 1;
@@ -368,7 +368,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 							}
 						}
 					}
-					if (hasAObstacleX == x && y != 5)
+					if (hasAObstacleX == x)
 					{
 						printText(y, x, text, pos, temp);
 						return 1;
@@ -400,7 +400,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 			}
 			else return 0;
 		}
-		else if (  y >= 6 && x != -1 && y != -1)
+		else if (  y >= 5 && x != -1 && y != -1)
 		{
 			if (y == 6 && previousCursonY == 4)
 			{
@@ -475,7 +475,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						}
 					}
 				}
-				if (hasAObstacleY == y && y != 5)
+				if (hasAObstacleY == y)
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
@@ -512,7 +512,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						}
 					}
 				}
-				if (hasAObstacleX == x && y != 5)
+				if (hasAObstacleX == x)
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
@@ -529,7 +529,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 12)
 	{
-	if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2 && y != 5)
+	if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2)
 	{
 		if (x - previousCursonX == -2 && Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
 		{
@@ -678,7 +678,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						}
 					}
 				}
-				if (hasAObstacleY == y && y != 5)
+				if (hasAObstacleY == y)
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
@@ -715,7 +715,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						}
 					}
 				}
-				if (hasAObstacleX == x && y != 5)
+				if (hasAObstacleX == x)
 				{
 					printText(y, x, text, pos, temp);
 					return 1;
@@ -737,20 +737,9 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 14)
 	{
-		if ( y >= 6 && y <= 7)
+		if ( y <= 5 && x != -1 && y != -1)
 		{
-			if (abs(x - previousCursonX) != 0)return 0;
-			else if (y > previousCursonY)return 0;
-			else if (abs(y - previousCursonY) == 1)
-			{
-				printText(y, x, text, pos, temp);
-				return 1;
-			}
-			else return 0;
-		}
-		else if ( y <= 4 && x != -1 && y != -1)
-		{
-			if (y == 4 && previousCursonY == 6)
+			if (y == 5 && previousCursonY == 6)
 			{
 
 				printText(y, x, text, pos, temp);
@@ -777,7 +766,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		{
 			for (int x = 0; x <= 8; x++)
 			{
-				for (int y = 0; y <= 10; y++)
+				for (int y = 0; y <= 9; y++)
 				{
 					if ((x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 					{
@@ -791,7 +780,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		{
 			for (int x = 0; x <= 8; x++)
 			{
-				for (int y = 0; y <= 10; y++)
+				for (int y = 0; y <= 9; y++)
 				{
 					if ((x >= 3 && x <= 5) && (y >= 0) && (y <= 2) && (abs(x - previousCursonX) == 1 && abs(y - previousCursonY) == 1))
 					{
@@ -805,7 +794,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		{
 			for (int x = 0; x <= 8; x++)
 			{
-				for (int y = 0; y <= 10; y++)
+				for (int y = 0; y <= 9; y++)
 				{
 					if (Board::CurrentBoard[abs(y + previousCursonY) / 2][abs(x + previousCursonX) / 2].GetID() == 0 && x != -1 && y != -1 && (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2) && y < 5)
 					{
@@ -822,7 +811,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		{
 		for (int x = 0; x <= 8; x++)
 		{
-			for (int y = 0; y <= 10; y++)
+			for (int y = 0; y <= 9; y++)
 			{
 				if ((x != -1) && (y != -1))
 				{
@@ -914,7 +903,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		{
 			for (int x = 0; x <= 8; x++)
 			{
-				for (int y = 0; y <= 10; y++)
+				for (int y = 0; y <= 9; y++)
 				{
 					if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2 && y != 5)
 					{
@@ -997,7 +986,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		{
 			for (int x = 0; x <= 8; x++)
 			{
-				for (int y = 0; y <= 10; y++)
+				for (int y = 0; y <= 9; y++)
 				{
 				
 				

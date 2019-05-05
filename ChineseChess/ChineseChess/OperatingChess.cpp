@@ -10,8 +10,8 @@
 OperatingChess::OperatingChess()
 {
 	command = _getch();
-	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,10).X;
-	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,10).Y;
+	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,9).X;
+	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,9).Y;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
@@ -46,7 +46,7 @@ void OperatingChess::gameStart()
 		}
 		else if (command == 80)//down
 		{
-			if (Board::ConvertToBoardPoint().y != 10) {
+			if (Board::ConvertToBoardPoint().y != 9) {
 				pos.Y += 2;
 				SetConsoleCursorPosition(hin, pos);
 			}
@@ -184,7 +184,7 @@ void OperatingChess::gameStart()
 						{
 							if (currenty - previousCursonY > 0)
 							{
-								for (int i = previousCursonY + 1; i <= 10; i++)
+								for (int i = previousCursonY + 1; i <= 9; i++)
 								{
 									if (Board::CurrentBoard[i][currentx].GetID() != 0)
 									{
@@ -289,6 +289,7 @@ void OperatingChess::gameStart()
 						isChoosed = 0;
 					}
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
+					Board::CurrentBoard.WriteFile("debug.txt", "History");
 					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
 					Regret::roundCount++;
 				}

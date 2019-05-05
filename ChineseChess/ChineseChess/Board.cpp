@@ -11,9 +11,9 @@ int Board::ChessSteps = 0;
 
 Board::Board()
 {
-	chessMap = vector<vector<Chess>>(11, vector<Chess>(9, Chess(0, L'\0', false)));
+	chessMap = vector<vector<Chess>>(10, vector<Chess>(9, Chess(0, L'\0', false)));
 
-	for (int y = 0; y < 21; y++) {
+	for (int y = 0; y < 19; y++) {
 		vector<wstring> tempArr;
 		for (int x = 0; x < 33; x++) {
 			if (y == 0) {
@@ -27,7 +27,7 @@ Board::Board()
 					tempArr.push_back(L"═ ");
 				}
 			}
-			else if (y == 20) {
+			else if (y == 18) {
 				if (x == 0) {
 					tempArr.push_back(L"╚ ");
 				}
@@ -43,7 +43,7 @@ Board::Board()
 					tempArr.push_back(L"║ ");
 				}
 				else {
-					if (y == 9 || y == 10 || y == 11) {
+					if (y == 9) {
 						tempArr.push_back(L"  ");
 					}
 					else if (y % 2 == 0 && x != 1 && x != 31) {
@@ -51,7 +51,7 @@ Board::Board()
 							if (y == 8) {
 								tempArr.push_back(L"┴ ");
 							}
-							else if (y == 12) {
+							else if (y == 10) {
 								tempArr.push_back(L"┬ ");
 							}
 							else {
@@ -76,28 +76,28 @@ Board::Board()
 		boardMap.push_back(tempArr);
 	}
 
-	boardMap[10][5] = L"";
-	boardMap[10][6] = L"楚";
-	boardMap[10][7] = L"";
-	boardMap[10][9] = L"";
-	boardMap[10][10] = L"河";
-	boardMap[10][11] = L"";
-	boardMap[10][21] = L"";
-	boardMap[10][22] = L"漢";
-	boardMap[10][23] = L"";
-	boardMap[10][25] = L"";
-	boardMap[10][26] = L"界";
-	boardMap[10][27] = L"";
+	boardMap[9][5] = L"";
+	boardMap[9][6] = L"楚";
+	boardMap[9][7] = L"";
+	boardMap[9][9] = L"";
+	boardMap[9][10] = L"河";
+	boardMap[9][11] = L"";
+	boardMap[9][21] = L"";
+	boardMap[9][22] = L"漢";
+	boardMap[9][23] = L"";
+	boardMap[9][25] = L"";
+	boardMap[9][26] = L"界";
+	boardMap[9][27] = L"";
 
 	boardMap[1][14] = L"╲ ";
 	boardMap[1][18] = L"╱ ";
 	boardMap[3][14] = L"╱ ";
 	boardMap[3][18] = L"╲ ";
 
-	boardMap[17][14] = L"╲ ";
-	boardMap[17][18] = L"╱ ";
-	boardMap[19][14] = L"╱ ";
-	boardMap[19][18] = L"╲ ";
+	boardMap[15][14] = L"╲ ";
+	boardMap[15][18] = L"╱ ";
+	boardMap[17][14] = L"╱ ";
+	boardMap[17][18] = L"╲ ";
 }
 
 void Board::PrintMap()
@@ -120,7 +120,7 @@ void Board::PrintMap()
 	}
 
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
-	SetCursorPosistion(WindowWidth / 3, 23);
+	SetCursorPosistion(WindowWidth / 3, 21);
 	wcout << L"九  八  七  六  五  四  三  二  一";
 
 	for (size_t y = 0; y < chessMap.size(); y++) {

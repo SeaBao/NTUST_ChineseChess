@@ -29,7 +29,7 @@ public:
 	Chess& GetChessByPoint(int x, int y);
 	vector<ChessPos> SearchByChessName(int ID);
 private:
-	const int BoardWidth = 17, BoardHeight = 21, WindowWidth = 80, WindowHeight = 25;
+	const int BoardWidth = 17, BoardHeight = 19, WindowWidth = 80, WindowHeight = 25;
 	vector<vector<Chess>> chessMap;
 	vector<vector<wstring>> boardMap;
 };
