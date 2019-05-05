@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-	int WindowHeight = 24, WindowWidth = 80;
+	int WindowHeight = 22, WindowWidth = 80;
 	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
 	SetWindow(WindowWidth + 2, WindowHeight + 1);
