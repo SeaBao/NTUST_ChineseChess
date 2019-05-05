@@ -55,7 +55,7 @@ void OperatingChess::gameStart()
 			auto temp1 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
 			auto temp3 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
 			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
-
+			
 			if (isChoosed == 1 && previousCursonX == Board::ConvertToBoardPoint().x && previousCursonY == Board::ConvertToBoardPoint().y && temp1.GetID() != 0)
 			{
 				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -72,28 +72,51 @@ void OperatingChess::gameStart()
 
 				SetConsoleCursorPosition(hin, pos);
 				isChoosed = 0;
+				turn++;
 			}
 
 			else if (!isChoosed && temp1.GetID() != 0)
 			{
-				int tempX = pos.X;
-				int tempY = pos.Y;
-				previousChess = temp1;
-				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-				SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
-				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-				previousCursonX = Board::ConvertToBoardPoint().x;
-				previousCursonY = Board::ConvertToBoardPoint().y;
-				isChoosed = 1;
+				if (turn % 2 == 1 && temp1.GetTeam() == false)
+				{
+					int tempX = pos.X;
+					int tempY = pos.Y;
+					previousChess = temp1;
+					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
+					wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
+					previousCursonX = Board::ConvertToBoardPoint().x;
+					previousCursonY = Board::ConvertToBoardPoint().y;
+					isChoosed = 1;
 
-				now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
-				pos.X = tempX;
-				pos.Y = tempY;
+					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
+					pos.X = tempX;
+					pos.Y = tempY;
 
-				SetConsoleCursorPosition(hin, pos);
+					SetConsoleCursorPosition(hin, pos);
+					turn++;
+				}
+				else if (turn % 2 == 0 && temp1.GetTeam() == true)
+				{
+					int tempX = pos.X;
+					int tempY = pos.Y;
+					previousChess = temp1;
+					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
+					wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
+					previousCursonX = Board::ConvertToBoardPoint().x;
+					previousCursonY = Board::ConvertToBoardPoint().y;
+					isChoosed = 1;
+
+					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
+					pos.X = tempX;
+					pos.Y = tempY;
+
+					SetConsoleCursorPosition(hin, pos);
+					turn++;
+				}
+				
 			}
-
-
 			//走路
 			else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))
 			{
@@ -103,7 +126,6 @@ void OperatingChess::gameStart()
 				int powBarrierY;
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				int x = Board::ConvertToBoardPoint().x, y = Board::ConvertToBoardPoint().y, currentx = Board::ConvertToBoardPoint().x, currenty = Board::ConvertToBoardPoint().y;
-				
 					int flag = 0;
 					if (Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 6 || Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 13)
 					{
@@ -221,12 +243,6 @@ void OperatingChess::gameStart()
 						if (temp3.GetTeam() != temp1.GetTeam())//如果棋種不相同
 						{
 							ChessWalking temp;
-							
-
-								
-								
-							
-
 									Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x] = previousChess;
 									if ((previousChess.GetID() == 6 || previousChess.GetID() == 13) && Board::ConvertToBoardPoint().x == powBarrierX && Board::ConvertToBoardPoint().y == powBarrierY)
 									{
@@ -249,22 +265,10 @@ void OperatingChess::gameStart()
 										SetConsoleCursorPosition(hin, pos);
 										isChoosed = 0;
 
-									}
-									
-
-									
+									}								
 							}
 						
 						}
-
-
-
-
-
-
-					
-
-
 					else//當前游標沒棋子的話
 					{
 

@@ -7,6 +7,7 @@
 class OperatingChess
 {
 private:
+	int turn=1;
 	char command;
 	bool isChoosed;
 	int previousCursonX;
@@ -17,6 +18,7 @@ private:
 	Chess previousChess;
 public:
 	OperatingChess();
+	
 	void gameStart();
 	~OperatingChess();
 };
