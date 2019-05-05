@@ -181,52 +181,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 5)
 	{
-		 if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2)
-			{
-			 if (x - previousCursonX == -2&& Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
-			 {
-				 if ((y == 4 && previousCursonY == 6) || (y == 6 && previousCursonY == 4))
-				 {
-					 printText(y, x, text, pos, temp);
-					 return 1;
-				 }
-			 }
-			 else if (x - previousCursonX == 2 && Board::CurrentBoard[previousCursonY][previousCursonX + 1].GetID() == 0)
-			 {
-				 if ((y == 4 && previousCursonY == 6) || (y == 6 && previousCursonY == 4))
-				 {
-					 printText(y, x, text, pos, temp);
-					 return 1;
-				 }
-			 }
-			 else return 0;
-				
-			}
-		else if (abs(x - previousCursonX) == 1 && abs(y - previousCursonY) == 3)
-		{
-			 if ((y == 3 && previousCursonY == 6) && Board::CurrentBoard[previousCursonY - 2][previousCursonX].GetID() == 0)
-			 {
-				 printText(y, x, text, pos, temp);
-				 return 1;
-			 }
-			 else if ((y == 6 && previousCursonY == 3) && Board::CurrentBoard[previousCursonY + 1][previousCursonX].GetID() == 0)
-			 {
-				 printText(y, x, text, pos, temp);
-				 return 1;
-			 }
-			 else if ((y == 7 && previousCursonY == 4) && Board::CurrentBoard[previousCursonY + 2][previousCursonX].GetID() == 0)
-			 {
-				 printText(y, x, text, pos, temp);
-				 return 1;
-			 }
-			 else if ((y == 4 && previousCursonY == 7) && Board::CurrentBoard[previousCursonY - 1][previousCursonX].GetID() == 0)
-			 {
-				 printText(y, x, text, pos, temp);
-				 return 1;
-			 }
-			 else return 0;
-			}
-		else if ( x != -1 && y != -1 && (abs(x - previousCursonX) + abs(y - previousCursonY) == 3) && abs(x - previousCursonX) != 0 && abs(y - previousCursonY) != 0&&y!=5 &&((y<5&&previousCursonY<5)||(y>5)&&previousCursonY>5))                                          
+		if ( x != -1 && y != -1 && (abs(x - previousCursonX) + abs(y - previousCursonY) == 3) && abs(x - previousCursonX) != 0 && abs(y - previousCursonY) != 0)                                          
 		{
 			if (x - previousCursonX == 2)
 			{
@@ -529,52 +484,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 12)
 	{
-	if (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2)
-	{
-		if (x - previousCursonX == -2 && Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
-		{
-			if ((y == 4 && previousCursonY == 6) || (y == 6 && previousCursonY == 4))
-			{
-				printText(y, x, text, pos, temp);
-				return 1;
-			}
-		}
-		else if (x - previousCursonX == 2 && Board::CurrentBoard[previousCursonY][previousCursonX + 1].GetID() == 0)
-		{
-			if ((y == 4 && previousCursonY == 6) || (y == 6 && previousCursonY == 4))
-			{
-				printText(y, x, text, pos, temp);
-				return 1;
-			}
-		}
-		else return 0;
-
-	}
-	else if (abs(x - previousCursonX) == 1 && abs(y - previousCursonY) == 3)
-	{
-		if ((y == 3 && previousCursonY == 6) && Board::CurrentBoard[previousCursonY - 2][previousCursonX].GetID() == 0)
-		{
-			printText(y, x, text, pos, temp);
-			return 1;
-		}
-		else if ((y == 6 && previousCursonY == 3) && Board::CurrentBoard[previousCursonY + 1][previousCursonX].GetID() == 0)
-		{
-			printText(y, x, text, pos, temp);
-			return 1;
-		}
-		else if ((y == 7 && previousCursonY == 4) && Board::CurrentBoard[previousCursonY + 2][previousCursonX].GetID() == 0)
-		{
-			printText(y, x, text, pos, temp);
-			return 1;
-		}
-		else if ((y == 4 && previousCursonY == 7) && Board::CurrentBoard[previousCursonY - 1][previousCursonX].GetID() == 0)
-		{
-			printText(y, x, text, pos, temp);
-			return 1;
-		}
-		else return 0;
-	}
-	else if (Board::CurrentBoard[y][x].GetID() == 0 && x != -1 && y != -1 && (abs(x - previousCursonX) + abs(y - previousCursonY) == 3) && abs(x - previousCursonX) != 0 && abs(y - previousCursonY) != 0 && y != 5 && ((y < 5 && previousCursonY < 5) || (y > 5) && previousCursonY > 5))
+	if (x != -1 && y != -1 && (abs(x - previousCursonX) + abs(y - previousCursonY) == 3) && abs(x - previousCursonX) != 0 && abs(y - previousCursonY) != 0)
 	{
 		if (x - previousCursonX == 2)
 		{
@@ -617,7 +527,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 		}
 		else if (y - previousCursonY == -2)
 		{
-			if (Board::CurrentBoard[previousCursonY - 1][previousCursonX ].GetID() == 0)
+			if (Board::CurrentBoard[previousCursonY - 1][previousCursonX].GetID() == 0)
 			{
 
 
@@ -632,6 +542,10 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 
 	else return 0;
+
+	
+
+
 	}
 	else if (id == 13)
 	{
