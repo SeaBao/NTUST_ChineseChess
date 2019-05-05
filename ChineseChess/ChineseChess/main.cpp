@@ -58,8 +58,8 @@ int main() {
 	}
 
 	system("del /Q History\\*.txt > nul 2> nul");
+	LogPanel::CurrentPanel.PrintPanel();
 	Board::CurrentBoard.ReadFile("Board.txt");
-	LogPanel panel;
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 10).X, Board::CurrentBoard.ConvertToConsolePoint(4, 10).Y);
 	OperatingChess start;
 	start.gameStart();

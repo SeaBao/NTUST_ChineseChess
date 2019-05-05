@@ -2,6 +2,7 @@
 #include "ChessWalking.h"
 #include "Board.h"
 #include "Menu.h"
+#include "LogPanel.h"
 #include <windows.h>
 #include <iostream>
 
@@ -238,6 +239,7 @@ void OperatingChess::gameStart()
 				{
 					CurrentCursonX = Board::ConvertToBoardPoint().x;
 					CurrentCursonY = Board::ConvertToBoardPoint().y;
+
 					if (temp3.GetID() != 0)//當前游標有棋子的話
 					{
 
@@ -286,6 +288,7 @@ void OperatingChess::gameStart()
 						isChoosed = 0;
 					}
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
+					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
 				}
 				
 			}
