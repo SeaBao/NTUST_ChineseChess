@@ -15,13 +15,14 @@ public:
 	} ChessPos;
 
 	Board();
+	static int ChessSteps;
 	static Board CurrentBoard;
 	static POINT ConvertToBoardPoint();
 	static COORD ConvertToConsolePoint(int x, int y);
 
 	void PrintMap();
 	void ReadFile(string path);
-	void WriteFile(string path);
+	void WriteFile(string FileName, string FolderName);
 	wstring GetGraphicStr(int x, int y);
 	
 	vector<Chess>& operator[](int row);

@@ -213,8 +213,9 @@ void OperatingChess::gameStart()
 									isChoosed = 0;
 								
 
-
+									
 							}
+						
 						}
 
 
@@ -240,15 +241,9 @@ void OperatingChess::gameStart()
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
 					}
-
+					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
 				}
-
-
-
-
-
-
-
+				
 			}
 		}
 		else if (command == 27)//esc

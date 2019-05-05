@@ -7,6 +7,7 @@
 #include <fstream>
 
 Board Board::CurrentBoard = Board();
+int Board::ChessSteps = 0;
 
 Board::Board()
 {
@@ -133,8 +134,6 @@ void Board::PrintMap()
 			wcout << chessMap[y][x].GetText();
 		}
 	}
-
-	
 	SetCursorPosistion(cursorPos.X, cursorPos.Y);
 }
 
@@ -161,11 +160,10 @@ void Board::ReadFile(string path)
 	PrintMap();
 }
 
-void Board::WriteFile(string path)
+void Board::WriteFile(string FileName, string FolderName)
 {
-	ofstream outStream;
-	outStream.open(path);
-
+	CreateDirectory(FolderName.c_str(), NULL);
+	ofstream outStream(FolderName + "/" + FileName);
 	if (outStream.is_open()) {
 		stringstream ss;
 		for (size_t y = 0; y < chessMap.size(); y++) {

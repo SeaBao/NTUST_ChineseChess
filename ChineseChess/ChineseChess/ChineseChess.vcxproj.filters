@@ -39,6 +39,9 @@
     <ClCompile Include="regret.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="LogPanel.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
@@ -60,6 +63,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="regret.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="LogPanel.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
