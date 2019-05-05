@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 OperatingChess::OperatingChess()
 {
@@ -19,8 +20,8 @@ OperatingChess::OperatingChess()
 void OperatingChess::gameStart()
 {
 	
-	//Regret clean;
-	//clean.cleanStoreFile();
+	Regret clean;
+	clean.cleanStoreFile();
 	
 	while (command != EOF)
 	{
@@ -223,9 +224,9 @@ void OperatingChess::gameStart()
 					SetConsoleCursorPosition(hin, pos);
 					isChoosed = 0;
 
-					/*Regret temp;
+					Regret temp;
 					temp.roundCount++;
-					temp.recordSteps();*/
+					temp.recordSteps();
 
 				}
 				
@@ -245,16 +246,16 @@ void OperatingChess::gameStart()
 		
 		else if (command == ',')//<
 		{
-			/*Regret temp;
+			Regret temp;
 			if (temp.roundCount > 1)
 			{
-				temp.readStore();
-			}*/
+				temp.readLastStore();
+			}
 		}
 		else if (command == '.')//>
 		{
-			//Regret temp;
-
+			Regret temp;
+			temp.readNextStore();
 		}
 
 		command = _getch();

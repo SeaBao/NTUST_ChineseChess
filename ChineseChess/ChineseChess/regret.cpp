@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-/*int Regret::roundCount = 1;
+int Regret::roundCount = 1;
 
 void Regret::recordSteps()
 {
@@ -15,7 +15,7 @@ void Regret::recordSteps()
 	temp.WriteFile(s.str());
 }
 
-void Regret::readStore()
+void Regret::readLastStore()
 {
 	Board temp;
 	int count = roundCount - 1;
@@ -23,6 +23,21 @@ void Regret::readStore()
 	ostringstream s;
 	s << "record" << count << ".txt";
 	Board::CurrentBoard.ReadFile(s.str());
+}
+
+void Regret::readNextStore()
+{
+	Board temp;
+	int count = roundCount + 1;
+	ostringstream s;
+	s << "record" << count << ".txt";
+	ifstream in;
+	in.open(s.str());
+	if (in.is_open())
+	{
+		roundCount++;
+		Board::CurrentBoard.ReadFile(s.str());
+	}
 }
 
 void Regret::cleanStoreFile()
@@ -35,13 +50,12 @@ void Regret::cleanStoreFile()
 	while (file.is_open())
 	{
 		string name = s.str();
-		system("pause");
+		file.close();
 		const char* cstr = name.c_str();
-		DeleteFile("record2.txt");
+		remove(cstr);
 		s.str("");
 		temp++;
 		s << "record" << temp << ".txt";
-		cout << s.str() << endl;
 		file.open(s.str());
 		if (!file.is_open())
 		{
@@ -50,7 +64,9 @@ void Regret::cleanStoreFile()
 	}
 }
 
+
+
 Regret::~Regret()
 {
 
-}*/
+}

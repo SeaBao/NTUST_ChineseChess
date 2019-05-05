@@ -120,9 +120,10 @@ void Menu::EnterOne()
 void Menu::EnterTwo()
 {
 	Board temp;
-	temp.ReadFile("Board.txt");
-	//Regret clean;
-	//clean.cleanStoreFile();
+	Board::CurrentBoard.ReadFile("Board.txt");
+	temp.WriteFile("store.txt");
+	Regret clean;
+	clean.cleanStoreFile();
 }
 
 void Menu::EnterThree()
