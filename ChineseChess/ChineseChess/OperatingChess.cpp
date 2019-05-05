@@ -59,7 +59,15 @@ void OperatingChess::gameStart()
 			if (isChoosed == 1 && previousCursonX == Board::ConvertToBoardPoint().x && previousCursonY == Board::ConvertToBoardPoint().y && temp1.GetID() != 0)
 			{
 				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-				SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
+
+				if (temp1.GetTeam()) {
+					SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+				}
+				else {
+
+					SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+				}
+
 				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
 
 				SetConsoleCursorPosition(hin, pos);
