@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include "Board.h"
+#include "regret.h"
 
 
 void Menu::printMenu()
@@ -95,6 +96,7 @@ void Menu::printMenu()
 			else if (pos.Y == 9)
 			{
 				EnterTwo();
+				break;
 			}
 			else if (pos.Y == 11)
 			{
@@ -111,12 +113,16 @@ void Menu::printMenu()
 
 void Menu::EnterOne()
 {
-
+	Board temp;
+	Board::CurrentBoard.ReadFile("History\store.txt");
 }
 
 void Menu::EnterTwo()
 {
-
+	Board::CurrentBoard.ReadFile("Board.txt");
+	system("del /Q History\\*.txt > nul 2> nul");
+	Board::ChessSteps = 0;
+	Regret::roundCount = 0;
 }
 
 void Menu::EnterThree()
@@ -126,7 +132,7 @@ void Menu::EnterThree()
 
 void Menu::EnterFour()
 {
-
+	exit(1);
 }
 
 void Menu::printWord(int y)
@@ -143,7 +149,7 @@ void Menu::printWord(int y)
 		SetConsoleCursorPosition(hOut, pos);
 		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 		wcout << L"重新開始";
-		pos.X = 43, pos.Y = 7;
+		pos.X = 42, pos.Y = 7;
 		SetConsoleCursorPosition(hin, pos);
 	}
 	else if (pos.Y == 9)
@@ -157,7 +163,7 @@ void Menu::printWord(int y)
 		pos.Y = 11, pos.X = 43;
 		SetConsoleCursorPosition(hOut, pos);
 		wcout << L"回主選單";
-		pos.Y = 9, pos.X = 43;
+		pos.Y = 9, pos.X = 42;
 		SetConsoleCursorPosition(hOut, pos);
 	}
 	else if (pos.Y == 11)
@@ -171,7 +177,7 @@ void Menu::printWord(int y)
 		pos.Y = 13, pos.X = 43;
 		SetConsoleCursorPosition(hOut, pos);
 		wcout << L"離開遊戲";
-		pos.Y = 11, pos.X = 43;
+		pos.Y = 11, pos.X = 42;
 		SetConsoleCursorPosition(hOut, pos);
 	}
 	else if (pos.Y == 13)
@@ -181,8 +187,8 @@ void Menu::printWord(int y)
 		pos.Y = 11, pos.X = 43;
 		SetConsoleCursorPosition(hOut, pos);
 		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-		wcout << L"重新開始";
-		pos.X = 43, pos.Y = 13;
+		wcout << L"回主選單";
+		pos.X = 42, pos.Y = 13;
 		SetConsoleCursorPosition(hin, pos);
 	}
 }

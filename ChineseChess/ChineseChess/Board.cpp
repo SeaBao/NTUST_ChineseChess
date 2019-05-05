@@ -175,9 +175,16 @@ void Board::WriteFile(string FileName, string FolderName)
 		stringstream ss;
 		for (size_t y = 0; y < chessMap.size(); y++) {
 			for (size_t x = 0; x < chessMap[y].size(); x++) {
-				ss << chessMap[y][x].GetID() << " ";
+				ss << chessMap[y][x].GetID();
+				if (x != chessMap[y].size() - 1)
+				{
+					ss << " ";
+				}
 			}
-			ss << endl;
+			if (y != chessMap.size() - 1)
+			{
+				ss << endl;
+			}
 		}
 
 		outStream << ss.str();

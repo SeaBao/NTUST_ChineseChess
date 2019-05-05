@@ -5,6 +5,7 @@
 #include "LogPanel.h"
 #include <windows.h>
 #include <iostream>
+#include "regret.h"
 
 OperatingChess::OperatingChess()
 {
@@ -289,14 +290,31 @@ void OperatingChess::gameStart()
 					}
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
 					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
+					Regret::roundCount++;
 				}
 				
 			}
 		}
 		else if (command == 27)//esc
 		{
-		Menu temp;
+			Menu temp;
+			Board::CurrentBoard.WriteFile("store.txt", "History");
+			temp.printMenu();
 
+		}
+
+		else if (command == ',')//<
+		{
+			Regret temp;
+			if (Regret::roundCount >= 1)
+			{
+				temp.readLastStore();
+			}
+		}
+		else if (command == '.')//>
+		{
+			Regret temp;
+			temp.readNextStore();
 		}
 
 				command = _getch();
