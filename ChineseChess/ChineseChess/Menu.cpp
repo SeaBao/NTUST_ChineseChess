@@ -114,16 +114,15 @@ void Menu::printMenu()
 void Menu::EnterOne()
 {
 	Board temp;
-	temp.ReadFile("store.txt");
+	Board::CurrentBoard.ReadFile("History\store.txt");
 }
 
 void Menu::EnterTwo()
 {
-	Board temp;
 	Board::CurrentBoard.ReadFile("Board.txt");
-	temp.WriteFile("store.txt");
-	Regret clean;
-	clean.cleanStoreFile();
+	system("del /Q History\\*.txt > nul 2> nul");
+	Board::ChessSteps = 0;
+	Regret::roundCount = 0;
 }
 
 void Menu::EnterThree()

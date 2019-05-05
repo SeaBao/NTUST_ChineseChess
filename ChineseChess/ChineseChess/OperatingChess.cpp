@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include <windows.h>
 #include <iostream>
+#include "regret.h"
 
 OperatingChess::OperatingChess()
 {
@@ -281,14 +282,31 @@ void OperatingChess::gameStart()
 						isChoosed = 0;
 					}
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
+					Regret::roundCount++;
 				}
 				
 			}
 		}
 		else if (command == 27)//esc
 		{
-		Menu temp;
+			Menu temp;
+			Board::CurrentBoard.WriteFile("store.txt", "History");
+			temp.printMenu();
 
+		}
+
+		else if (command == ',')//<
+		{
+			Regret temp;
+			if (Regret::roundCount >= 1)
+			{
+				temp.readLastStore();
+			}
+		}
+		else if (command == '.')//>
+		{
+			Regret temp;
+			temp.readNextStore();
 		}
 
 				command = _getch();
