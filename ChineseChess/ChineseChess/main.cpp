@@ -13,10 +13,6 @@ int main() {
 	SetWindow(WindowWidth + 1, WindowHeight + 1);
 
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO	cursorInfo;
-	GetConsoleCursorInfo(hOut, &cursorInfo);
-	cursorInfo.bVisible = true;
-	SetConsoleCursorInfo(hOut, &cursorInfo);
 
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);
@@ -60,6 +56,7 @@ int main() {
 		}
 	}
 
+	system("del /Q History\\*.txt > nul 2> nul");
 	Board::CurrentBoard.ReadFile("Board.txt");
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 10).X, Board::CurrentBoard.ConvertToConsolePoint(4, 10).Y);
 	OperatingChess start;

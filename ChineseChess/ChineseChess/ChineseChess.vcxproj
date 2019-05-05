@@ -118,6 +118,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Chess.cpp" />
     <ClCompile Include="ChessWalking.cpp" />
+    <ClCompile Include="LogPanel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="OperatingChess.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Chess.h" />
     <ClInclude Include="ChessWalking.h" />
+    <ClInclude Include="LogPanel.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="OperatingChess.h" />
     <ClInclude Include="regret.h" />
