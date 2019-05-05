@@ -35,9 +35,16 @@ void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 {
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	HANDLE hin;
-	SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
 	Board::CurrentBoard[y][x] = temp;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	if (temp.GetTeam()) {
+		SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+	}
+	else {
+		SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+	}
+
 	SetConsoleCursorPosition(hin, post);
 	wcout << text;
 }

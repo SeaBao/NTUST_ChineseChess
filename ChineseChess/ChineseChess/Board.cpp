@@ -123,13 +123,20 @@ void Board::PrintMap()
 	SetCursorPosistion(WindowWidth / 3, 23);
 	wcout << L"九  八  七  六  五  四  三  二  一";
 
-	SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
 	for (size_t y = 0; y < chessMap.size(); y++) {
 		for (size_t x = 0; x < chessMap[y].size(); x++) {
 			if (chessMap[y][x].GetID() == 0) {
 				continue;
 			}
 			
+			if (chessMap[y][x].GetTeam()) {
+				SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+			}
+			else {
+				
+				SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+			}
+
 			SetCursorPosistion(WindowWidth / 3 + 4 * x, 2 + 2 * y);
 			wcout << chessMap[y][x].GetText();
 		}

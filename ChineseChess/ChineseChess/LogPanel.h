@@ -3,6 +3,5 @@ class LogPanel
 {
 public:
 	LogPanel();
-	~LogPanel();
 };
 
