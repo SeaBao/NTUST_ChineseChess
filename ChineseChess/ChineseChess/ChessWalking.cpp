@@ -422,11 +422,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	{
 		if ( (x >= 3 && x <= 5) && (y != -1) && y <= 10 && y >= 8 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 		{
-			HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-			SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
-			Board::CurrentBoard[y][x] = temp;
-			SetConsoleCursorPosition(hin, pos);
-			wcout << text;
+			printText(y, x, text, pos, temp);
 			return 1;
 		}
 		else return 0;
