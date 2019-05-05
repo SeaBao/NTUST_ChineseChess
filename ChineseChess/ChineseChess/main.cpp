@@ -1,3 +1,5 @@
+#define _WIN32_WINNT 0x0500
+
 #include <iostream>
 #include <Windows.h>
 #include "OperatingChess.h"
@@ -9,11 +11,14 @@ using namespace std;
 
 int main() {
 	int WindowHeight = 22, WindowWidth = 80;
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	HWND consoleWindow = GetConsoleWindow();
+
 	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
 	SetWindow(WindowWidth + 2, WindowHeight + 1);
-
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+	ShowScrollBar(consoleWindow, SB_BOTH, FALSE);
 
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);

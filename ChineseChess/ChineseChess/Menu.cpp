@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Utility.h"
 #include "Board.h"
 #include "regret.h"
 
@@ -9,6 +10,7 @@ void Menu::printMenu()
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	pos.X = 38, pos.Y = 6;
+	ShowConsoleCursor(false);
 	SetConsoleCursorPosition(hOut, pos);
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 	SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
@@ -115,6 +117,8 @@ void Menu::EnterOne()
 {
 	Board temp;
 	Board::CurrentBoard.ReadFile("History\store.txt");
+	SetCursorPosistion(Board::ConvertToConsolePoint(4, 9).X, Board::ConvertToConsolePoint(4, 9).Y);
+	ShowConsoleCursor(true);
 }
 
 void Menu::EnterTwo()
