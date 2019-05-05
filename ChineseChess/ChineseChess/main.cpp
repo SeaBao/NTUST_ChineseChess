@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include "OperatingChess.h"
+#include "LogPanel.h"
 #include "ChessWalking.h"
 #include "Board.h"
 #include "Utility.h"
@@ -10,7 +11,7 @@ int main() {
 	int WindowHeight = 24, WindowWidth = 80;
 	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
-	SetWindow(WindowWidth + 1, WindowHeight + 1);
+	SetWindow(WindowWidth + 2, WindowHeight + 1);
 
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -18,7 +19,7 @@ int main() {
 	cfi.cbSize = sizeof(cfi);
 	cfi.nFont = 0;
 	cfi.dwFontSize.X = 0;
-	cfi.dwFontSize.Y = 30;
+	cfi.dwFontSize.Y = 28;
 	cfi.FontFamily = FF_DONTCARE;
 	cfi.FontWeight = FW_NORMAL;
 	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
@@ -58,6 +59,7 @@ int main() {
 
 	system("del /Q History\\*.txt > nul 2> nul");
 	Board::CurrentBoard.ReadFile("Board.txt");
+	LogPanel panel;
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 10).X, Board::CurrentBoard.ConvertToConsolePoint(4, 10).Y);
 	OperatingChess start;
 	start.gameStart();
