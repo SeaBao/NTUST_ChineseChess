@@ -61,6 +61,7 @@ int main() {
 	}
 
 	Board::CurrentBoard.ReadFile("Board.txt");
+	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 10).X, Board::CurrentBoard.ConvertToConsolePoint(4, 10).Y);
 	OperatingChess start;
 	start.gameStart();
 	return 0;

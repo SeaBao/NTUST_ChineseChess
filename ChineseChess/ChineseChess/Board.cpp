@@ -75,12 +75,18 @@ Board::Board()
 		boardMap.push_back(tempArr);
 	}
 
-	/*boardMap[10][6] = L"楚";
-	boardMap[10][7] = L"  ";
-	boardMap[10][8] = L"河";
-	boardMap[10][19] = L"漢";
-	boardMap[10][20] = L"  ";
-	boardMap[10][21] = L"界";*/
+	boardMap[10][5] = L"";
+	boardMap[10][6] = L"楚";
+	boardMap[10][7] = L"";
+	boardMap[10][9] = L"";
+	boardMap[10][10] = L"河";
+	boardMap[10][11] = L"";
+	boardMap[10][21] = L"";
+	boardMap[10][22] = L"漢";
+	boardMap[10][23] = L"";
+	boardMap[10][25] = L"";
+	boardMap[10][26] = L"界";
+	boardMap[10][27] = L"";
 
 	boardMap[1][14] = L"╲ ";
 	boardMap[1][18] = L"╱ ";
@@ -96,6 +102,10 @@ Board::Board()
 void Board::PrintMap()
 {
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(hOut, &csbi);
+	auto cursorPos = csbi.dwCursorPosition;
+
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x5d);
 	SetCursorPosistion(WindowWidth / 3, 1);
 	wcout << L"１  ２  ３  ４  ５  ６  ７  ８  ９";
@@ -123,6 +133,9 @@ void Board::PrintMap()
 			wcout << chessMap[y][x].GetText();
 		}
 	}
+
+	
+	SetCursorPosistion(cursorPos.X, cursorPos.Y);
 }
 
 void Board::ReadFile(string path)
@@ -172,6 +185,11 @@ void Board::WriteFile(string path)
 		outStream << ss.str();
 		outStream.close();
 	}
+}
+
+wstring Board::GetGraphicStr(int x, int y)
+{
+	return boardMap[y * 2][x * 4];
 }
 
 COORD Board::ConvertToConsolePoint(int x, int y)

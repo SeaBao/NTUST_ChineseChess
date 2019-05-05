@@ -10,7 +10,8 @@
 OperatingChess::OperatingChess()
 {
 	command = _getch();
-	pos.X = 42, pos.Y = 2; // 將位置設在 (5,5) 之地方。
+	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,10).X;
+	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,10).Y;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
@@ -69,28 +70,134 @@ void OperatingChess::gameStart()
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
 					}
-					else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))//旗子碰撞 林志浩
+					else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))
 					{
-						 cout << "?";
-						 pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
-						 HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-						 SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
-						 SetConsoleCursorPosition(hin, pos);
-						 //wcout << "";
+						 ChessWalking temp;
+						 int x= Board::ConvertToBoardPoint().x, y= Board::ConvertToBoardPoint().y, currentx=Board::ConvertToBoardPoint().x,currenty= Board::ConvertToBoardPoint().y;
+						 if (temp1.GetTeam() != previousChess.GetTeam())
+						 {
+							 int flag = 0;
+							 if (Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 6 || Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 13)
+							 {
+								 int obstacleFirst = 0;
+								 if (currenty == previousCursonY)
+								 {
+									 if (currentx - previousCursonX > 0)
+									 {
+										 for (int i = previousCursonX+1; i < 10; i++)
+										 {
+											 if (Board::CurrentBoard[currenty][i].GetID() != 0)
+											 {
+												 if (obstacleFirst == 0)obstacleFirst = 1;
+												 else
+												 {
+													 x = i;
+													 y = currenty;
+													 break;
+												 }
+											 }
+										 }
+									 }
+									 else if (currentx - previousCursonX < 0)
+									 {
+										 for (int i = previousCursonX-1; i >0; i--)
+										 {
+											 if (Board::CurrentBoard[currenty][i].GetID() != 0)
+											 {
+												 if (obstacleFirst == 0)obstacleFirst = 1;
+												 else
+												 {
+													 x = i;
+													 y = currenty;
+													 break;
+												 }
+											 }
+										 }
+									 }
+								 }
+								 else if (currentx == previousCursonX)
+								 {
+									 if (currenty - previousCursonY > 0)
+									 {
+										 for (int i = previousCursonY + 1; i <10; i++)
+										 {
+											 if (Board::CurrentBoard[i][currentx].GetID() != 0)
+											 {
+												 if (obstacleFirst == 0)obstacleFirst = 1;
+												 else
+												 {
+													 x = currentx;
+													 y = i;
+													 break;
+												 }
+											 }
+										 }
+									 }
+									 else if (currenty - previousCursonY < 0)
+									 {
+										 for (int i = previousCursonY - 1; i >0; i--)
+										 {
+											 if (Board::CurrentBoard[i][currentx].GetID() != 0)
+											 {
+												
+												 if (obstacleFirst == 0)obstacleFirst = 1;
+												 else
+												 {
+													 x = currentx;
+													 y = i;
+													 break;
+												 }
+											 }
+										 }
+									 }
+								 }
+							 }
+							 if ((Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 6 || Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 13) && (x != Board::ConvertToBoardPoint().x || y != Board::ConvertToBoardPoint().y))
+							 {
+
+							 }
+							 else
+
+							 {
+								 Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x] = previousChess;
+								 int tempX = pos.X;
+								 int tempY = pos.Y;
+								 temp.printText(Board::ConvertToBoardPoint().y, Board::ConvertToBoardPoint().x, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), pos, previousChess);
+								 pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
+								 Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
+								 HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+								 SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+								 SetConsoleCursorPosition(hin, pos);
+
+								 wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
+								 pos.X = tempX;
+								 pos.Y = tempY;
+								 SetConsoleCursorPosition(hin, pos);
+								 isChoosed = 0;
+							 }
+							 
+						 }
+					    
+
+						 
 						
-						 isChoosed = 0;
 					}
 					else if (!isChoosed)
 					{
+						int tempX = pos.X;
+						int tempY = pos.Y;
+						previousChess = temp1;
 						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 						SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
 						wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-
 						previousCursonX = Board::ConvertToBoardPoint().x;
 						previousCursonY = Board::ConvertToBoardPoint().y;
 						isChoosed = 1;
 						
-						//now.printWhereCanGO();
+						now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(),previousCursonX,previousCursonY);
+						pos.X = tempX;
+						pos.Y = tempY;
+				
 						SetConsoleCursorPosition(hin, pos);
 					}
 
@@ -103,11 +210,13 @@ void OperatingChess::gameStart()
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				if(now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(),temp1))
 				{
+
 					pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
 					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x00);
+					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE| 0x00);
 					SetConsoleCursorPosition(hin, pos);
-					wcout << "  ";
+				
+					wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
 					Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
 					pos.X = tempX;
 					pos.Y = tempY;

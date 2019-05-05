@@ -22,6 +22,7 @@ public:
 	void PrintMap();
 	void ReadFile(string path);
 	void WriteFile(string path);
+	wstring GetGraphicStr(int x, int y);
 	
 	vector<Chess>& operator[](int row);
 	Chess& GetChessByPoint(int x, int y);
