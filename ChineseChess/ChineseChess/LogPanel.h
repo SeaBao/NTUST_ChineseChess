@@ -6,6 +6,7 @@ public:
 	static LogPanel CurrentPanel;
 
 	void PrintPanel();
+	void ClearPanel();
 	void AddLog(wchar_t ChessName, int fromX, int fromY, int toX, int toY, bool Team);
 private:
 	const int _PanelHeight = 20, _PanelWidth = 22;

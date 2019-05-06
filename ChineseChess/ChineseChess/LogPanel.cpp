@@ -52,13 +52,33 @@ void LogPanel::PrintPanel()
 	wcout << L" ¾Ô ªp Åã ¥Ü";
 }
 
+void LogPanel::ClearPanel()
+{
+	auto hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	auto cursorPos = GetCursorPosition();
+
+	SetConsoleTextAttribute(hOut, 0);
+	for (int y = 0; y < _PanelHeight - 1; y++) {
+		SetCursorPosistion(5, 2 + y);
+		wcout << "                  ";
+	}
+
+	SetCursorPosistion(cursorPos.X, cursorPos.Y);
+}
+
 void LogPanel::AddLog(wchar_t ChessName, int fromX, int fromY, int toX, int toY, bool Team)
 {
 	auto hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	auto cursorPos = GetCursorPosition();
 	WORD whiteText = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
-	
-	SetCursorPosistion(5, 2 + _LogIndex++);
+
+	SetCursorPosistion(5, 2 + _LogIndex % (_PanelHeight - 1));
+
+	if (_LogIndex % (_PanelHeight - 1) == 0) {
+		ClearPanel();
+	}
+
+	_LogIndex++;
 
 	// Doing printing stuffs
 	SetConsoleTextAttribute(hOut, whiteText);

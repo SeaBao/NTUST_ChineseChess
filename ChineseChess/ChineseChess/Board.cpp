@@ -167,9 +167,12 @@ void Board::ReadFile(string path)
 	PrintMap();
 }
 
-void Board::WriteFile(string FileName, string FolderName)
+void Board::WriteFile(string FileName, string FolderName = "")
 {
-	CreateDirectory(FolderName.c_str(), NULL);
+	if (FolderName != "") {
+		CreateDirectory(FolderName.c_str(), NULL);
+	}
+	
 	ofstream outStream(FolderName + "/" + FileName);
 	if (outStream.is_open()) {
 		stringstream ss;
