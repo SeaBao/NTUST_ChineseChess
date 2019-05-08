@@ -71,7 +71,7 @@ void OperatingChess::gameStart()
 				}
 
 				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-
+				Board::CurrentBoard.ReadFile("History\store.txt");
 				SetConsoleCursorPosition(hin, pos);
 				isChoosed = 0;
 				turn++;
@@ -109,8 +109,9 @@ void OperatingChess::gameStart()
 					previousCursonX = Board::ConvertToBoardPoint().x;
 					previousCursonY = Board::ConvertToBoardPoint().y;
 					isChoosed = 1;
-
+					
 					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
+					
 					pos.X = tempX;
 					pos.Y = tempY;
 
