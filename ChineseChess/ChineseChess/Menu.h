@@ -3,6 +3,8 @@
 #include <conio.h>
 #include <Windows.h>
 #include "Board.h"
+#include "ShowD.h"
+#include "LogPanel.h"
 using namespace std;
 
 class Menu

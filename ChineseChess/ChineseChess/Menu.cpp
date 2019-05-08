@@ -127,6 +127,13 @@ void Menu::EnterTwo()
 	system("del /Q History\\*.txt > nul 2> nul");
 	Board::ChessSteps = 0;
 	Regret::roundCount = 0;
+	ShowD::roundCount = 1;
+	ShowD temp;
+	temp.showTurn();
+	LogPanel clean;
+	clean.ClearPanel();
+	SetCursorPosistion(Board::ConvertToConsolePoint(4, 9).X, Board::ConvertToConsolePoint(4, 9).Y);
+	ShowConsoleCursor(true);
 }
 
 void Menu::EnterThree()

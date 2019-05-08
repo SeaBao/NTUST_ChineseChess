@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <iostream>
 #include "regret.h"
+#include "ShowD.h"
 
 OperatingChess::OperatingChess()
 {
@@ -18,7 +19,6 @@ OperatingChess::OperatingChess()
 
 void OperatingChess::gameStart()
 {
-
 	while (command != EOF)
 	{
 		//Board::CurrentBoard.PrintMap();
@@ -113,7 +113,6 @@ void OperatingChess::gameStart()
 					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
 					pos.X = tempX;
 					pos.Y = tempY;
-
 					SetConsoleCursorPosition(hin, pos);
 					turn++;
 				}
@@ -292,6 +291,9 @@ void OperatingChess::gameStart()
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
 					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
 					Regret::roundCount++;
+					ShowD::roundCount++;
+					ShowD temp;
+					temp.showTurn();
 				}
 				
 			}
