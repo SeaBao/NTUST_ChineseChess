@@ -16,6 +16,9 @@ public:
 	void EnterTwo();//重新開始
 	void EnterThree();//回主選單
 	void EnterFour();//離開遊戲
+	void blackWins();
+	void redWins();
+	void wantNext();
 private:
 	const int MenuWidth = 16, MenuHeight = 12;
 	char command;

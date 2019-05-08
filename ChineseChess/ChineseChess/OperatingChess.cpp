@@ -303,7 +303,6 @@ void OperatingChess::gameStart()
 			Menu temp;
 			Board::CurrentBoard.WriteFile("store.txt", "History");
 			temp.printMenu();
-
 		}
 
 		else if (command == ',')//<
