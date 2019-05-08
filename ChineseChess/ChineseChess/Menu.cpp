@@ -1,8 +1,8 @@
 #include "Menu.h"
 #include "Utility.h"
 #include "Board.h"
+#include "LogPanel.h"
 #include "regret.h"
-
 
 void Menu::printMenu()
 {
@@ -124,9 +124,13 @@ void Menu::EnterOne()
 void Menu::EnterTwo()
 {
 	Board::CurrentBoard.ReadFile("Board.txt");
+	LogPanel::CurrentPanel.ClearPanel(true);
 	system("del /Q History\\*.txt > nul 2> nul");
 	Board::ChessSteps = 0;
 	Regret::roundCount = 0;
+	ShowConsoleCursor(true);
+	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
+
 }
 
 void Menu::EnterThree()
