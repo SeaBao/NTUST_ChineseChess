@@ -20,6 +20,18 @@ private:
 	Chess previousChess;
 public:
 	OperatingChess();
+	bool GetBlackOrRed()
+	{
+		if (turn % 2 == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
 	int GetPreviousCursonX()
 	{
 		return previousCursonX;
