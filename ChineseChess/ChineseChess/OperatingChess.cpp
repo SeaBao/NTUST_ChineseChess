@@ -341,6 +341,9 @@ void OperatingChess::gameStart()
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
 					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
 					Regret::roundCount++;
+					ShowD::roundCount++;
+					ShowD temp;
+					temp.showTurn();
 				}
 				
 			}
