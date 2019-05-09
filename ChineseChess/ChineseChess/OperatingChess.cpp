@@ -61,7 +61,7 @@ void OperatingChess::gameStart()
 			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
 			if (isChoosed == 1 && previousCursonX == Board::ConvertToBoardPoint().x && previousCursonY == Board::ConvertToBoardPoint().y && temp1.GetID() != 0)
 			{
-				record.clearWhereCanGO();
+				
 				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 				if (temp1.GetTeam()) {
@@ -74,7 +74,7 @@ void OperatingChess::gameStart()
 				
 				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
 				
-				
+				record.clearWhereCanGO();
 				SetConsoleCursorPosition(hin, pos);
 				isChoosed = 0;
 				turn++;
@@ -303,11 +303,14 @@ void OperatingChess::gameStart()
 										HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 										SetConsoleCursorPosition(hin, pos);
-
+										
 										wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
+										record.clearWhereCanGO();
 										pos.X = tempX;
 										pos.Y = tempY;
+										
 										SetConsoleCursorPosition(hin, pos);
+
 										isChoosed = 0;
 
 									}								
