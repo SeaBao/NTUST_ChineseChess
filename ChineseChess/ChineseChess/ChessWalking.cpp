@@ -3,6 +3,7 @@
 #include <windows.h>
 #include"Board.h"
 #include<iostream>
+#include "Menu.h"
 #include"Utility.h"
 #include<math.h>
 using namespace std;
@@ -268,116 +269,100 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 		else return 0;
 	}
 	else if (id == 6)
+
 	{
 	
-		if (powx == x && powy == y && ((powx == previousCursonX) || (powy == previousCursonY)) && (Board::CurrentBoard[y][x].GetID() != 0) && powflag ==0)
+	if (powx == x && powy == y && ((powx == previousCursonX) || (powy == previousCursonY)) && (Board::CurrentBoard[y][x].GetID() != 0))
+	{
+		printText(y, x, text, pos, temp);
+		return 1;
+	}
+	else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y))
+	{
+		return 0;
+	}
+	else
+	{
+		if ((x != -1) && (y != -1))
 		{
-
-			
-			return 0;
-		}
-		else if (powx == x && powy == y &&((powx==previousCursonX)||(powy==previousCursonY))&& (Board::CurrentBoard[y][x].GetID() != 0))
-		{
-			cout << powflag;
-		
-			
-			return 1;
-		}
-		
-		else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y) )
-		{
-			
-			return 0;
-		}
-
-		else 
-		{
-		
-			if ((x != -1) && (y != -1))
+			int hasAObstacleX = x;
+			int hasAObstacleY = y;
+			if (x == previousCursonX)
 			{
-				int hasAObstacleX = x;
-				int hasAObstacleY = y;
-				if (x == previousCursonX)
+				if (y - previousCursonY < 0)
 				{
-					if (y - previousCursonY < 0)
+					for (int i = previousCursonY - 1; i > y; i--)
 					{
-						for (int i = previousCursonY - 1; i > y; i--)
+						if (Board::CurrentBoard[i][x].GetID() != 0)
 						{
-							if (Board::CurrentBoard[i][x].GetID() != 0)
-							{
-								hasAObstacleY = i;
-								break;
-							}
+							hasAObstacleY = i;
+							break;
 						}
-					}
-					else if (y - previousCursonY > 0)
-					{
-						for (int i = previousCursonY + 1; i < y; i++)
-						{
-							if (Board::CurrentBoard[i][x].GetID() != 0)
-							{
-								hasAObstacleY = i;
-								break;
-							}
-						}
-					}
-					if (hasAObstacleY == y)
-					{
-						printText(y, x, text, pos, temp);
-					
-						return 1;
-					}
-					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) )
-					{
-						printText(y, x, text, pos, temp);
-						
-						return 1;
-
-					}
-					else return 0;
-				}
-				else if (y == previousCursonY)
-				{
-					if (x - previousCursonX < 0)
-					{
-						for (int i = previousCursonX - 1; i > x; i--)
-						{
-							if (Board::CurrentBoard[y][i].GetID() != 0)
-							{
-								hasAObstacleX = i;
-								break;
-							}
-						}
-					}
-					else if (x - previousCursonX > 0)
-					{
-						for (int i = previousCursonX + 1; i < x; i++)
-						{
-							if (Board::CurrentBoard[y][i].GetID() != 0)
-							{
-								hasAObstacleX = i;
-								break;
-							}
-						}
-					}
-					if (hasAObstacleX == x )
-					{
-						printText(y, x, text, pos, temp);
-						return 1;
-					}
-					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
-					{
-
-						printText(y, x, text, pos, temp);
-						return 1;
 					}
 				}
-				
+				else if (y - previousCursonY > 0)
+				{
+					for (int i = previousCursonY + 1; i < y; i++)
+					{
+						if (Board::CurrentBoard[i][x].GetID() != 0)
+						{
+							hasAObstacleY = i;
+							break;
+						}
+					}
+				}
+				if (hasAObstacleY == y)
+				{
+					printText(y, x, text, pos, temp);
+					return 1;
+				}
+				else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
+				{
+					printText(y, x, text, pos, temp);
+					return 1;
+
+				}
+				else return 0;
+			}
+			else if (y == previousCursonY)
+			{
+				if (x - previousCursonX < 0)
+				{
+					for (int i = previousCursonX - 1; i > x; i--)
+					{
+						if (Board::CurrentBoard[y][i].GetID() != 0)
+						{
+							hasAObstacleX = i;
+							break;
+						}
+					}
+				}
+				else if (x - previousCursonX > 0)
+				{
+					for (int i = previousCursonX + 1; i < x; i++)
+					{
+						if (Board::CurrentBoard[y][i].GetID() != 0)
+						{
+							hasAObstacleX = i;
+							break;
+						}
+					}
+				}
+				if (hasAObstacleX == x)
+				{
+					printText(y, x, text, pos, temp);
+					return 1;
+				}
+				else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
+				{
+
+					printText(y, x, text, pos, temp);
+					return 1;
+				}
+			}
+
 		}
-			
-		
-		
-		}
+	}
 	}
 	else if (id == 7)
 	{
@@ -568,6 +553,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	{
 		if (powx == x && powy == y && ((powx == previousCursonX) || (powy == previousCursonY)) && (Board::CurrentBoard[y][x].GetID() != 0))
 		{
+			printText(y, x, text, pos, temp);
 			return 1;
 		}
 		else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y))
@@ -910,7 +896,6 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 				{
 					if (x == previousCursonX && y == previousCursonY)continue;
 				
-
 						if ((x != -1) && (y != -1))
 						{
 
@@ -1554,9 +1539,11 @@ void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 {
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	HANDLE hin;
+	int winID= Board::CurrentBoard[y][x].GetID();
+	
 	Board::CurrentBoard[y][x] = temp;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
-
+	
 	if (temp.GetTeam()) {
 		SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 	}
@@ -1566,6 +1553,16 @@ void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 
 	SetConsoleCursorPosition(hin, post);
 	wcout << text;
+	if (winID== 1)
+	{
+		Menu temp;
+		temp.redWins();
+	}
+	else if (winID == 8)
+	{
+		Menu temp;
+		temp.blackWins();
+	}
 	clearWhereCanGO();
 }
 ChessWalking::~ChessWalking()
