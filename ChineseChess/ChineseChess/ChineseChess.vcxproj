@@ -118,6 +118,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Chess.cpp" />
     <ClCompile Include="ChessWalking.cpp" />
+    <ClCompile Include="clear.cpp" />
     <ClCompile Include="LogPanel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />

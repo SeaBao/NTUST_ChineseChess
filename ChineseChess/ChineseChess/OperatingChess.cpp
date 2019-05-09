@@ -1,13 +1,13 @@
 #include "OperatingChess.h"
 #include "ChessWalking.h"
+#include"clear.cpp"
 #include "Board.h"
 #include "Menu.h"
 #include "LogPanel.h"
 #include <windows.h>
 #include <iostream>
 #include "regret.h"
-#include "ShowD.h"
-
+int OperatingChess::turn = 1;
 OperatingChess::OperatingChess()
 {
 	command = _getch();
@@ -19,6 +19,8 @@ OperatingChess::OperatingChess()
 
 void OperatingChess::gameStart()
 {
+	
+	ChessWalking record;
 	while (command != EOF)
 	{
 		//Board::CurrentBoard.PrintMap();
@@ -55,23 +57,24 @@ void OperatingChess::gameStart()
 		{
 			Board temp2;
 			auto temp1 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
-			auto temp3 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
+			auto temp3 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];	
 			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
-			
 			if (isChoosed == 1 && previousCursonX == Board::ConvertToBoardPoint().x && previousCursonY == Board::ConvertToBoardPoint().y && temp1.GetID() != 0)
 			{
+				
 				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 				if (temp1.GetTeam()) {
 					SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 				}
 				else {
-
+					 
 					SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
 				}
-
+				
 				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-				Board::CurrentBoard.ReadFile("History\store.txt");
+				
+				record.clearWhereCanGO();
 				SetConsoleCursorPosition(hin, pos);
 				isChoosed = 0;
 				turn++;
@@ -79,6 +82,8 @@ void OperatingChess::gameStart()
 
 			else if (!isChoosed && temp1.GetID() != 0)
 			{
+			
+				
 				if (turn % 2 == 1 && temp1.GetTeam() == false)
 				{
 					int tempX = pos.X;
@@ -91,7 +96,7 @@ void OperatingChess::gameStart()
 					previousCursonY = Board::ConvertToBoardPoint().y;
 					isChoosed = 1;
 
-					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
+					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY, record);
 					pos.X = tempX;
 					pos.Y = tempY;
 
@@ -109,13 +114,15 @@ void OperatingChess::gameStart()
 					previousCursonX = Board::ConvertToBoardPoint().x;
 					previousCursonY = Board::ConvertToBoardPoint().y;
 					isChoosed = 1;
-					
-					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
+				
+					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY, record);
 					
 					pos.X = tempX;
 					pos.Y = tempY;
+
 					SetConsoleCursorPosition(hin, pos);
 					turn++;
+				
 				}
 				
 			}
@@ -274,7 +281,7 @@ void OperatingChess::gameStart()
 				{
 					CurrentCursonX = Board::ConvertToBoardPoint().x;
 					CurrentCursonY = Board::ConvertToBoardPoint().y;
-
+					
 					if (temp3.GetID() != 0)//當前游標有棋子的話
 					{
 
@@ -296,11 +303,14 @@ void OperatingChess::gameStart()
 										HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 										SetConsoleCursorPosition(hin, pos);
-
+										
 										wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
+										record.clearWhereCanGO();
 										pos.X = tempX;
 										pos.Y = tempY;
+										
 										SetConsoleCursorPosition(hin, pos);
+
 										isChoosed = 0;
 
 									}								
@@ -317,18 +327,18 @@ void OperatingChess::gameStart()
 
 						wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
 						Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
+						record.clearWhereCanGO();
 						pos.X = tempX;
 						pos.Y = tempY;
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
+						
+						
 					}
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
 					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
 					Regret::roundCount++;
-					ShowD::roundCount++;
-					ShowD temp;
-					temp.showTurn();
 				}
 				
 			}
@@ -338,6 +348,7 @@ void OperatingChess::gameStart()
 			Menu temp;
 			Board::CurrentBoard.WriteFile("store.txt", "History");
 			temp.printMenu();
+
 		}
 
 		else if (command == ',')//<
