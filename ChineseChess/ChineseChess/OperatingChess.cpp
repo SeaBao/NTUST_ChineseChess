@@ -327,11 +327,12 @@ void OperatingChess::gameStart()
 
 						wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
 						Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
+						record.clearWhereCanGO();
 						pos.X = tempX;
 						pos.Y = tempY;
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
-						record.clearWhereCanGO();
+						
 						
 					}
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
