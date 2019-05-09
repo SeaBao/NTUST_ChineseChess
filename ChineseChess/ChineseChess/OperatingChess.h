@@ -7,7 +7,7 @@
 class OperatingChess
 {
 private:
-	int turn=1;
+	static int turn;
 	char command;
 	bool isChoosed;
 	int previousCursonX;

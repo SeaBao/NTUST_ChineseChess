@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <iostream>
 #include "regret.h"
-
+int OperatingChess::turn = 1;
 OperatingChess::OperatingChess()
 {
 	command = _getch();
