@@ -1,16 +1,16 @@
 #include "OperatingChess.h"
 #include "ChessWalking.h"
-#include"clear.cpp"
+#include "clear.cpp"
 #include "Board.h"
 #include "Menu.h"
 #include "LogPanel.h"
-#include <windows.h>
-#include <iostream>
 #include "regret.h"
-int OperatingChess::turn = 1;
+#include "Utility.h"
+#include <conio.h>
+#include <iostream>
+
 OperatingChess::OperatingChess()
 {
-	command = _getch();
 	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,9).X;
 	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,9).Y;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -19,12 +19,9 @@ OperatingChess::OperatingChess()
 
 void OperatingChess::gameStart()
 {
-	
 	ChessWalking record;
 	while (command != EOF)
 	{
-		//Board::CurrentBoard.PrintMap();
-		hin = GetStdHandle(STD_OUTPUT_HANDLE);
 		if (command == 75)//left
 		{
 			if (Board::ConvertToBoardPoint().x != 0) {
@@ -365,11 +362,7 @@ void OperatingChess::gameStart()
 			temp.readNextStore();
 		}
 
-				command = _getch();
+		command = _getch();
 	}
-
-}
-OperatingChess::~OperatingChess()
-{
 
 }

@@ -1,13 +1,11 @@
 #pragma once
-#include<stdio.h>
-#include<conio.h>
 #include <windows.h>
-#include "Menu.h"
 #include"Chess.h"
+
 class OperatingChess
 {
 private:
-	static int turn;
+	int turn = 1;
 	char command;
 	bool isChoosed;
 	int previousCursonX;
@@ -20,18 +18,24 @@ private:
 	Chess previousChess;
 public:
 	OperatingChess();
+
 	bool GetBlackOrRed()
 	{
 		if (turn % 2 == 0)
 		{
-			return true;
+			return false;
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 		
 	}
+
+	void SetTurn(int n) {
+		turn = n;
+	}
+
 	int GetPreviousCursonX()
 	{
 		return previousCursonX;
@@ -49,6 +53,5 @@ public:
 		return CurrentCursonY;
 	}
 	void gameStart();
-	~OperatingChess();
 };
 

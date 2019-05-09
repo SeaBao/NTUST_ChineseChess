@@ -98,6 +98,8 @@ Board::Board()
 	boardMap[15][18] = L"╱ ";
 	boardMap[17][14] = L"╱ ";
 	boardMap[17][18] = L"╲ ";
+
+	
 }
 
 void Board::PrintMap()
@@ -151,8 +153,16 @@ void Board::ReadFile(string path)
 
 	string line;
 
+	bool isRedFirst = false;
 	int row = 0;
 	while (getline(file, line)) {
+		if (row == 10) {
+			if (line == "1") {
+				isRedFirst = true;
+			}
+			break;
+		}
+
 		vector<string> splitStrArr;
 		Split(line, splitStrArr, ' ');
 
@@ -163,8 +173,10 @@ void Board::ReadFile(string path)
 		}
 		row++;
 	}
-
 	PrintMap();
+	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
+	_opChess.SetTurn(isRedFirst);
+	_opChess.gameStart();
 }
 
 void Board::WriteFile(string FileName, string FolderName = "")
@@ -189,7 +201,8 @@ void Board::WriteFile(string FileName, string FolderName = "")
 				ss << endl;
 			}
 		}
-
+		
+		ss << _opChess.GetBlackOrRed();
 		outStream << ss.str();
 		outStream.close();
 	}

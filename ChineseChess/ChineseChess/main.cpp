@@ -17,8 +17,8 @@ int main() {
 	setlocale(LC_ALL, "zh_TW.UTF-8");
 	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
 	SetWindow(WindowWidth + 2, WindowHeight + 1);
-	/*SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
-	ShowScrollBar(consoleWindow, SB_BOTH, FALSE);*/
+	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+	ShowScrollBar(consoleWindow, SB_BOTH, FALSE);
 
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);
@@ -65,8 +65,5 @@ int main() {
 	system("del /Q History\\*.txt > nul 2> nul");
 	LogPanel::CurrentPanel.PrintPanel();
 	Board::CurrentBoard.ReadFile("Board.txt");
-	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
-	OperatingChess start;
-	start.gameStart();
 	return 0;
 }
