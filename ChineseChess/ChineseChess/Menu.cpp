@@ -115,10 +115,10 @@ void Menu::printMenu()
 
 void Menu::EnterOne()
 {
-	Board temp;
-	Board::CurrentBoard.ReadFile("History\store.txt");
+	Board::CurrentBoard.ReadFile("History/store.txt");
 	SetCursorPosistion(Board::ConvertToConsolePoint(4, 9).X, Board::ConvertToConsolePoint(4, 9).Y);
 	ShowConsoleCursor(true);
+	Board::CurrentBoard.StartGame();
 }
 
 void Menu::EnterTwo()
@@ -128,9 +128,9 @@ void Menu::EnterTwo()
 	system("del /Q History\\*.txt > nul 2> nul");
 	Board::ChessSteps = 0;
 	Regret::roundCount = 0;
-	ShowConsoleCursor(true);
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
-
+	ShowConsoleCursor(true);
+	Board::CurrentBoard.StartGame();
 }
 
 void Menu::EnterThree()

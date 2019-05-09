@@ -149,6 +149,11 @@ void Board::PrintMap()
 	print.printRight();
 }
 
+void Board::StartGame()
+{
+	_opChess.gameStart();
+}
+
 void Board::ReadFile(string path)
 {
 	ifstream file;
@@ -177,9 +182,10 @@ void Board::ReadFile(string path)
 		row++;
 	}
 	PrintMap();
+
+	_opChess = OperatingChess();
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
 	_opChess.SetTurn(isRedFirst);
-	_opChess.gameStart();
 }
 
 void Board::WriteFile(string FileName, string FolderName = "")
@@ -205,7 +211,7 @@ void Board::WriteFile(string FileName, string FolderName = "")
 			}
 		}
 		
-		ss << _opChess.GetBlackOrRed();
+		ss << endl << _opChess.GetBlackOrRed();
 		outStream << ss.str();
 		outStream.close();
 	}

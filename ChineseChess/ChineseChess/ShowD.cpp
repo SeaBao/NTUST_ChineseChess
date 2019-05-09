@@ -1,9 +1,11 @@
 #include "ShowD.h"
+#include "Utility.h"
 
 int ShowD::roundCount = 1;
 
 void ShowD::showTurn()
 {
+	auto currentPos = GetCursorPosition();
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD Position;
@@ -23,10 +25,13 @@ void ShowD::showTurn()
 		SetConsoleCursorPosition(hOut, Position);
 		wcout << L"¶ֲ₪ט ₪U´ׁ";
 	}
+
+	SetCursorPosistion(currentPos.X, currentPos.Y);
 }
 
 void ShowD::printRight()
 {
+	auto currentPos = GetCursorPosition();
 	HANDLE hOut;
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD Position;
@@ -91,4 +96,6 @@ void ShowD::printRight()
 	SetConsoleCursorPosition(hOut, Position);
 	wcout << L"שששששששששששששששששששששששששששששש";
 	showTurn();
+
+	SetCursorPosistion(currentPos.X, currentPos.Y);
 }

@@ -11,6 +11,11 @@
 
 OperatingChess::OperatingChess()
 {
+	previousCursonX = -1;
+	previousCursonY = -1;
+	CurrentCursonX = -1;
+	CurrentCursonY = -1;
+	isChoosed = false;
 	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,9).X;
 	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,9).Y;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);

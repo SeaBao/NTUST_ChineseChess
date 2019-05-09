@@ -22,6 +22,7 @@ public:
 	static COORD ConvertToConsolePoint(int x, int y);
 
 	void PrintMap();
+	void StartGame();
 	void ReadFile(string path);
 	void WriteFile(string FileName, string FolderName);
 	wstring GetGraphicStr(int x, int y);
