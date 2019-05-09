@@ -52,7 +52,7 @@ void LogPanel::PrintPanel()
 	wcout << L" ¾Ô ªp Åã ¥Ü";
 }
 
-void LogPanel::ClearPanel()
+void LogPanel::ClearPanel(bool resetIndex = false)
 {
 	auto hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	auto cursorPos = GetCursorPosition();
@@ -64,6 +64,8 @@ void LogPanel::ClearPanel()
 	}
 
 	SetCursorPosistion(cursorPos.X, cursorPos.Y);
+
+	if (resetIndex) _LogIndex = 0;
 }
 
 void LogPanel::AddLog(wchar_t ChessName, int fromX, int fromY, int toX, int toY, bool Team)

@@ -7,6 +7,31 @@
 #include<math.h>
 using namespace std;
 
+void printWhereToGoRed(int y, int x, COORD pos)
+{
+	HANDLE hin;
+	hin = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (Board::CurrentBoard[y][x].GetID() == 0)
+	{
+		Board temp;
+		pos = temp.ConvertToConsolePoint(x, y);
+		HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | 0x90);
+		SetConsoleCursorPosition(hin, pos);
+		wcout << Board::CurrentBoard.GetGraphicStr(x, y);
+
+	}
+	else if (Board::CurrentBoard[y][x].GetID() != 0 && Board::CurrentBoard[y][x].GetTeam() != false)
+	{
+		Board temp;
+		pos = temp.ConvertToConsolePoint(x, y);
+		HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hOut,  BACKGROUND_BLUE | BACKGROUND_GREEN|0x90);
+		SetConsoleCursorPosition(hin, pos);
+		wcout << Board::CurrentBoard[y][x].GetText();
+	}
+
+}
 void printWhereToGo(int y,int x,COORD pos)
 {
 	HANDLE hin;
@@ -26,10 +51,11 @@ void printWhereToGo(int y,int x,COORD pos)
 		Board temp;
 		pos = temp.ConvertToConsolePoint(x, y);
 		HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_BLUE | 0x90);
+		SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | 0x90);
 		SetConsoleCursorPosition(hin, pos);
 		wcout << Board::CurrentBoard[y][x].GetText();
 	}
+	
 }
 void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 {
@@ -47,6 +73,7 @@ void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 
 	SetConsoleCursorPosition(hin, post);
 	wcout << text;
+	Board::CurrentBoard.ReadFile("History\store.txt");
 }
 ChessWalking::ChessWalking()
 {
@@ -242,13 +269,22 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 6)
 	{
-
-		if (powx == x && powy == y &&((powx==previousCursonX)||(powy==previousCursonY))&& (Board::CurrentBoard[y][x].GetID() != 0))
+	
+		if (powx == x && powy == y && ((powx == previousCursonX) || (powy == previousCursonY)) && (Board::CurrentBoard[y][x].GetID() != 0) && powflag ==0)
 		{
+
+			
+			return 0;
+		}
+		else if (powx == x && powy == y &&((powx==previousCursonX)||(powy==previousCursonY))&& (Board::CurrentBoard[y][x].GetID() != 0))
+		{
+			cout << powflag;
+		
 			
 			return 1;
 		}
-		else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y))
+		
+		else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y) )
 		{
 			
 			return 0;
@@ -259,7 +295,6 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 		
 			if ((x != -1) && (y != -1))
 			{
-
 				int hasAObstacleX = x;
 				int hasAObstacleY = y;
 				if (x == previousCursonX)
@@ -289,11 +324,13 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 					if (hasAObstacleY == y)
 					{
 						printText(y, x, text, pos, temp);
+					
 						return 1;
 					}
-					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) && y != 5)
+					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) )
 					{
 						printText(y, x, text, pos, temp);
+						
 						return 1;
 
 					}
@@ -323,12 +360,12 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 							}
 						}
 					}
-					if (hasAObstacleX == x)
+					if (hasAObstacleX == x )
 					{
 						printText(y, x, text, pos, temp);
 						return 1;
 					}
-					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY && y != 5)
+					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
 					{
 
 						printText(y, x, text, pos, temp);
@@ -357,13 +394,8 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 		}
 		else if (  y >= 5 && x != -1 && y != -1)
 		{
-			if (y == 6 && previousCursonY == 4)
-			{
-
-				printText(y, x, text, pos, temp);
-				return 1;
-			}
-			else if ((abs(x - previousCursonX) + abs(y - previousCursonY) > 1))return 0;
+			
+			if ((abs(x - previousCursonX) + abs(y - previousCursonY) > 1))return 0;
 			else if (y < previousCursonY)return 0;
 			else
 			{
@@ -592,7 +624,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						printText(y, x, text, pos, temp);
 						return 1;
 					}
-					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) && y != 5)
+					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) )
 					{
 						printText(y, x, text, pos, temp);
 						return 1;
@@ -629,7 +661,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 						printText(y, x, text, pos, temp);
 						return 1;
 					}
-					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY && y != 5)
+					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
 					{
 
 						printText(y, x, text, pos, temp);
@@ -642,17 +674,29 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 14)
 	{
-		if (x != -1 && y != -1) {
-			if (y > previousCursonY) return 0;
-
-			if (abs(previousCursonX - x) + abs(previousCursonY - y) > 1) {
-				return 0;
-			}
-			else {
+		if (y >= 5 && y <= 6)
+		{
+			if (abs(x - previousCursonX) != 0)return 0;
+			else if (y > previousCursonY)return 0;
+			else if (abs(y - previousCursonY) == 1)
+			{
 				printText(y, x, text, pos, temp);
 				return 1;
 			}
+			else return 0;
 		}
+		else if (y <= 4 && x != -1 && y != -1)
+		{
+
+			if ((abs(x - previousCursonX) + abs(y - previousCursonY) > 1))return 0;
+			else if (y > previousCursonY)return 0;
+			else
+			{
+				printText(y, x, text, pos, temp);
+				return 1;
+		}
+	}
+	else return 0;
 	}
 	return 0;
 }
@@ -740,12 +784,12 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 								}
 							}
 						}
-						if (hasAObstacleY == y && y != 5)
+						if (hasAObstacleY == y )
 						{
 							printWhereToGo(y, x, pos);
 							
 						}
-						else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) && y != 5)
+						else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) )
 						{
 							printWhereToGo(y, x, pos);
 							
@@ -777,12 +821,12 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 								}
 							}
 						}
-						if (hasAObstacleX == x && y != 5)
+						if (hasAObstacleX == x )
 						{
 							printWhereToGo(y, x, pos);
 						
 						}
-						else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY && y != 5)
+						else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
 						{
 							printWhereToGo(y, x, pos);
 
@@ -895,6 +939,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 
 							int hasAObstacleX = x;
 							int hasAObstacleY = y;
+							//走直的
 							if (x == previousCursonX)
 							{
 								if (y - previousCursonY < 0)
@@ -919,18 +964,40 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 										}
 									}
 								}
-								if (hasAObstacleY == y && y != 5)
+								if (hasAObstacleY == y)
 								{
-									printWhereToGo(y, x, pos);
+									if (Board::CurrentBoard[y][x].GetID() != 0)
+									{
+											Board temp;
+											pos = temp.ConvertToConsolePoint(x, y);
+											HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+											if (Board::CurrentBoard[y][x].GetTeam() == true)
+											{
+												SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+											}
+											else
+											{
+												SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+											}
+
+											
+											SetConsoleCursorPosition(hin, pos);
+											wcout << Board::CurrentBoard[y][x].GetText();
+									}
+									else
+									{
+										printWhereToGo(y, x, pos);
+									}
+									
 								}
-								else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) && y != 5)
+								else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
 								{
 									printWhereToGo(y, x, pos);
 
 								}
 								
 							}
-							else if (y == previousCursonY)
+							else if (y == previousCursonY) //走橫的
 							{
 								if (x - previousCursonX < 0)
 								{
@@ -954,11 +1021,32 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 										}
 									}
 								}
-								if (hasAObstacleX == x && y != 5)
+								if (hasAObstacleX == x )
 								{
-									printWhereToGo(y, x, pos);
+									if (Board::CurrentBoard[y][x].GetID() != 0)
+									{
+										Board temp;
+										pos = temp.ConvertToConsolePoint(x, y);
+										HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+										if (Board::CurrentBoard[y][x].GetTeam() == true)
+										{
+											SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										}
+										else
+										{
+											SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+										}
+
+
+										SetConsoleCursorPosition(hin, pos);
+										wcout << Board::CurrentBoard[y][x].GetText();
+									}
+									else
+									{
+										printWhereToGo(y, x, pos);
+									}
 								}
-								else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY && y != 5)
+								else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY )
 								{
 
 									printWhereToGo(y, x, pos);
@@ -975,40 +1063,417 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 			}
 		else if (ID == 7)
 		{
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if (y >= 3 && y <= 4)
+					{
+						if (abs(x - previousCursonX) != 0)
+						{
 
+						}
+						else if (y < previousCursonY)
+						{
+
+						}
+						else if (abs(y - previousCursonY) == 1)
+						{
+							printWhereToGo(y, x, pos);
+						}
+						
+					}
+					else if (y >= 5 && x != -1 && y != -1)
+					{
+
+						if ((abs(x - previousCursonX) + abs(y - previousCursonY) > 1))
+						{
+
+						}
+						else if (y < previousCursonY)
+						{
+
+						}
+						else
+						{
+							printWhereToGo(y, x, pos);
+						}
+					}
+					
+				}
+			}
 		}
 	}
-	else
+	else//printWhereToGoRed(y, x, pos);
 	{
-		if (ID == 1)
+		if (ID == 8)
 		{
-
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if ((x >= 3 && x <= 5) && (y != -1) && y <= 10 && y >= 8 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
+					{
+						printWhereToGoRed(y, x, pos);
+					}
+					
+				}
+			}
 		}
-		else if (ID == 2)
+		else if (ID == 9)
 		{
-
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if ((x >= 3 && x <= 5) && (y >= 8) && (y <= 10) && (abs(x - previousCursonX) == 1 && abs(y - previousCursonY) == 1))
+					{
+						printWhereToGoRed(y, x, pos);
+					}
+					
+				}
+			}
 		}
-		else if (ID == 3)
+		else if (ID == 10)
 		{
-
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if (Board::CurrentBoard[abs(y + previousCursonY) / 2][abs(x + previousCursonX) / 2].GetID() == 0 && x != -1 && y != -1 && (abs(x - previousCursonX) == 2 && abs(y - previousCursonY) == 2) && y > 5)
+					{
+						printWhereToGoRed(y, x, pos);
+					}
+					
+				}
+			}
 		}
-		else if (ID == 4)
+		else if (ID == 11)
 		{
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if ((x != -1) && (y != -1))
+					{
+						int hasAObstacleX = x;
+						int hasAObstacleY = y;
+						if (x == previousCursonX)
+						{
+							if (y - previousCursonY < 0)
+							{
+								for (int i = previousCursonY - 1; i > y; i--)
+								{
+									if (Board::CurrentBoard[i][x].GetID() != 0)
+									{
+										hasAObstacleY = i;
+										break;
+									}
+								}
+							}
+							else if (y - previousCursonY > 0)
+							{
+								for (int i = previousCursonY + 1; i < y; i++)
+								{
+									if (Board::CurrentBoard[i][x].GetID() != 0)
+									{
+										hasAObstacleY = i;
+										break;
+									}
+								}
+							}
+							if (hasAObstacleY == y)
+							{
+								printWhereToGoRed(y, x, pos);
+							}
+							else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) && y != 5)
+							{
+								printWhereToGoRed(y, x, pos);
+							}
+							
+						}
+						else if (y == previousCursonY)
+						{
+							if (x - previousCursonX < 0)
+							{
+								for (int i = previousCursonX - 1; i > x; i--)
+								{
+									if (Board::CurrentBoard[y][i].GetID() != 0)
+									{
+										hasAObstacleX = i;
+										break;
+									}
+								}
+							}
+							else if (x - previousCursonX > 0)
+							{
+								for (int i = previousCursonX + 1; i < x; i++)
+								{
+									if (Board::CurrentBoard[y][i].GetID() != 0)
+									{
+										hasAObstacleX = i;
+										break;
+									}
+								}
+							}
+							if (hasAObstacleX == x)
+							{
+								printWhereToGoRed(y, x, pos);
+							}
+							else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY && y != 5)
+							{
 
+								printWhereToGoRed(y, x, pos);
+							}
+						}
+						
+					}
+				}
+			}
 		}
-		else if (ID == 5)
+		else if (ID == 12)
 		{
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if (x != -1 && y != -1 && (abs(x - previousCursonX) + abs(y - previousCursonY) == 3) && abs(x - previousCursonX) != 0 && abs(y - previousCursonY) != 0)
+					{
+						if (x - previousCursonX == 2)
+						{
+							if (Board::CurrentBoard[previousCursonY][previousCursonX + 1].GetID() == 0)
+							{
 
+
+								printWhereToGoRed(y, x, pos);
+
+
+							}
+							
+						}
+						else if (x - previousCursonX == -2)
+						{
+							if (Board::CurrentBoard[previousCursonY][previousCursonX - 1].GetID() == 0)
+							{
+
+
+								printWhereToGoRed(y, x, pos);
+
+
+							}
+							
+						}
+						if (y - previousCursonY == 2)
+						{
+							if (Board::CurrentBoard[previousCursonY + 1][previousCursonX].GetID() == 0)
+							{
+
+								printWhereToGoRed(y, x, pos);
+
+
+							}
+							
+						}
+						else if (y - previousCursonY == -2)
+						{
+							if (Board::CurrentBoard[previousCursonY - 1][previousCursonX].GetID() == 0)
+							{
+
+
+								printWhereToGoRed(y, x, pos);
+
+
+							}
+							
+						}
+
+					}
+
+					
+
+
+				}
+			}
 		}
-		else if (ID == 6)
+		else if (ID == 13)
 		{
-
-		}
-		else if (ID == 7)
+		for (int x = 0; x <= 8; x++)
 		{
+			for (int y = 0; y <= 9; y++)
+			{
+				if ((x != -1) && (y != -1))
+				{
 
+					int hasAObstacleX = x;
+					int hasAObstacleY = y;
+					//走直的
+					if (x == previousCursonX)
+					{
+						if (y - previousCursonY < 0)
+						{
+							for (int i = previousCursonY - 1; i > y; i--)
+							{
+								if (Board::CurrentBoard[i][x].GetID() != 0)
+								{
+									hasAObstacleY = i;
+									break;
+								}
+							}
+						}
+						else if (y - previousCursonY > 0)
+						{
+							for (int i = previousCursonY + 1; i < y; i++)
+							{
+								if (Board::CurrentBoard[i][x].GetID() != 0)
+								{
+									hasAObstacleY = i;
+									break;
+								}
+							}
+						}
+						if (hasAObstacleY == y)
+						{
+							if (Board::CurrentBoard[y][x].GetID() != 0)
+							{
+								Board temp;
+								pos = temp.ConvertToConsolePoint(x, y);
+								HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+								if (Board::CurrentBoard[y][x].GetTeam() == true)
+								{
+									SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+								}
+								else
+								{
+									SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+								}
+
+
+								SetConsoleCursorPosition(hin, pos);
+								wcout << Board::CurrentBoard[y][x].GetText();
+							}
+							else
+							{
+								printWhereToGo(y, x, pos);
+							}
+
+						}
+						else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
+						{
+							printWhereToGo(y, x, pos);
+
+						}
+
+					}
+					else if (y == previousCursonY) //走橫的
+					{
+						if (x - previousCursonX < 0)
+						{
+							for (int i = previousCursonX - 1; i > x; i--)
+							{
+								if (Board::CurrentBoard[y][i].GetID() != 0)
+								{
+									hasAObstacleX = i;
+									break;
+								}
+							}
+						}
+						else if (x - previousCursonX > 0)
+						{
+							for (int i = previousCursonX + 1; i < x; i++)
+							{
+								if (Board::CurrentBoard[y][i].GetID() != 0)
+								{
+									hasAObstacleX = i;
+									break;
+								}
+							}
+						}
+						if (hasAObstacleX == x)
+						{
+							if (Board::CurrentBoard[y][x].GetID() != 0)
+							{
+								Board temp;
+								pos = temp.ConvertToConsolePoint(x, y);
+								HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+								if (Board::CurrentBoard[y][x].GetTeam() == true)
+								{
+									SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+								}
+								else
+								{
+									SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
+								}
+
+
+								SetConsoleCursorPosition(hin, pos);
+								wcout << Board::CurrentBoard[y][x].GetText();
+							}
+							else
+							{
+								printWhereToGo(y, x, pos);
+							}
+						}
+						else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
+						{
+
+							printWhereToGo(y, x, pos);
+						}
+					}
+
+
+
+
+
+				}
+			}
 		}
-	}
+		}
+		else if (ID == 14)
+		{
+			for (int x = 0; x <= 8; x++)
+			{
+				for (int y = 0; y <= 9; y++)
+				{
+					if (y >= 5 && y <= 6)
+					{
+						if (abs(x - previousCursonX) != 0)
+						{
+
+						}
+						else if (y > previousCursonY)
+						{
+
+						}
+
+						else if (abs(y - previousCursonY) == 1)
+						{
+							printWhereToGoRed(y, x, pos);
+						}
+						
+					}
+					else if (y <= 4 && x != -1 && y != -1)
+					{
+
+						if ((abs(x - previousCursonX) + abs(y - previousCursonY) > 1))
+						{
+
+						}
+						else if (y > previousCursonY)
+						{
+
+						}
+						else
+						{
+							printWhereToGoRed(y, x, pos);
+						}
+					}
+					
+				}
+				
+				}
+			}
+		}
+	
 }
 ChessWalking::~ChessWalking()
 {

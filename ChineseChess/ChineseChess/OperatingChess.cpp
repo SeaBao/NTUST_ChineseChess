@@ -71,7 +71,7 @@ void OperatingChess::gameStart()
 				}
 
 				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-
+				Board::CurrentBoard.ReadFile("History\store.txt");
 				SetConsoleCursorPosition(hin, pos);
 				isChoosed = 0;
 				turn++;
@@ -109,8 +109,9 @@ void OperatingChess::gameStart()
 					previousCursonX = Board::ConvertToBoardPoint().x;
 					previousCursonY = Board::ConvertToBoardPoint().y;
 					isChoosed = 1;
-
+					
 					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY);
+					
 					pos.X = tempX;
 					pos.Y = tempY;
 					SetConsoleCursorPosition(hin, pos);
@@ -127,7 +128,7 @@ void OperatingChess::gameStart()
 				int powBarrierY;
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				int x = Board::ConvertToBoardPoint().x, y = Board::ConvertToBoardPoint().y, currentx = Board::ConvertToBoardPoint().x, currenty = Board::ConvertToBoardPoint().y;
-					int flag = 0;
+					int flag = 0,count=0;
 					if (Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 6 || Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 13)
 					{
 						int obstacleFirst = 0;
@@ -154,7 +155,14 @@ void OperatingChess::gameStart()
 										}
 									}
 								}
-								if (x >= currentx)flag = 1;
+								for (int i = previousCursonX + 1; i <= 8; i++)
+								{
+									if (Board::CurrentBoard[currenty][i].GetID() != 0)
+									{
+										count++;
+									}
+								}
+								if (x >= currentx&&count>1)flag = 1;
 							}
 							else if (currentx - previousCursonX < 0)
 							{
@@ -177,6 +185,14 @@ void OperatingChess::gameStart()
 										}
 									}
 								}
+								for (int i = previousCursonX - 1; i >= 0; i--)
+								{
+									if (Board::CurrentBoard[currenty][i].GetID() != 0)
+									{
+										count++;
+									}
+								}
+								if (x <= currentx && count > 1)flag = 1;
 							}
 						}
 						else if (currentx == previousCursonX)
@@ -203,6 +219,16 @@ void OperatingChess::gameStart()
 
 									}
 								}
+								for (int i = previousCursonY + 1; i <= 9; i++)
+								{
+									if (Board::CurrentBoard[i][currentx].GetID() != 0)
+									{										
+											count++;
+									}
+								}
+								
+								if (y >= currentx && count > 1)flag = 1;
+								
 							}
 							else if (currenty - previousCursonY < 0)
 							{
@@ -226,6 +252,14 @@ void OperatingChess::gameStart()
 										}
 									}
 								}
+								for (int i = previousCursonY - 1; i >=0; i--)
+								{
+									if (Board::CurrentBoard[i][currentx].GetID() != 0)
+									{
+										count++;
+									}
+								}
+								if (y >= currentx && count > 1)flag = 1;
 							}
 						}
 						else
@@ -233,6 +267,7 @@ void OperatingChess::gameStart()
 							
 							flag = 1;
 						}
+						
 					}
 				
 				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y,flag))
