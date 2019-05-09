@@ -200,3 +200,154 @@ void Menu::printWord(int y)
 		SetConsoleCursorPosition(hin, pos);
 	}
 }
+
+void Menu::blackWins()
+{
+	COORD pos;
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	pos.X = 37, pos.Y = 7;
+	ShowConsoleCursor(false);
+	SetConsoleCursorPosition(hOut, pos);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	wcout << L"ùÝ ";
+	for (int i = 0; i < 10; i++)
+	{
+		wcout << L"ùù";
+	}
+	wcout << L"ùß \n";
+	pos.Y = 8;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùø  ¶Â¤è³Ó§Q ùø \n";
+	pos.Y = 9;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùã ";
+	for (int i = 0; i < 10; i++)
+	{
+		wcout << L"ùù";
+	}
+	wcout << L"ùå ";
+	wantNext();
+}
+
+void Menu::redWins()
+{
+	COORD pos;
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	pos.X = 37, pos.Y = 7;
+	ShowConsoleCursor(false);
+	SetConsoleCursorPosition(hOut, pos);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	wcout << L"ùÝ ";
+	for (int i = 0; i < 10; i++)
+	{
+		wcout << L"ùù";
+	}
+	wcout << L"ùß \n";
+	pos.Y = 8;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùø  ¬õ¤è³Ó§Q ùø \n";
+	pos.Y = 9;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùã ";
+	for (int i = 0; i < 10; i++)
+	{
+		wcout << L"ùù";
+	}
+	wcout << L"ùå ";
+	wantNext();
+}
+
+void Menu::wantNext()
+{
+	COORD pos;
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	pos.X = 36, pos.Y = 11;
+	ShowConsoleCursor(false);
+	SetConsoleCursorPosition(hOut, pos);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	wcout << L"ùÝ ";
+	for (int i = 0; i < 12; i++)
+	{
+		wcout << L"ùù";
+	}
+	wcout << L"ùß \n";
+	pos.Y = 12;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùø   ¶}±Ò·s§½? ùø ";
+	pos.Y = 13;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùø             ùø ";
+	pos.Y = 14;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùø   ";
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	wcout << L"¬O    §_";
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	wcout << L"  ùø ";
+	pos.Y = 15;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"ùã ";
+	for (int i = 0; i < 12; i++)
+	{
+		wcout << L"ùù";
+	}
+	wcout << L"ùå ";
+	command = _getch();
+	while (command != EOF)
+	{
+		hin = GetStdHandle(STD_OUTPUT_HANDLE);
+		if (command == 75) //left
+		{
+			pos.X = 40;
+			pos.Y = 14;
+			SetConsoleCursorPosition(hin, pos);
+			SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
+			wcout << L"¬O";
+			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			pos.X = 46;
+			pos.Y = 14;
+			SetConsoleCursorPosition(hin, pos);
+			wcout << L"§_";
+			pos.X = 40;
+			pos.Y = 14;
+			SetConsoleCursorPosition(hin, pos);
+		}
+		if (command == 77) //right
+		{
+			pos.X = 46;
+			pos.Y = 14;
+			SetConsoleCursorPosition(hin, pos);
+			SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
+			wcout << L"§_";
+			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			pos.X = 40;
+			pos.Y = 14;
+			SetConsoleCursorPosition(hin, pos);
+			wcout << L"¬O";
+			pos.X = 46;
+			pos.Y = 14;
+			SetConsoleCursorPosition(hin, pos);
+		}
+		if (command == 13) //enter
+		{
+			if (pos.X == 46)
+			{
+				EnterOne();
+				break;
+			}
+			else if (pos.X == 40)
+			{
+				EnterTwo();
+				break;
+			}
+		}
+		command = _getch();
+	}
+}

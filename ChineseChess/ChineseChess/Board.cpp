@@ -1,5 +1,6 @@
 ﻿#include "Board.h"
 #include "Utility.h"
+#include "ShowD.h"
 #include <Windows.h>
 #include <iostream>
 #include <algorithm>
@@ -144,6 +145,8 @@ void Board::PrintMap()
 		}
 	}
 	SetCursorPosistion(cursorPos.X, cursorPos.Y);
+	ShowD print;
+	print.printRight();
 }
 
 void Board::ReadFile(string path)
