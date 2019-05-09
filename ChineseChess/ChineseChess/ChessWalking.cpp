@@ -86,6 +86,20 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	{
 		if ( (x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 		{
+			int count=0, sameY=0;
+			for (int i = y + 1; i <= 9; i++)
+			{
+				if (Board::CurrentBoard[i][x].GetID() != 0)
+				{
+					if (Board::CurrentBoard[i][x].GetID() == 8)
+					{
+						sameY = 1;
+						break;
+					}
+					count++;
+				}
+			}
+			if (sameY == 1 && count == 0)return 0;
 			printText(y, x, text, pos, temp);
 			return 1;
 		}
@@ -684,7 +698,24 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 				{
 					if ((x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 					{
-						printWhereToGo(y, x, pos);
+						int count = 0, sameY = 0;
+						for (int i = y + 1; i <= 9; i++)
+						{
+							if (Board::CurrentBoard[i][x].GetID() != 0)
+							{
+								if (Board::CurrentBoard[i][x].GetID() == 8)
+								{
+									sameY = 1;
+									break;
+								}
+								count++;
+							}
+						}
+						if (sameY == 1 && count == 0)
+						{
+
+						}
+						else printWhereToGo(y, x, pos);
 						temp.beShown[x][y] = 1;
 					}
 					
@@ -1067,7 +1098,24 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 				{
 					if ((x >= 3 && x <= 5) && (y != -1) && y <= 9 && y >= 7 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 					{
-						printWhereToGoRed(y, x, pos);
+						int count = 0, sameY = 0;
+						for (int i = y - 1; i >= 0; i--)
+						{
+							if (Board::CurrentBoard[i][x].GetID() != 0)
+							{
+								if (Board::CurrentBoard[i][x].GetID() == 1)
+								{
+									sameY = 1;
+									break;
+								}
+								count++;
+							}
+						}
+						if (sameY == 1 && count == 0)
+						{
+
+						}
+						else printWhereToGoRed(y, x, pos);
 						temp.beShown[x][y] = 1;
 					}
 					
