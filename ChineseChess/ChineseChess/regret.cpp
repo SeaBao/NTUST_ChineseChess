@@ -29,6 +29,7 @@ void Regret::readLastStore()
 		ostringstream s;
 		s << "History/" << count << ".txt";
 		Board::CurrentBoard.ReadFile(s.str());
+
 	}
 }
 
