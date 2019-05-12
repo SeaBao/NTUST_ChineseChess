@@ -24,6 +24,7 @@ void Regret::readLastStore()
 	if (roundCount == 0)
 	{
 		Board::CurrentBoard.ReadFile("Board.txt");
+		LogPanel::CurrentPanel.GetIndex() = 0;
 	}
 	else
 	{
@@ -31,8 +32,8 @@ void Regret::readLastStore()
 		s << "History/" << count << ".txt";
 		Board::CurrentBoard.ReadFile(s.str());
 		LogPanel::CurrentPanel.GetIndex() -= 1;
-		LogPanel::CurrentPanel.PrintLogs();
 	}
+	LogPanel::CurrentPanel.PrintLogs();
 }
 
 void Regret::readNextStore()
