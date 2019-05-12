@@ -1,5 +1,6 @@
 #include "regret.h"
 #include "Board.h"
+#include "LogPanel.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -29,7 +30,8 @@ void Regret::readLastStore()
 		ostringstream s;
 		s << "History/" << count << ".txt";
 		Board::CurrentBoard.ReadFile(s.str());
-
+		LogPanel::CurrentPanel.GetIndex() -= 1;
+		LogPanel::CurrentPanel.PrintLogs();
 	}
 }
 
@@ -45,6 +47,8 @@ void Regret::readNextStore()
 	{
 		roundCount++;
 		Board::CurrentBoard.ReadFile(s.str());
+		LogPanel::CurrentPanel.GetIndex() += 1;
+		LogPanel::CurrentPanel.PrintLogs();
 	}
 }
 
