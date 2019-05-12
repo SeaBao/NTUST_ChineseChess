@@ -268,6 +268,9 @@ void OperatingChess::gameStart()
 			if (Regret::roundCount >= 1)
 			{
 				temp.readLastStore();
+				ShowD temp1;
+				temp1.roundCount--;
+				temp1.showTurn();
 			}
 		}
 		else if (command == '.')//>

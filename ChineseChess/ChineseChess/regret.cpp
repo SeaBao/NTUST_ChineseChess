@@ -1,6 +1,7 @@
 #include "regret.h"
 #include "Board.h"
 #include "LogPanel.h"
+#include "ShowD.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -50,6 +51,9 @@ void Regret::readNextStore()
 		Board::CurrentBoard.ReadFile(s.str());
 		LogPanel::CurrentPanel.GetIndex() += 1;
 		LogPanel::CurrentPanel.PrintLogs();
+		ShowD temp1;
+		temp1.roundCount++;
+		temp1.showTurn();
 	}
 }
 
