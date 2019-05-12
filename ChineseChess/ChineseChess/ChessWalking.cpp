@@ -86,21 +86,7 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	if (id == 1)
 	{
 		if ( (x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
-		{
-			int count=0, sameY=0;
-			for (int i = y + 1; i <= 9; i++)
-			{
-				if (Board::CurrentBoard[i][x].GetID() != 0)
-				{
-					if (Board::CurrentBoard[i][x].GetID() == 8)
-					{
-						sameY = 1;
-						break;
-					}
-					count++;
-				}
-			}
-			if (sameY == 1 && count == 0)return 0;
+		{		
 			printText(y, x, text, pos, temp);
 			return 1;
 		}
@@ -269,100 +255,204 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 		else return 0;
 	}
 	else if (id == 6)
-
-	{
+	{			
 	
-	if (powx == x && powy == y && ((powx == previousCursonX) || (powy == previousCursonY)) && (Board::CurrentBoard[y][x].GetID() != 0))
-	{
-		printText(y, x, text, pos, temp);
-		return 1;
-	}
-	else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y))
-	{
-		return 0;
-	}
-	else
-	{
-		if ((x != -1) && (y != -1))
+		int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+		for (int i = previousCursonX + 1; i < 9; i++)
 		{
-			int hasAObstacleX = x;
-			int hasAObstacleY = y;
-			if (x == previousCursonX)
+			if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
 			{
-				if (y - previousCursonY < 0)
-				{
-					for (int i = previousCursonY - 1; i > y; i--)
-					{
-						if (Board::CurrentBoard[i][x].GetID() != 0)
-						{
-							hasAObstacleY = i;
-							break;
-						}
-					}
-				}
-				else if (y - previousCursonY > 0)
-				{
-					for (int i = previousCursonY + 1; i < y; i++)
-					{
-						if (Board::CurrentBoard[i][x].GetID() != 0)
-						{
-							hasAObstacleY = i;
-							break;
-						}
-					}
-				}
-				if (hasAObstacleY == y)
-				{
-					printText(y, x, text, pos, temp);
-					return 1;
-				}
-				else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
-				{
-					printText(y, x, text, pos, temp);
-					return 1;
-
-				}
-				else return 0;
+				countRight++;
 			}
-			else if (y == previousCursonY)
+			if (countRight == 2)
 			{
-				if (x - previousCursonX < 0)
-				{
-					for (int i = previousCursonX - 1; i > x; i--)
-					{
-						if (Board::CurrentBoard[y][i].GetID() != 0)
-						{
-							hasAObstacleX = i;
-							break;
-						}
-					}
-				}
-				else if (x - previousCursonX > 0)
-				{
-					for (int i = previousCursonX + 1; i < x; i++)
-					{
-						if (Board::CurrentBoard[y][i].GetID() != 0)
-						{
-							hasAObstacleX = i;
-							break;
-						}
-					}
-				}
-				if (hasAObstacleX == x)
-				{
-					printText(y, x, text, pos, temp);
-					return 1;
-				}
-				else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
-				{
+				rightx = i;
+				righty = previousCursonY;
+				break;
+			}
+		}
+		for (int i = previousCursonX - 1; i >= 0; i--)
+		{
+			if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+			{
+				countLeft++;
+			}
+			if (countLeft == 2)
+			{
+				leftx = i;
+				lefty = previousCursonY;
+				break;
+			}
+		}
+		for (int i = previousCursonY + 1; i < 10; i++)
+		{
+			if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+			{
+				countDown++;
+			}
+			if (countDown == 2)
+			{
+				downx = previousCursonX;
+				downy = i;
+				break;
+			}
+		}
+		for (int i = previousCursonY - 1; i >= 0; i--)
+		{
+			if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+			{
+				countUp++;
+			}
+			if (countUp == 2)
+			{
+				upx = previousCursonX;
+				upy = i;
+				break;
+			}
+		}
+		if ((x == rightx && y == righty && countRight == 2) || (x == leftx && y == lefty && countLeft == 2) || (x == upx && y == upy && countUp == 2) || (x == downx && y == downy && countDown == 2))
+		{
+			
+			if (countLeft == 2)
+			{
+				printText(y, x, text, pos, temp);
+				
+				return 1;
 
-					printText(y, x, text, pos, temp);
-					return 1;
-				}
+			}
+			if (countRight == 2)
+			{
+				printText(y, x, text, pos, temp);
+				return 1;
+			}
+			if (countDown == 2)
+			{
+
+			
+				printText(y, x, text, pos, temp);
+			
+				return 1;
+
+			}
+			if (countUp == 2)
+			{
+				printText(y, x, text, pos, temp);
+				return 1;
 			}
 
 		}
-	}
+		else
+		{
+			if ((x != -1) && (y != -1))
+			{
+			
+				int hasAObstacleX = -1;
+				int hasAObstacleY = -1;
+				if (x == previousCursonX)
+				{
+					
+					if (y - previousCursonY < 0)
+					{
+						for (int i = previousCursonY - 1; i >= y; i--)
+						{
+							if (Board::CurrentBoard[i][x].GetID() != 0)
+							{
+								hasAObstacleY = i;
+								break;
+							}
+						}
+					}
+					else if (y - previousCursonY > 0)
+					{
+						for (int i = previousCursonY + 1; i <= y; i++)
+						{
+							if (Board::CurrentBoard[i][x].GetID() != 0)
+							{
+								hasAObstacleY = i;
+								break;
+							}
+						}
+					}
+					if (hasAObstacleY == y)
+					{
+						
+						return 0;
+					}
+					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
+					{
+						
+						printText(y, x, text, pos, temp);
+							
+						return 1;
+
+					}
+					else if (hasAObstacleY == -1)
+					{
+						
+						printText(y, x, text, pos, temp);
+						
+						return 1;
+					}
+					else
+					{
+					
+						return 0;
+					}
+				}
+				else if (y == previousCursonY)
+				{
+				
+
+					if (x - previousCursonX < 0)
+					{
+						for (int i = previousCursonX - 1; i >= x; i--)
+						{
+							if (Board::CurrentBoard[y][i].GetID() != 0)
+							{
+								hasAObstacleX = i;
+								break;
+							}
+						}
+					}
+					else if (x - previousCursonX > 0)
+					{
+						for (int i = previousCursonX + 1; i <= x; i++)
+						{
+							if (Board::CurrentBoard[y][i].GetID() != 0)
+							{
+								hasAObstacleX = i;
+								break;
+							}
+						}
+					}
+					if (hasAObstacleX == x)
+					{
+						
+						return 0;
+					}
+					else if (hasAObstacleX == -1)
+					{
+						printText(y, x, text, pos, temp);
+
+
+						return 1;
+					}
+					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
+					{
+						printText(y, x, text, pos, temp);
+					
+
+						return 1;
+					}
+					
+				}
+				else
+				{
+				
+					return 0;
+				}
+			}
+		}
 	}
 	else if (id == 7)
 	{
@@ -551,97 +641,202 @@ int ChessWalking::walk(int id, int x, int y, int& previousCursonX, int &previous
 	}
 	else if (id == 13)
 	{
-		if (powx == x && powy == y && ((powx == previousCursonX) || (powy == previousCursonY)) && (Board::CurrentBoard[y][x].GetID() != 0))
+	int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+	for (int i = previousCursonX + 1; i < 9; i++)
+	{
+		if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+		{
+			countRight++;
+		}
+		if (countRight == 2)
+		{
+			rightx = i;
+			righty = previousCursonY;
+			break;
+		}
+	}
+	for (int i = previousCursonX - 1; i >= 0; i--)
+	{
+		if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+		{
+			countLeft++;
+		}
+		if (countLeft == 2)
+		{
+			leftx = i;
+			lefty = previousCursonY;
+			break;
+		}
+	}
+	for (int i = previousCursonY + 1; i < 10; i++)
+	{
+		if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+		{
+			countDown++;
+		}
+		if (countDown == 2)
+		{
+			downx = previousCursonX;
+			downy = i;
+			break;
+		}
+	}
+	for (int i = previousCursonY - 1; i >= 0; i--)
+	{
+		if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+		{
+			countUp++;
+		}
+		if (countUp == 2)
+		{
+			upx = previousCursonX;
+			upy = i;
+			break;
+		}
+	}
+	if ((x == rightx && y == righty && countRight == 2) || (x == leftx && y == lefty && countLeft == 2) || (x == upx && y == upy && countUp == 2) || (x == downx && y == downy && countDown == 2))
+	{
+
+		if (countLeft == 2)
+		{
+			printText(y, x, text, pos, temp);
+
+			return 1;
+
+		}
+		if (countRight == 2)
 		{
 			printText(y, x, text, pos, temp);
 			return 1;
 		}
-		else if (Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetID() != 0 && (powx != x || powy != y))
+		if (countDown == 2)
 		{
-			return 0;
+
+
+			printText(y, x, text, pos, temp);
+
+			return 1;
+
 		}
-		else
+		if (countUp == 2)
 		{
-			if ((x != -1) && (y != -1))
+			printText(y, x, text, pos, temp);
+			return 1;
+		}
+
+	}
+	else
+	{
+		if ((x != -1) && (y != -1))
+		{
+
+			int hasAObstacleX = -1;
+			int hasAObstacleY = -1;
+			if (x == previousCursonX)
 			{
-				int hasAObstacleX = x;
-				int hasAObstacleY = y;
-				if (x == previousCursonX)
-				{
-					if (y - previousCursonY < 0)
-					{
-						for (int i = previousCursonY - 1; i > y; i--)
-						{
-							if (Board::CurrentBoard[i][x].GetID() != 0)
-							{
-								hasAObstacleY = i;
-								break;
-							}
-						}
-					}
-					else if (y - previousCursonY > 0)
-					{
-						for (int i = previousCursonY + 1; i < y; i++)
-						{
-							if (Board::CurrentBoard[i][x].GetID() != 0)
-							{
-								hasAObstacleY = i;
-								break;
-							}
-						}
-					}
-					if (hasAObstacleY == y)
-					{
-						printText(y, x, text, pos, temp);
-						return 1;
-					}
-					else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX) )
-					{
-						printText(y, x, text, pos, temp);
-						return 1;
 
+				if (y - previousCursonY < 0)
+				{
+					for (int i = previousCursonY - 1; i >= y; i--)
+					{
+						if (Board::CurrentBoard[i][x].GetID() != 0)
+						{
+							hasAObstacleY = i;
+							break;
+						}
 					}
-					else return 0;
 				}
-				else if (y == previousCursonY)
+				else if (y - previousCursonY > 0)
 				{
-					if (x - previousCursonX < 0)
+					for (int i = previousCursonY + 1; i <= y; i++)
 					{
-						for (int i = previousCursonX - 1; i > x; i--)
+						if (Board::CurrentBoard[i][x].GetID() != 0)
 						{
-							if (Board::CurrentBoard[y][i].GetID() != 0)
-							{
-								hasAObstacleX = i;
-								break;
-							}
+							hasAObstacleY = i;
+							break;
 						}
 					}
-					else if (x - previousCursonX > 0)
-					{
-						for (int i = previousCursonX + 1; i < x; i++)
-						{
-							if (Board::CurrentBoard[y][i].GetID() != 0)
-							{
-								hasAObstacleX = i;
-								break;
-							}
-						}
-					}
-					if (hasAObstacleX == x)
-					{
-						printText(y, x, text, pos, temp);
-						return 1;
-					}
-					else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
-					{
+				}
+				if (hasAObstacleY == y)
+				{
 
-						printText(y, x, text, pos, temp);
-						return 1;
+					return 0;
+				}
+				else if ((abs(y - previousCursonY) < abs(previousCursonY - hasAObstacleY) && x == previousCursonX))
+				{
+
+					printText(y, x, text, pos, temp);
+
+					return 1;
+
+				}
+				else if (hasAObstacleY == -1)
+				{
+
+					printText(y, x, text, pos, temp);
+
+					return 1;
+				}
+				else
+				{
+
+					return 0;
+				}
+			}
+			else if (y == previousCursonY)
+			{
+
+
+				if (x - previousCursonX < 0)
+				{
+					for (int i = previousCursonX - 1; i >= x; i--)
+					{
+						if (Board::CurrentBoard[y][i].GetID() != 0)
+						{
+							hasAObstacleX = i;
+							break;
+						}
 					}
+				}
+				else if (x - previousCursonX > 0)
+				{
+					for (int i = previousCursonX + 1; i <= x; i++)
+					{
+						if (Board::CurrentBoard[y][i].GetID() != 0)
+						{
+							hasAObstacleX = i;
+							break;
+						}
+					}
+				}
+				if (hasAObstacleX == x)
+				{
+
+					return 0;
+				}
+				else if (hasAObstacleX == -1)
+				{
+					printText(y, x, text, pos, temp);
+
+
+					return 1;
+				}
+				else if (abs(x - previousCursonX) < abs(previousCursonX - hasAObstacleX) && y == previousCursonY)
+				{
+					printText(y, x, text, pos, temp);
+
+
+					return 1;
 				}
 
 			}
+			else
+			{
+
+				return 0;
+			}
 		}
+	}
 	}
 	else if (id == 14)
 	{
@@ -684,24 +879,8 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 				{
 					if ((x >= 3 && x <= 5) && (y != -1) && y <= 2 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 					{
-						int count = 0, sameY = 0;
-						for (int i = y + 1; i <= 9; i++)
-						{
-							if (Board::CurrentBoard[i][x].GetID() != 0)
-							{
-								if (Board::CurrentBoard[i][x].GetID() == 8)
-								{
-									sameY = 1;
-									break;
-								}
-								count++;
-							}
-						}
-						if (sameY == 1 && count == 0)
-						{
-
-						}
-						else printWhereToGo(y, x, pos);
+						
+					  printWhereToGo(y, x, pos);
 						temp.beShown[x][y] = 1;
 					}
 					
@@ -890,15 +1069,91 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		}
 		else if (ID == 6)
 		{
+			int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+			for (int i = previousCursonX + 1; i < 9; i++)
+			{
+				if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+				{
+					countRight++;
+				}
+				if (countRight == 2)
+				{
+					rightx = i;
+					righty = previousCursonY;
+					break;
+				}			
+			}
+			for (int i = previousCursonX - 1; i >=0; i--)
+			{
+				if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+				{
+					countLeft++;
+				}
+				if (countLeft == 2)
+				{
+					leftx = i;
+					lefty = previousCursonY;
+					break;
+				}
+			}
+			for (int i = previousCursonY + 1; i < 10; i++)
+			{
+				if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+				{
+					countDown++;
+				}
+				if (countDown == 2)
+				{
+					downx = previousCursonX;
+					downy =i;
+					break;
+				}
+			}
+			for (int i = previousCursonY - 1; i >=0; i--)
+			{
+				if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+				{
+					countUp++;
+				}
+				if (countUp == 2)
+				{
+					upx = previousCursonX;
+					upy = i;
+					break;
+				}
+			}
 			for (int x = 0; x <= 8; x++)
 			{
 				for (int y = 0; y <= 9; y++)
-				{
-					if (x == previousCursonX && y == previousCursonY)continue;
-				
-						if ((x != -1) && (y != -1))
+				{				
+						if ((x == rightx && y== righty && countRight == 2)|| (x== leftx && y == lefty && countLeft == 2)|| (x == upx && y == upy && countUp == 2)|| (x== downx && y== downy && countDown == 2))
 						{
-
+							if (countLeft == 2)
+							{
+								printWhereToGo(y, x, pos);
+								
+								temp.beShown[x][y] = 1;
+							
+							}
+							if (countRight == 2)
+							{
+								printWhereToGo(y, x, pos);
+								temp.beShown[x][y] = 1;
+							}
+							if (countDown == 2)
+							{
+								printWhereToGo(y, x, pos);
+								temp.beShown[x][y] = 1;
+								
+							}
+							if (countUp == 2)
+							{
+								printWhereToGo(y, x, pos);
+								temp.beShown[x][y] = 1;
+							}
+						}
+						else if ((x != -1) && (y != -1))
+						{
 							int hasAObstacleX = x;
 							int hasAObstacleY = y;
 							//¨«ª½ªº
@@ -1017,11 +1272,6 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 									temp.beShown[x][y] = 1;
 								}
 							}
-
-						
-
-
-
 					}
 				}
 			}
@@ -1083,24 +1333,7 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 				{
 					if ((x >= 3 && x <= 5) && (y != -1) && y <= 9 && y >= 7 && (abs(x - previousCursonX) + abs(y - previousCursonY) <= 1))
 					{
-						int count = 0, sameY = 0;
-						for (int i = y - 1; i >= 0; i--)
-						{
-							if (Board::CurrentBoard[i][x].GetID() != 0)
-							{
-								if (Board::CurrentBoard[i][x].GetID() == 1)
-								{
-									sameY = 1;
-									break;
-								}
-								count++;
-							}
-						}
-						if (sameY == 1 && count == 0)
-						{
-
-						}
-						else printWhereToGoRed(y, x, pos);
+					   printWhereToGoRed(y, x, pos);
 						temp.beShown[x][y] = 1;
 					}
 					
@@ -1289,14 +1522,92 @@ void ChessWalking::printWhereCanGO(int ID,int previousCursonX, int previousCurso
 		}
 		else if (ID == 13)
 		{
+			int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+			for (int i = previousCursonX + 1; i < 9; i++)
+			{
+				if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+				{
+					countRight++;
+				}
+				if (countRight == 2)
+				{
+					rightx = i;
+					righty = previousCursonY;
+					break;
+				}
+			}
+			for (int i = previousCursonX - 1; i >= 0; i--)
+			{
+				if (Board::CurrentBoard[previousCursonY][i].GetID() != 0)
+				{
+					countLeft++;
+				}
+				if (countLeft == 2)
+				{
+					leftx = i;
+					lefty = previousCursonY;
+					break;
+				}
+			}
+			for (int i = previousCursonY + 1; i < 10; i++)
+			{
+				if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+				{
+					countDown++;
+				}
+				if (countDown == 2)
+				{
+					downx = previousCursonX;
+					downy = i;
+					break;
+				}
+			}
+			for (int i = previousCursonY - 1; i >= 0; i--)
+			{
+				if (Board::CurrentBoard[i][previousCursonX].GetID() != 0)
+				{
+					countUp++;
+				}
+				if (countUp == 2)
+				{
+					upx = previousCursonX;
+					upy = i;
+					break;
+				}
+			}
 		for (int x = 0; x <= 8; x++)
 		{
 			for (int y = 0; y <= 9; y++)
 			{
 				if (x == previousCursonX && y == previousCursonY)continue;
 
+				if ((x == rightx && y == righty && countRight == 2) || (x == leftx && y == lefty && countLeft == 2) || (x == upx && y == upy && countUp == 2) || (x == downx && y == downy && countDown == 2))
+				{
+					if (countLeft == 2)
+					{
+						printWhereToGoRed(y, x, pos);
 
-				if ((x != -1) && (y != -1))
+						temp.beShown[x][y] = 1;
+
+					}
+					if (countRight == 2)
+					{
+						printWhereToGoRed(y, x, pos);
+						temp.beShown[x][y] = 1;
+					}
+					if (countDown == 2)
+					{
+						printWhereToGoRed(y, x, pos);
+						temp.beShown[x][y] = 1;
+
+					}
+					if (countUp == 2)
+					{
+						printWhereToGoRed(y, x, pos);
+						temp.beShown[x][y] = 1;
+					}
+				}
+				else if ((x != -1) && (y != -1))
 				{
 
 					int hasAObstacleX = x;
