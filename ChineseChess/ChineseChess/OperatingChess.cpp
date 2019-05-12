@@ -133,154 +133,61 @@ void OperatingChess::gameStart()
 			{
 				int tempX = pos.X;
 				int tempY = pos.Y;
-				int powBarrierX;
-				int powBarrierY;
+				int powBarrierX=0;
+				int powBarrierY=0;
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				int x = Board::ConvertToBoardPoint().x, y = Board::ConvertToBoardPoint().y, currentx = Board::ConvertToBoardPoint().x, currenty = Board::ConvertToBoardPoint().y;
 					int flag = 0,count=0;
-					if (Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 6 || Board::CurrentBoard[previousCursonY][previousCursonX].GetID() == 13)
-					{
-						int obstacleFirst = 0;
-						if (currenty == previousCursonY)
-						{
-							if (currentx - previousCursonX > 0)
-							{
-								for (int i = previousCursonX+1; i <= 8; i++)
-								{
-									if (Board::CurrentBoard[currenty][i].GetID() != 0)
-									{
-
-										if (obstacleFirst == 1)
-										{
-											x = i;
-											y = currenty;
-											break;
-										}
-										if (obstacleFirst == 0)
-										{
-											powBarrierX = i;
-											powBarrierY = currenty;
-											obstacleFirst = 1;
-										}
-									}
-								}
-								for (int i = previousCursonX + 1; i <= 8; i++)
-								{
-									if (Board::CurrentBoard[currenty][i].GetID() != 0)
-									{
-										count++;
-									}
-								}
-								if (x >= currentx&&count>1)flag = 1;
-							}
-							else if (currentx - previousCursonX < 0)
-							{
-								for (int i = previousCursonX - 1; i >= 0; i--)
-								{
-									if (Board::CurrentBoard[currenty][i].GetID() != 0)
-									{
-
-										if (obstacleFirst == 1)
-										{
-											x = i;
-											y = currenty;
-											break;
-										}
-										if (obstacleFirst == 0)
-										{
-											powBarrierX = i;
-											powBarrierY = currenty;
-											obstacleFirst = 1;
-										}
-									}
-								}
-								for (int i = previousCursonX - 1; i >= 0; i--)
-								{
-									if (Board::CurrentBoard[currenty][i].GetID() != 0)
-									{
-										count++;
-									}
-								}
-								if (x <= currentx && count > 1)flag = 1;
-							}
-						}
-						else if (currentx == previousCursonX)
-						{
-							if (currenty - previousCursonY > 0)
-							{
-								for (int i = previousCursonY + 1; i <= 9; i++)
-								{
-									if (Board::CurrentBoard[i][currentx].GetID() != 0)
-									{
-
-										if (obstacleFirst == 1)
-										{
-											x = currentx;
-											y = i;
-											break;
-										}
-										if (obstacleFirst == 0)
-										{
-											powBarrierX = currentx;
-											powBarrierY =i;
-											obstacleFirst = 1;
-										}
-
-									}
-								}
-								for (int i = previousCursonY + 1; i <= 9; i++)
-								{
-									if (Board::CurrentBoard[i][currentx].GetID() != 0)
-									{										
-											count++;
-									}
-								}
-								
-								if (y >= currentx && count > 1)flag = 1;
-								
-							}
-							else if (currenty - previousCursonY < 0)
-							{
-
-								for (int i = previousCursonY - 1; i >= 0; i--)
-								{
-									if (Board::CurrentBoard[i][currentx].GetID() != 0)
-									{
-
-
-										if (obstacleFirst == 1)
-										{
-											x = currentx;
-											y = i;
-											break;
-										}
-										if (obstacleFirst == 0) {
-											powBarrierX = currentx;
-											powBarrierY = i;
-											obstacleFirst = 1;
-										}
-									}
-								}
-								for (int i = previousCursonY - 1; i >=0; i--)
-								{
-									if (Board::CurrentBoard[i][currentx].GetID() != 0)
-									{
-										count++;
-									}
-								}
-								if (y >= currentx && count > 1)flag = 1;
-							}
-						}
-						else
-						{
-							
-							flag = 1;
-						}
-						
-					}
+					
 				
 				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y,flag))
 				{
+					Board::CurrentBoard[previousCursonY][previousCursonX] = Chess::GetChessByID(0);
+					int blackCaptainX = 0, blackCaptainY = 0, redCaptainX = 0, redCaptainY = 0, hasChess = 0;
+					for (int i = 3; i <= 5; i++)
+					{
+						for (int k = 0; k <= 2; k++)
+						{
+							if (Board::CurrentBoard[k][i].GetID() == 1)
+							{
+								blackCaptainX = i;
+								blackCaptainY = k;
+							}
+						}
+						for (int k = 7; k <= 9; k++)
+						{
+							if (Board::CurrentBoard[k][i].GetID() == 8)
+							{
+								redCaptainX = i;
+								redCaptainY = k;
+							}
+						}
+					}
+					if (blackCaptainX == redCaptainX)
+					{
+						for (int i = blackCaptainY + 1; i <= redCaptainY - 1; i++)
+						{
+							if (Board::CurrentBoard[i][blackCaptainX].GetID() != 0)
+							{
+								hasChess++;
+							}
+						}
+					}
+					else if (blackCaptainX != redCaptainX)hasChess++;
+					if (hasChess == 0)
+					{
+						if (turn % 2 == 0)
+						{
+							Menu temp;
+							temp.blackWins();
+						}
+						else
+						{
+							Menu temp;
+							temp.redWins();
+						}
+					}
+					
 					CurrentCursonX = Board::ConvertToBoardPoint().x;
 					CurrentCursonY = Board::ConvertToBoardPoint().y;
 					
