@@ -287,3 +287,118 @@ Board::ChessPos::ChessPos()
 	Point.x = -1;
 	Point.y = -1;
 }
+
+void Board::mainScreen()
+{
+	COORD pos;
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	pos.X = 0, pos.Y = 0;
+	SetConsoleCursorPosition(hOut, pos);
+	ShowConsoleCursor(false);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	pos.X = 0, pos.Y = 0;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"         ________  ___  ___  ___  ________   _______   ________  _______                 ";
+	pos.X = 0, pos.Y = 1;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"        |\\   ____\\|\\  \\|\\  \\|\\  \\|\\   ___  \\|\\  ___ \\ |\\   ____\\|\\  ___ \\              ";
+	pos.X = 0, pos.Y = 2;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"        \\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\ \\  \\\\ \\  \\ \\   __/|\\ \\  \\___|\\ \\   __/|               ";
+	pos.X = 0, pos.Y = 3;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"         \\ \\  \\    \\ \\   __  \\ \\  \\ \\  \\\\ \\  \\ \\  \\_|/_\\ \\_____  \\ \\  \\_|/__           ";
+	pos.X = 0, pos.Y = 4;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"          \\ \\  \\____\\ \\  \\ \\  \\ \\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\|____|\\  \\ \\  \\_|\\ \\          ";
+	pos.X = 0, pos.Y = 5;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"           \\ \\_______\\ \\__\\ \\__\\ \\__\\ \\__\\\\ \\__\\ \\_______\\____\\_\\  \\ \\_______\\            ";
+	pos.X = 0, pos.Y = 6;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"            \\|_______|\\|__|\\|__|\\|__|\\|__| \\|__|\\|_______|\\_________\\|_______|                     ";
+	pos.X = 0, pos.Y = 7;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"                                                         \\|_________|                                ";
+	pos.X = 0, pos.Y = 8;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"                ________  ___  ___  _______   ________   ________                  ";
+	pos.X = 0, pos.Y = 9;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"               |\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\ |\\   ____\\                ";
+	pos.X = 0, pos.Y = 10;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"               \\ \\  \\___|\\ \\  \\\\\\  \\ \\   __/|\\ \\  \\___|_\\ \\  \\___|_               ";
+	pos.X = 0, pos.Y = 11;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"                \\ \\  \\    \\ \\   __  \\ \\  \\_|/_\\ \\_____  \\\\ \\_____  \\               ";
+	pos.X = 0, pos.Y = 12;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"                 \\ \\  \\____\\ \\  \\ \\  \\ \\  \\_|\\ \\|____|\\  \\\\|____|\\  \\             ";
+	pos.X = 0, pos.Y = 13;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"                  \\ \\_______\\ \\__\\ \\__\\ \\_______\\____\\_\\  \\ ____\\_\\  \\             ";
+	pos.X = 0, pos.Y = 14;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"                   \\|_______|\\|__|\\|__|\\|_______|\\_________\\\\_________\\             ";
+	pos.X = 0, pos.Y = 15;
+	SetConsoleCursorPosition(hOut, pos);
+    wcout<<L"                                                \\|_________\\|_________|            ";
+	for (int i = 16; i < 23; i++)
+	{
+		pos.X = 0, pos.Y = i;
+		SetConsoleCursorPosition(hOut, pos);
+		for (int j = 0; j < 82; j++)
+		{
+			wcout << L" ";
+		}
+	}
+	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+	pos.X = 38, pos.Y = 18;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"遊戲開始";
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	pos.X = 39, pos.Y = 20;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L" 離開";
+	char command;
+	command = _getch();
+	while (command != EOF)
+	{
+		if (command == 80)//down
+		{
+			SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+			pos.X = 40, pos.Y = 20;
+			SetConsoleCursorPosition(hOut, pos);
+			wcout << L"離開";
+			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			pos.X = 38, pos.Y = 18;
+			SetConsoleCursorPosition(hOut, pos);
+			wcout << L"遊戲開始";
+		}
+		if (command == 72)//up
+		{
+			SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+			pos.X = 38, pos.Y = 18;
+			SetConsoleCursorPosition(hOut, pos);
+			wcout << L"遊戲開始";
+			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+			pos.X = 40, pos.Y = 20;
+			SetConsoleCursorPosition(hOut, pos);
+			wcout << L"離開";
+		}
+		if (command == 13)//enter
+		{
+			if (pos.Y == 18)
+			{
+				exit(1);
+			}
+			else if (pos.Y == 20)
+			{
+				
+			}
+		}
+		command = _getch();
+	}
+}

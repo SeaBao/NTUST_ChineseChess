@@ -2,6 +2,7 @@
 #include "Chess.h"
 #include <vector>
 #include <string>
+#include <conio.h>
 #include <Windows.h>
 #include "OperatingChess.h"
 using namespace std;
@@ -26,6 +27,8 @@ public:
 	void ReadFile(string path);
 	void WriteFile(string FileName, string FolderName);
 	wstring GetGraphicStr(int x, int y);
+
+	void mainScreen();
 	
 	vector<Chess>& operator[](int row);
 	Chess& GetChessByPoint(int x, int y);
