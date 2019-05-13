@@ -11,6 +11,10 @@ class ShowD
 public:
 	void showTurn();
 	void printRight();
+	void blackShowCheckmate();
+	void blackCancelCheckmate();
+	void redShowCheckmate();
+	void redCancelCheckmate();
 	static int roundCount;
 private:
 

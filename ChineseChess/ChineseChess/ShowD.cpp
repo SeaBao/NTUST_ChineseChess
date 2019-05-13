@@ -99,3 +99,61 @@ void ShowD::printRight()
 
 	SetCursorPosistion(currentPos.X, currentPos.Y);
 }
+
+void ShowD::blackShowCheckmate()
+{
+	auto currentPos = GetCursorPosition();
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Position;
+	Position.X = 64;
+	Position.Y = 7;
+	SetConsoleCursorPosition(hOut, Position);
+	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	wcout << L"黑方被將軍了!";
+	SetCursorPosistion(currentPos.X, currentPos.Y);
+}
+
+void ShowD::blackCancelCheckmate()
+{
+	auto currentPos = GetCursorPosition();
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Position;
+	Position.X = 64;
+	Position.Y = 7;
+	SetConsoleCursorPosition(hOut, Position);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	wcout << L"             ";
+
+	SetCursorPosistion(currentPos.X, currentPos.Y);
+}
+
+void ShowD::redShowCheckmate()
+{
+	auto currentPos = GetCursorPosition();
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Position;
+	Position.X = 64;
+	Position.Y = 3;
+	SetConsoleCursorPosition(hOut, Position);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+	wcout << L"紅方被將軍了!";
+	SetCursorPosistion(currentPos.X, currentPos.Y);
+}
+
+void ShowD::redCancelCheckmate()
+{
+	auto currentPos = GetCursorPosition();
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Position;
+	Position.X = 64;
+	Position.Y = 3;
+	SetConsoleCursorPosition(hOut, Position);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	wcout << L"             ";
+
+	SetCursorPosistion(currentPos.X, currentPos.Y);
+}
