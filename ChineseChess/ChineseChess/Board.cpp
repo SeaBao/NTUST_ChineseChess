@@ -395,46 +395,45 @@ void Board::mainScreen()
 		}
 	}
 	SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
-	pos.X = 38, pos.Y = 18;
+	pos.X = 38, pos.Y = 17;
 	SetConsoleCursorPosition(hOut, pos);
 	wcout << L"遊戲開始";
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-	pos.X = 39, pos.Y = 20;
+	pos.X = 38, pos.Y = 19;
+	SetConsoleCursorPosition(hOut, pos);
+	wcout << L"殘局模式";
+	pos.X = 39, pos.Y = 21;
 	SetConsoleCursorPosition(hOut, pos);
 	wcout << L" 離開";
 	char command;
 	command = _getch();
+	pos.Y = 17;
 	while (command != EOF)
 	{
 		if (command == 80)//down
 		{
-			SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
-			pos.X = 40, pos.Y = 20;
-			SetConsoleCursorPosition(hOut, pos);
-			wcout << L"離開";
-			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-			pos.X = 38, pos.Y = 18;
-			SetConsoleCursorPosition(hOut, pos);
-			wcout << L"遊戲開始";
+			if (pos.Y == 19 or pos.Y == 17)
+			{
+				pos.Y += 2;
+				printWord(pos.Y); 
+			}
 		}
 		if (command == 72)//up
 		{
-			SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
-			pos.X = 38, pos.Y = 18;
-			SetConsoleCursorPosition(hOut, pos);
-			wcout << L"遊戲開始";
-			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-			pos.X = 40, pos.Y = 20;
-			SetConsoleCursorPosition(hOut, pos);
-			wcout << L"離開";
+			if (pos.Y == 19 or pos.Y == 21)
+			{
+				pos.Y -= 2;
+				printWord(pos.Y);
+			}
+
 		}
 		if (command == 13)//enter
 		{
-			if (pos.Y == 18)
+			if (pos.Y == 21)
 			{
 				exit(1);
 			}
-			else if (pos.Y == 20)
+			else if (pos.Y == 19) //殘局模式
 			{
 				system("cls");
 				system("del /Q History\\*.txt > nul 2> nul");
@@ -447,7 +446,61 @@ void Board::mainScreen()
 				Board::CurrentBoard.StartGame();
 				return;
 			}
+			else if (pos.Y == 17) //遊戲開始
+			{
+
+			}
 		}
 		command = _getch();
+	}
+}
+
+void Board::printWord(int y)
+{
+	COORD pos;
+	HANDLE hOut;
+	pos.Y = y;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (y== 19)
+	{
+		SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+		pos.X = 38, pos.Y = 19;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"殘局模式";
+		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+		pos.X = 40, pos.Y = 21;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"離開";
+		pos.X = 38, pos.Y = 17;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"遊戲開始";
+	}
+	else if (y == 17)
+	{
+		SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+		pos.X = 38, pos.Y = 17;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"遊戲開始";
+		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+		pos.X = 40, pos.Y = 21;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"離開";
+		pos.X = 38, pos.Y = 19;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"殘局模式";
+	}
+	else if (y == 21)
+	{
+		SetConsoleTextAttribute(hOut, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | 0x00);
+		pos.X = 40, pos.Y = 21;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"離開";
+		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+		pos.X = 38, pos.Y = 19;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"殘局模式";
+		pos.X = 38, pos.Y = 17;
+		SetConsoleCursorPosition(hOut, pos);
+		wcout << L"遊戲開始";
 	}
 }
