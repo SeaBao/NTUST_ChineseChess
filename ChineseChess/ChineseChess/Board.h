@@ -23,6 +23,7 @@ public:
 	static COORD ConvertToConsolePoint(int x, int y);
 
 	void PrintMap();
+	void PrintBorder();
 	void StartGame();
 	void ReadFile(string path);
 	void WriteFile(string FileName, string FolderName);
@@ -35,7 +36,7 @@ public:
 	Chess& GetChessByPoint(int x, int y);
 	vector<ChessPos> SearchByChessName(int ID);
 private:
-	const int BoardWidth = 17, BoardHeight = 19, WindowWidth = 80, WindowHeight = 25;
+	const int BoardWidth = 17, BoardHeight = 19, WindowWidth = 80, WindowHeight = 22;
 	OperatingChess _opChess;
 	vector<vector<Chess>> chessMap;
 	vector<vector<wstring>> boardMap;

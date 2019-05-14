@@ -119,6 +119,12 @@ void LogPanel::PrintLogs()
 	SetCursorPosistion(cursorPos.X, cursorPos.Y);
 }
 
+void LogPanel::ClearLogs()
+{
+	_logArr.clear();
+	_LogIndex = 0;
+}
+
 int& LogPanel::GetIndex() {
 	return _LogIndex;
 }

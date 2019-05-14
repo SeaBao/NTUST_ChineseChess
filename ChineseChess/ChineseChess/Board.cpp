@@ -1,6 +1,7 @@
 ﻿#include "Board.h"
 #include "Utility.h"
 #include "ShowD.h"
+#include "LogPanel.h"
 #include <Windows.h>
 #include <iostream>
 #include <algorithm>
@@ -288,6 +289,44 @@ Board::ChessPos::ChessPos()
 	Point.y = -1;
 }
 
+void Board::PrintBorder()
+{
+	COORD cursorPos = GetCursorPosition();
+	for (int y = 0; y <= WindowHeight; y++) {
+		for (int x = 0; x < WindowWidth; x++) {
+			SetCursorPosistion(x, y);
+			if (y == 0) {
+				if (x == 0) {
+					wcout << L"╔ ";
+				}
+				else if (x == WindowWidth - 1) {
+					wcout << L"╗ ";
+				}
+				else {
+					wcout << L"═ ";
+				}
+			}
+			else if (y == WindowHeight) {
+				if (x == 0) {
+					wcout << L"╚ ";
+				}
+				else if (x == WindowWidth - 1) {
+					wcout << L"╝ ";
+				}
+				else {
+					wcout << L"═ ";
+				}
+			}
+			else {
+				if (x == 0 || x == WindowWidth - 1) {
+					wcout << L"║ ";
+				}
+			}
+		}
+	}
+	SetCursorPosistion(cursorPos.X, cursorPos.Y);
+}
+
 void Board::mainScreen()
 {
 	COORD pos;
@@ -296,6 +335,7 @@ void Board::mainScreen()
 	pos.X = 0, pos.Y = 0;
 	SetConsoleCursorPosition(hOut, pos);
 	ShowConsoleCursor(false);
+	system("cls");
 	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 	pos.X = 0, pos.Y = 0;
 	SetConsoleCursorPosition(hOut, pos);
@@ -395,7 +435,16 @@ void Board::mainScreen()
 			}
 			else if (pos.Y == 19) //殘局模式
 			{
-				
+				system("cls");
+				system("del /Q History\\*.txt > nul 2> nul");
+
+				ShowConsoleCursor(true);
+				LogPanel::CurrentPanel.ClearLogs();
+				LogPanel::CurrentPanel.PrintPanel();
+				Board::CurrentBoard.PrintBorder();		
+				Board::CurrentBoard.ReadFile("Board.txt");
+				Board::CurrentBoard.StartGame();
+				return;
 			}
 			else if (pos.Y == 17) //遊戲開始
 			{

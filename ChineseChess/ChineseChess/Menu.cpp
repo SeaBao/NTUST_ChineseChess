@@ -139,7 +139,7 @@ void Menu::EnterTwo()
 
 void Menu::EnterThree()
 {
-
+	Board::CurrentBoard.mainScreen();
 }
 
 void Menu::EnterFour()
