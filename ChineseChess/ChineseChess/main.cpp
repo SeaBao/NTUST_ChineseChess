@@ -63,6 +63,7 @@ int main() {
 	}
 
 	system("del /Q History\\*.txt > nul 2> nul");
+
 	LogPanel::CurrentPanel.PrintPanel();
 	Board::CurrentBoard.ReadFile("Board.txt");
 	Board::CurrentBoard.StartGame();

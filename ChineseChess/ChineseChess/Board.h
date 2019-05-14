@@ -29,6 +29,7 @@ public:
 	wstring GetGraphicStr(int x, int y);
 
 	void mainScreen();
+	void printWord(int y);
 	
 	vector<Chess>& operator[](int row);
 	Chess& GetChessByPoint(int x, int y);
