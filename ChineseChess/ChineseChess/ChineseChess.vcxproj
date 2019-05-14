@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Board.txt" />
+    <Text Include="EndGame_1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
