@@ -19,6 +19,7 @@ public:
 	int& GetIndex();
 	void PrintPanel();
 	void PrintLogs();
+	void ClearLogs();
 	void ClearPanel(bool resetIndex);
 	void AddLog(wchar_t ChessName, int fromX, int fromY, int toX, int toY, bool Team);
 private:

@@ -1,5 +1,3 @@
-#define _WIN32_WINNT 0x0500
-
 #include <iostream>
 #include <Windows.h>
 #include "OperatingChess.h"
@@ -27,44 +25,10 @@ int main() {
 	cfi.dwFontSize.Y = 28;
 	cfi.FontFamily = FF_DONTCARE;
 	cfi.FontWeight = FW_NORMAL;
-	SetCurrentConsoleFontEx(hOut, FALSE, &cfi);
-
-	for (int y = 0; y <= WindowHeight; y++) {
-		for (int x = 0; x < WindowWidth; x++) {
-			SetCursorPosistion(x, y);
-			if (y == 0) {
-				if (x == 0) {
-					wcout << L"שÝ ";
-				}
-				else if (x == WindowWidth - 1) {
-					wcout << L"שß ";
-				}
-				else {
-					wcout << L"שש ";
-				}
-			}
-			else if (y == WindowHeight) {
-				if (x == 0) {
-					wcout << L"שד ";
-				}
-				else if (x == WindowWidth - 1) {
-					wcout << L"שו ";
-				}
-				else {
-					wcout << L"שש ";
-				}
-			}
-			else {
-				if (x == 0 || x == WindowWidth - 1) {
-					wcout << L"שר ";
-				}
-			}
-		}
-	}
+	SetCurrentConsoleFontEx(hOut, FALSE, &cfi); 
 
 	system("del /Q History\\*.txt > nul 2> nul");
-	LogPanel::CurrentPanel.PrintPanel();
-	Board::CurrentBoard.ReadFile("Board.txt");
-	Board::CurrentBoard.StartGame();
+	
+	Board::CurrentBoard.mainScreen();
 	return 0;
 }
