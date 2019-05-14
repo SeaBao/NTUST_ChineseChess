@@ -1,4 +1,4 @@
-#include "Chess.h"
+ï»¿#include "Chess.h"
 #include <vector>
 
 Chess::Chess()
@@ -34,8 +34,8 @@ Chess Chess::GetChessByID(int id)
 {
 	vector<Chess> chessList = {
 		Chess(0, L'\0', false),
-		Chess(1, L'±N', true), Chess(2, L'¤h', true), Chess(3, L'¶H', true), Chess(4, L'¨®', true), Chess(5, L'°¨', true), Chess(6, L'¥]', true), Chess(7, L'¨ò', true),
-		Chess(8, L'«Ó', false), Chess(9, L'¥K', false), Chess(10, L'¬Û', false), Chess(11, L'¨®', false), Chess(12, L'ØX', false), Chess(13, L'¬¶', false), Chess(14, L'§L', false)
+		Chess(1, L'å°‡', true), Chess(2, L'å£«', true), Chess(3, L'è±¡', true), Chess(4, L'è»Š', true), Chess(5, L'é¦¬', true), Chess(6, L'åŒ…', true), Chess(7, L'å’', true),
+		Chess(8, L'å¸¥', false), Chess(9, L'ä»•', false), Chess(10, L'ç›¸', false), Chess(11, L'è»Š', false), Chess(12, L'å‚Œ', false), Chess(13, L'ç‚®', false), Chess(14, L'å…µ', false)
 	};
 
 	for (Chess c : chessList) {
