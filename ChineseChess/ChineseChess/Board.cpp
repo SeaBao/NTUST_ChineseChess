@@ -435,20 +435,20 @@ void Board::mainScreen()
 			}
 			else if (pos.Y == 19) //殘局模式
 			{
+				
+			}
+			else if (pos.Y == 17) //遊戲開始
+			{
 				system("cls");
 				system("del /Q History\\*.txt > nul 2> nul");
 
 				ShowConsoleCursor(true);
 				LogPanel::CurrentPanel.ClearLogs();
 				LogPanel::CurrentPanel.PrintPanel();
-				Board::CurrentBoard.PrintBorder();		
+				Board::CurrentBoard.PrintBorder();
 				Board::CurrentBoard.ReadFile("Board.txt");
 				Board::CurrentBoard.StartGame();
 				return;
-			}
-			else if (pos.Y == 17) //遊戲開始
-			{
-
 			}
 		}
 		command = _getch();
