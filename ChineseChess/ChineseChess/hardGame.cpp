@@ -754,11 +754,11 @@ void hardGame::gameStart()
 								while (!isMoved)
 								{
 									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
-									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2);
 
 									if (abs(deltaX) == abs(deltaY)) continue;
 
-									if ( (myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									if ( (myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -782,7 +782,7 @@ void hardGame::gameStart()
 
 									if (abs(deltaX) == abs(deltaY)) continue;
 
-									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -908,11 +908,11 @@ void hardGame::gameStart()
 								while (!isMoved)
 								{
 									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
-									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2);
 
 									if (abs(deltaX) == abs(deltaY)) continue;
 
-									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -936,7 +936,7 @@ void hardGame::gameStart()
 
 									if (abs(deltaX) == abs(deltaY)) continue;
 
-									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -1084,11 +1084,11 @@ void hardGame::gameStart()
 								while (!isMoved)
 								{
 									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
-									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2);
 
 									if (abs(deltaX) == abs(deltaY)) continue;
 
-									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -1112,7 +1112,7 @@ void hardGame::gameStart()
 
 									if (abs(deltaX) == abs(deltaY)) continue;
 
-									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -1207,11 +1207,11 @@ void hardGame::gameStart()
 							while (!isMoved)
 							{
 								deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
-								deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+								deltaY = GetRandomNumber(2);
 
 								if (abs(deltaX) == abs(deltaY)) continue;
 
-								if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+								if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 									Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 									Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -1235,7 +1235,7 @@ void hardGame::gameStart()
 
 								if (abs(deltaX) == abs(deltaY)) continue;
 
-								if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+								if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 									Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 									Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -1338,11 +1338,11 @@ void hardGame::gameStart()
 						while (!isMoved)
 						{
 							deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
-							deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+							deltaY = GetRandomNumber(2);
 
 							if (abs(deltaX) == abs(deltaY)) continue;
 
-							if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+							if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 								Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 								Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
@@ -1367,7 +1367,7 @@ void hardGame::gameStart()
 
 							if (abs(deltaX) == abs(deltaY)) continue;
 
-							if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+							if ((myPos.x + deltaX < 9 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 10 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
 								Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
 								Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
 
