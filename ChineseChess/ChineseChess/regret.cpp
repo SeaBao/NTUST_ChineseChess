@@ -33,6 +33,8 @@ void Regret::readLastStore()
 		s << "History/" << count << ".txt";
 		Board::CurrentBoard.ReadFile(s.str());
 		LogPanel::CurrentPanel.GetIndex() -= 1;
+		ShowD temp;
+		temp.showTurn();
 	}
 	LogPanel::CurrentPanel.PrintLogs();
 }
@@ -52,7 +54,6 @@ void Regret::readNextStore()
 		LogPanel::CurrentPanel.GetIndex() += 1;
 		LogPanel::CurrentPanel.PrintLogs();
 		ShowD temp1;
-		temp1.roundCount++;
 		temp1.showTurn();
 	}
 }

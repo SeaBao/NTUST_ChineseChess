@@ -186,12 +186,31 @@ void Board::ReadFile(string path)
 	}
 	PrintMap();
 
+	ifstream file2;
+	file2.open("Board.txt");
+	string line2;
+	int row2 = 0;
+	while (getline(file2, line2)) {
+		if (row2 == 10) {
+			if (line == "1") {
+				ShowD temp;
+				temp.roundCount = 1;
+			}
+			else
+			{
+				ShowD temp;
+				temp.roundCount = 0;
+			}
+			break;
+		}
+		row2++;
+	}
+	ShowD temp;
+	temp.showTurn();
+
 	_opChess = OperatingChess();
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
 	_opChess.SetTurn(isRedFirst);
-	ShowD::roundCount = isRedFirst;
-	ShowD showturn;
-	showturn.showTurn();
 }
 
 void Board::WriteFile(string FileName, string FolderName = "")

@@ -20,6 +20,7 @@ public:
 	void blackWins();
 	void redWins();
 	void wantNext();
+	void startTurnFix();
 private:
 	const int MenuWidth = 16, MenuHeight = 12;
 	char command;
