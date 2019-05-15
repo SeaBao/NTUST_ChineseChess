@@ -451,7 +451,7 @@ void Board::mainScreen()
 				Board::CurrentBoard.ReadFile("EndGame_1.txt");
 				hardGame now;
 				now.gameStart();
-				Board::CurrentBoard.StartGame();
+				//Board::CurrentBoard.StartGame();
 				return;
 			}
 			else if (pos.Y == 17) //遊戲開始

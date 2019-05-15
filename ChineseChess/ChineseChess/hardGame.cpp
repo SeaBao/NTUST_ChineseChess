@@ -10,6 +10,13 @@
 #include "Utility.h"
 #include <conio.h>
 #include <iostream>
+#include <ctime>
+#include <random>
+
+int GetRandomNumber(int max) {
+	srand(time(NULL));	
+	return rand() % max;
+}
 
 hardGame::hardGame()
 {
@@ -680,9 +687,8 @@ void hardGame::gameStart()
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[7][7].GetText();
+							wcout << Board::CurrentBoard.GetGraphicStr(7, 7);
 							pos = Board::ConvertToConsolePoint(7, 1);
-							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard[1][7].GetText();
@@ -705,13 +711,69 @@ void hardGame::gameStart()
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[9][8].GetText();
+							wcout << Board::CurrentBoard.GetGraphicStr(8, 9);
 							
 							step++;
 						}//預設外
 						else
 						{
+							vector<reference_wrapper<Chess>> blackChessList;
+							vector<POINT> posArr;
+							for (int i = 0; i < 10; i++) {
+								for (int j = 0; j < 9; j++) {
+									if (Board::CurrentBoard[i][j].GetTeam() == true) {
+										POINT p;
+										p.x = j;
+										p.y = i;
+
+										posArr.push_back(p);
+										blackChessList.push_back(Board::CurrentBoard[i][j]);
+									}
+								}
+							}
+
+							srand(time(NULL));
+
+							int randIndex = rand() % blackChessList.size();
+							auto myPos = posArr[randIndex];
+							auto chess = blackChessList[randIndex].get();
 							
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							switch (chess.GetText())
+							{
+							case L'卒':
+								int deltaX, deltaY;
+								bool isMoved;
+								isMoved = false;
+
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ( (myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										isMoved = true;
+									}
+								}
+								break;
+							case L'砲':
+								break;
+							case L'將':
+								break;
+
+							}
 						}
 
 					}
@@ -731,7 +793,7 @@ void hardGame::gameStart()
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[9][7].GetText();
+							wcout << Board::CurrentBoard.GetGraphicStr(7, 9);
 							pos = Board::ConvertToConsolePoint(6, 9);
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
@@ -846,7 +908,7 @@ void hardGame::gameStart()
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[4][8].GetText();
+							wcout << Board::CurrentBoard.GetGraphicStr(8, 9);
 							step++;
 
 						}//預設外
