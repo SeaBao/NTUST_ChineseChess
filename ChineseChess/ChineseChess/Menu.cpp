@@ -4,6 +4,7 @@
 #include "LogPanel.h"
 #include "regret.h"
 #include "ShowD.h"
+#include "hardGame.h"
 #include <fstream>
 #include <Windows.h>
 #include <iostream>
@@ -137,6 +138,7 @@ void Menu::EnterTwo()
 	if (Menu::isFirstOne)
 	{
 		Board::CurrentBoard.ReadFile("Board.txt");
+
 	}
 	else
 	{
@@ -152,7 +154,16 @@ void Menu::EnterTwo()
 	ShowD::roundCount = redFirst;
 	ShowD showturn;
 	showturn.showTurn();
-	Board::CurrentBoard.StartGame();
+	if (Menu::isFirstOne)
+	{
+		Board::CurrentBoard.StartGame();
+
+	}
+	else
+	{
+		hardGame now;
+		now.gameStart();
+	}
 }
 
 void Menu::EnterThree()
