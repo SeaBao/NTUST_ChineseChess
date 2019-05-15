@@ -727,7 +727,7 @@ void hardGame::gameStart()
 							vector<POINT> posArr;
 							for (int i = 0; i < 10; i++) {
 								for (int j = 0; j < 9; j++) {
-									if (Board::CurrentBoard[i][j].GetTeam() == true) {
+									if (Board::CurrentBoard[i][j].GetTeam() == true && Board::CurrentBoard[i][j].GetText() != L'將') {
 										POINT p;
 										p.x = j;
 										p.y = i;
@@ -745,13 +745,12 @@ void hardGame::gameStart()
 							auto chess = blackChessList[randIndex].get();
 							
 							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							int deltaX, deltaY;
+							bool isMoved = false;
+							isMoved = false;
 							switch (chess.GetText())
 							{
 							case L'卒':
-								int deltaX, deltaY;
-								bool isMoved;
-								isMoved = false;
-
 								while (!isMoved)
 								{
 									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
@@ -775,7 +774,29 @@ void hardGame::gameStart()
 									}
 								}
 								break;
-							case L'砲':
+							case L'包':
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+										isMoved = true;
+									}
+								}
 								break;
 							case L'將':
 								break;
@@ -850,12 +871,91 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard.GetGraphicStr(7, 1);
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[1][4].GetText(), 7, 1, 4, 1, Board::CurrentBoard[1][4].GetTeam());
 							step++;
 
 						}//預設外
 						else
 						{
-							//here
+							vector<reference_wrapper<Chess>> blackChessList;
+							vector<POINT> posArr;
+							for (int i = 0; i < 10; i++) {
+								for (int j = 0; j < 9; j++) {
+									if (Board::CurrentBoard[i][j].GetTeam() == true && Board::CurrentBoard[i][j].GetText() != L'將') {
+										POINT p;
+										p.x = j;
+										p.y = i;
+
+										posArr.push_back(p);
+										blackChessList.push_back(Board::CurrentBoard[i][j]);
+									}
+								}
+							}
+
+							srand(time(NULL));
+
+							int randIndex = rand() % blackChessList.size();
+							auto myPos = posArr[randIndex];
+							auto chess = blackChessList[randIndex].get();
+
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							int deltaX, deltaY;
+							bool isMoved = false;
+							switch (chess.GetText())
+							{
+							case L'卒':
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+										isMoved = true;
+									}
+								}
+								break;
+							case L'包':
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+										isMoved = true;
+									}
+								}
+								break;
+							case L'將':
+								break;
+
+							}
 						}
 
 					}
@@ -880,6 +980,8 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard[8][4].GetText();
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[8][4].GetText(), 3, 8, 4, 8, Board::CurrentBoard[8][4].GetTeam());
 							step++;
 
 						}
@@ -900,6 +1002,8 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard.GetGraphicStr(4, 8);
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[9][4].GetText(), 4, 8, 4, 9, Board::CurrentBoard[9][4].GetTeam());
 							step++;
 
 						}//預設外
@@ -920,6 +1024,8 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard.GetGraphicStr(4, 1);
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[1][5].GetText(), 4, 1, 5, 1, Board::CurrentBoard[1][5].GetTeam());
 							step++;
 
 						}//預設外
@@ -940,12 +1046,114 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard.GetGraphicStr(5, 7);
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[7][4].GetText(), 5, 7, 4, 7, Board::CurrentBoard[7][4].GetTeam());
 							step++;
 
 						}//預設外
 						else
 						{
-							//here
+							vector<reference_wrapper<Chess>> blackChessList;
+							vector<POINT> posArr;
+							for (int i = 0; i < 10; i++) {
+								for (int j = 0; j < 9; j++) {
+									if (Board::CurrentBoard[i][j].GetTeam() == true) {
+										POINT p;
+										p.x = j;
+										p.y = i;
+
+										posArr.push_back(p);
+										blackChessList.push_back(Board::CurrentBoard[i][j]);
+									}
+								}
+							}
+
+							srand(time(NULL));
+
+							int randIndex = rand() % blackChessList.size();
+							auto myPos = posArr[randIndex];
+							auto chess = blackChessList[randIndex].get();
+
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+							int deltaX, deltaY;
+							bool isMoved = false;
+							switch (chess.GetText())
+							{
+							case L'卒':
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+										isMoved = true;
+									}
+								}
+								break;
+							case L'包':
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+										isMoved = true;
+									}
+								}
+								break;
+							case L'將':
+								while (!isMoved)
+								{
+									deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+									deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+									if (abs(deltaX) == abs(deltaY)) continue;
+
+									if ((myPos.x + deltaX >= 3 && myPos.x + deltaX <= 5 && myPos.y + deltaY <= 2 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+										Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+										Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+										wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+										SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+										isMoved = true;
+									}
+								}
+								break;
+
+							}
 						}
 
 					}
@@ -969,7 +1177,84 @@ void hardGame::gameStart()
 					else if (Board::CurrentBoard[8][5].GetID() == 8 && turn<10)
 					{
 
-						//here
+						vector<reference_wrapper<Chess>> blackChessList;
+						vector<POINT> posArr;
+						for (int i = 0; i < 10; i++) {
+							for (int j = 0; j < 9; j++) {
+								if (Board::CurrentBoard[i][j].GetTeam() == true && Board::CurrentBoard[i][j].GetText() != L'將') {
+									POINT p;
+									p.x = j;
+									p.y = i;
+
+									posArr.push_back(p);
+									blackChessList.push_back(Board::CurrentBoard[i][j]);
+								}
+							}
+						}
+
+						srand(time(NULL));
+
+						int randIndex = rand() % blackChessList.size();
+						auto myPos = posArr[randIndex];
+						auto chess = blackChessList[randIndex].get();
+
+						HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+						int deltaX, deltaY;
+						bool isMoved = false;
+						switch (chess.GetText())
+						{
+						case L'卒':
+							while (!isMoved)
+							{
+								deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+								deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+								if (abs(deltaX) == abs(deltaY)) continue;
+
+								if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+									Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+									SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+									SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+									wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+									SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+									SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+									wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+									LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+									isMoved = true;
+								}
+							}
+							break;
+						case L'包':
+							while (!isMoved)
+							{
+								deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+								deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+								if (abs(deltaX) == abs(deltaY)) continue;
+
+								if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+									Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+									Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+									SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+									SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+									wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+									SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+									SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+									wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+									LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+									isMoved = true;
+								}
+							}
+							break;
+						case L'將':
+							break;
+
+						}
 						
 
 					}
@@ -1021,7 +1306,86 @@ void hardGame::gameStart()
 					}//預設外
 					else
 					{
-						//here
+					vector<reference_wrapper<Chess>> blackChessList;
+					vector<POINT> posArr;
+					for (int i = 0; i < 10; i++) {
+						for (int j = 0; j < 9; j++) {
+							if (Board::CurrentBoard[i][j].GetTeam() == true && Board::CurrentBoard[i][j].GetText() != L'將') {
+								POINT p;
+								p.x = j;
+								p.y = i;
+
+								posArr.push_back(p);
+								blackChessList.push_back(Board::CurrentBoard[i][j]);
+							}
+						}
+					}
+
+					srand(time(NULL));
+
+					int randIndex = rand() % blackChessList.size();
+					auto myPos = posArr[randIndex];
+					auto chess = blackChessList[randIndex].get();
+
+					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+					int deltaX, deltaY;
+					bool isMoved = false;
+					switch (chess.GetText())
+					{
+					case L'卒':
+
+						while (!isMoved)
+						{
+							deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+							deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+							if (abs(deltaX) == abs(deltaY)) continue;
+
+							if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+								Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+								Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+								SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+								SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+								wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+								SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+								SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+								wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+								LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+								isMoved = true;
+							}
+						}
+						break;
+					case L'包':
+
+						while (!isMoved)
+						{
+							deltaX = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+							deltaY = GetRandomNumber(2) * (GetRandomNumber(2) == 0 ? 1 : -1);
+
+							if (abs(deltaX) == abs(deltaY)) continue;
+
+							if ((myPos.x + deltaX < 10 && myPos.x + deltaX >= 0 && myPos.y + deltaY < 11 && myPos.y + deltaY >= 0) && Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetID() == 0) {
+								Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX] = Chess::GetChessByID(chess.GetID());
+								Board::CurrentBoard[myPos.y][myPos.x] = Chess::GetChessByID(0);
+
+								SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+								SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x, myPos.y).Y);
+								wcout << Board::CurrentBoard.GetGraphicStr(myPos.x, myPos.y);
+								SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+								SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
+								wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
+
+								LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
+								isMoved = true;
+							}
+						}
+						break;
+					case L'將':
+						break;
+
+					}
 					}
 
 					}
