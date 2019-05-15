@@ -2,6 +2,7 @@
 #include "Utility.h"
 #include "ShowD.h"
 #include "LogPanel.h"
+#include "Menu.h"
 #include <Windows.h>
 #include <iostream>
 #include <algorithm>
@@ -169,6 +170,7 @@ void Board::ReadFile(string path)
 		if (row == 10) {
 			if (line == "1") {
 				isRedFirst = true;
+				Menu::redFirst = true;
 			}
 			break;
 		}
@@ -188,6 +190,9 @@ void Board::ReadFile(string path)
 	_opChess = OperatingChess();
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
 	_opChess.SetTurn(isRedFirst);
+	ShowD::roundCount = isRedFirst;
+	ShowD showturn;
+	showturn.showTurn();
 }
 
 void Board::WriteFile(string FileName, string FolderName = "")

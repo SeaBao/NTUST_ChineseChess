@@ -5,6 +5,8 @@
 #include "regret.h"
 #include "ShowD.h"
 
+bool Menu::redFirst = false;
+
 void Menu::printMenu()
 {
 	COORD pos;
@@ -344,7 +346,7 @@ void Menu::wantNext()
 		{
 			if (pos.X == 46)
 			{
-				EnterOne();
+				EnterThree();
 				break;
 			}
 			else if (pos.X == 40)

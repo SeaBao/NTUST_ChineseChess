@@ -96,7 +96,7 @@ void LogPanel::PrintLogs()
 		else {
 			if (_logArr[i].toY - _logArr[i].fromY > 0) {
 				if (_logArr[i].Team) {
-					if (_logArr[i].ChessName == L'馬' || _logArr[i].ChessName == L'象') {
+					if (_logArr[i].ChessName == L'馬' || _logArr[i].ChessName == L'象' || _logArr[i].ChessName == L'士') {
 						wcout << digitArr[_logArr[i].fromX] << L" 進 " << digitArr[_logArr[i].toX];
 					}
 					else {
@@ -104,7 +104,7 @@ void LogPanel::PrintLogs()
 					}
 				}
 				else {
-					if (_logArr[i].ChessName == L'傌' || _logArr[i].ChessName == L'相') {
+					if (_logArr[i].ChessName == L'傌' || _logArr[i].ChessName == L'相' || _logArr[i].ChessName == L'仕') {
 						wcout << chineseArr[_logArr[i].fromX] << L" 退 " << chineseArr[_logArr[i].toX];
 					}
 					else {
@@ -115,7 +115,7 @@ void LogPanel::PrintLogs()
 			}
 			else {
 				if (_logArr[i].Team) {
-					if (_logArr[i].ChessName == L'馬' || _logArr[i].ChessName == L'象') {
+					if (_logArr[i].ChessName == L'馬' || _logArr[i].ChessName == L'象' || _logArr[i].ChessName == L'士') {
 						wcout << digitArr[_logArr[i].fromX] << L" 退 " << digitArr[_logArr[i].toX];
 					}
 					else {
@@ -123,7 +123,7 @@ void LogPanel::PrintLogs()
 					}
 				}
 				else {
-					if (_logArr[i].ChessName == L'傌' || _logArr[i].ChessName == L'相') {
+					if (_logArr[i].ChessName == L'傌' || _logArr[i].ChessName == L'相' || _logArr[i].ChessName == L'仕') {
 						wcout << chineseArr[_logArr[i].fromX] << L" 進 " << chineseArr[_logArr[i].toX];
 					}
 					else {
