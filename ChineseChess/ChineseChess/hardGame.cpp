@@ -170,16 +170,11 @@ void hardGame::gameStart()
 					else if (blackCaptainX != redCaptainX)hasChess++;
 					if (hasChess == 0)
 					{
-						if (turn % 2 == 0)
-						{
+						
 							Menu temp;
 							temp.blackWins();
-						}
-						else
-						{
-							Menu temp;
-							temp.redWins();
-						}
+						
+						
 					}
 					for (int xx = 0; xx <= 8; xx++)
 					{
