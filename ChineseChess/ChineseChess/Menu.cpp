@@ -4,6 +4,12 @@
 #include "LogPanel.h"
 #include "regret.h"
 #include "ShowD.h"
+#include <fstream>
+#include <Windows.h>
+#include <iostream>
+#include <algorithm>
+#include <sstream>
+
 
 bool Menu::redFirst = false;
 
@@ -126,6 +132,7 @@ void Menu::EnterOne()
 
 void Menu::EnterTwo()
 {
+	startTurnFix();
 	Board::CurrentBoard.ReadFile("Board.txt");
 	LogPanel::CurrentPanel.ClearPanel(true);
 	system("del /Q History\\*.txt > nul 2> nul");
@@ -357,4 +364,23 @@ void Menu::wantNext()
 		}
 		command = _getch();
 	}
+}
+
+void Menu::startTurnFix()
+{
+	ifstream file;
+	file.open("Board.txt");
+	string line;
+	int row = 0;
+	while (getline(file, line)) {
+		if (row == 10) {
+			if (line == "1") {
+				Menu::redFirst = true;
+			}
+			break;
+		}
+		row++;
+	}
+	ShowD temp;
+	temp.showTurn();
 }
