@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <sstream>
 #include <fstream>
+#include"hardGame.h"
 
 Board Board::CurrentBoard = Board();
 int Board::ChessSteps = 0;
@@ -437,12 +438,14 @@ void Board::mainScreen()
 			{
 				system("cls");
 				system("del /Q History\\*.txt > nul 2> nul");
-
+				
 				ShowConsoleCursor(true);
 				LogPanel::CurrentPanel.ClearLogs();
 				LogPanel::CurrentPanel.PrintPanel();
 				Board::CurrentBoard.PrintBorder();
 				Board::CurrentBoard.ReadFile("EndGame_1.txt");
+				hardGame now;
+				now.gameStart();
 				Board::CurrentBoard.StartGame();
 				return;
 			}

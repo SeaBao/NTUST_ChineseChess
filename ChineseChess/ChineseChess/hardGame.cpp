@@ -1,4 +1,5 @@
-#include "OperatingChess.h"
+#include "hardGame.h"
+#include"ChessWalking.h"
 #include "ChessWalking.h"
 #include "clear.cpp"
 #include "Board.h"
@@ -10,20 +11,20 @@
 #include <conio.h>
 #include <iostream>
 
-OperatingChess::OperatingChess()
+hardGame::hardGame()
 {
 	previousCursonX = -1;
 	previousCursonY = -1;
 	CurrentCursonX = -1;
 	CurrentCursonY = -1;
 	isChoosed = false;
-	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4,9).X;
-	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4,9).Y;
+	pos.X = Board::CurrentBoard.ConvertToConsolePoint(4, 9).X;
+	pos.Y = Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y;
 	hin = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
 
-void OperatingChess::gameStart()
+void hardGame::gameStart()
 {
 	ChessWalking record;
 	while (command != EOF)
@@ -60,23 +61,23 @@ void OperatingChess::gameStart()
 		{
 			Board temp2;
 			auto temp1 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
-			auto temp3 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];	
+			auto temp3 = Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x];
 			ChessWalking now(temp1.GetID(), temp1.GetTeam(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y);
 			if (isChoosed == 1 && previousCursonX == Board::ConvertToBoardPoint().x && previousCursonY == Board::ConvertToBoardPoint().y && temp1.GetID() != 0)
 			{
-				
+
 				HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 				if (temp1.GetTeam()) {
 					SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 				}
 				else {
-					 
+
 					SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY | FOREGROUND_RED);
 				}
-				
+
 				wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-				
+
 				record.clearWhereCanGO();
 				SetConsoleCursorPosition(hin, pos);
 				isChoosed = 0;
@@ -85,8 +86,8 @@ void OperatingChess::gameStart()
 
 			else if (!isChoosed && temp1.GetID() != 0)
 			{
-			
-				
+
+
 				if (turn % 2 == 1 && temp1.GetTeam() == false)
 				{
 					int tempX = pos.X;
@@ -106,45 +107,28 @@ void OperatingChess::gameStart()
 					SetConsoleCursorPosition(hin, pos);
 					turn++;
 				}
-				else if (turn % 2 == 0 && temp1.GetTeam() == true)
-				{
-					int tempX = pos.X;
-					int tempY = pos.Y;
-					previousChess = temp1;
-					HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-					SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | 0x90);
-					wcout << Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x].GetText();
-					previousCursonX = Board::ConvertToBoardPoint().x;
-					previousCursonY = Board::ConvertToBoardPoint().y;
-					isChoosed = 1;
 				
-					now.printWhereCanGO(Board::CurrentBoard[previousCursonY][previousCursonX].GetID(), previousCursonX, previousCursonY, record);
-					
-					pos.X = tempX;
-					pos.Y = tempY;
 
-					SetConsoleCursorPosition(hin, pos);
-					turn++;
-				
-				}
-				
 			}
 			//走路
 			else if (isChoosed && (previousCursonX != Board::ConvertToBoardPoint().x || previousCursonY != Board::ConvertToBoardPoint().y))
 			{
 				int tempX = pos.X;
 				int tempY = pos.Y;
-				int powBarrierX=0;
-				int powBarrierY=0;
+				int powBarrierX = 0;
+				int powBarrierY = 0;
 				auto temp1 = Board::CurrentBoard[previousCursonY][previousCursonX];
 				int x = Board::ConvertToBoardPoint().x, y = Board::ConvertToBoardPoint().y, currentx = Board::ConvertToBoardPoint().x, currenty = Board::ConvertToBoardPoint().y;
-					int flag = 0,count=0;
-					
-				
-				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y,flag))
+				int flag = 0, count = 0;
+
+
+				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1, x, y, flag))
 				{
-					int redWillLose = 0, blackWillLose = 0;
+
+					turn++;
 					
+					int redWillLose = 0, blackWillLose = 0;
+
 					Board::CurrentBoard[previousCursonY][previousCursonX] = Chess::GetChessByID(0);
 					int blackCaptainX = 0, blackCaptainY = 0, redCaptainX = 0, redCaptainY = 0, hasChess = 0;
 					for (int i = 3; i <= 5; i++)
@@ -272,9 +256,9 @@ void OperatingChess::gameStart()
 									{
 										if (Board::CurrentBoard[yy][xx + 1].GetID() == 0)
 										{
-											 flag = 1;
+											flag = 1;
 										}
-									
+
 									}
 									if (yy - redCaptainY == 2)
 									{
@@ -282,118 +266,118 @@ void OperatingChess::gameStart()
 										{
 											flag = 1;
 										}
-										
+
 									}
 									else if (yy - redCaptainY == -2)
 									{
-										if (Board::CurrentBoard[yy+ 1][xx].GetID() == 0)
+										if (Board::CurrentBoard[yy + 1][xx].GetID() == 0)
 										{
-											 flag = 1;
+											flag = 1;
 										}
-										
+
 									}
 
 								}
 
-								if (flag )
+								if (flag)
 								{
 									redWillLose = 1;
 								}
 							}
 							else if (Board::CurrentBoard[yy][xx].GetID() == 6)
 							{
-							int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
-							for (int i = xx + 1; i < 9; i++)
-							{
-								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+								for (int i = xx + 1; i < 9; i++)
 								{
-									countRight++;
+									if (Board::CurrentBoard[yy][i].GetID() != 0)
+									{
+										countRight++;
+									}
+									if (countRight == 2)
+									{
+										rightx = i;
+										righty = yy;
+										break;
+									}
 								}
-								if (countRight == 2)
+								for (int i = xx - 1; i >= 0; i--)
 								{
-									rightx = i;
-									righty = yy;
-									break;
+									if (Board::CurrentBoard[yy][i].GetID() != 0)
+									{
+										countLeft++;
+									}
+									if (countLeft == 2)
+									{
+										leftx = i;
+										lefty = yy;
+										break;
+									}
 								}
-							}
-							for (int i = xx - 1; i >= 0; i--)
-							{
-								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								for (int i = yy + 1; i < 10; i++)
 								{
-									countLeft++;
+									if (Board::CurrentBoard[i][xx].GetID() != 0)
+									{
+										countDown++;
+									}
+									if (countDown == 2)
+									{
+										downx = xx;
+										downy = i;
+										break;
+									}
 								}
-								if (countLeft == 2)
+								for (int i = yy - 1; i >= 0; i--)
 								{
-									leftx = i;
-									lefty = yy;
-									break;
+									if (Board::CurrentBoard[i][xx].GetID() != 0)
+									{
+										countUp++;
+									}
+									if (countUp == 2)
+									{
+										upx = xx;
+										upy = i;
+										break;
+									}
 								}
-							}
-							for (int i = yy + 1; i < 10; i++)
-							{
-								if (Board::CurrentBoard[i][xx].GetID() != 0)
-								{
-									countDown++;
-								}
-								if (countDown == 2)
-								{
-									downx = xx;
-									downy = i;
-									break;
-								}
-							}
-							for (int i = yy - 1; i >= 0; i--)
-							{
-								if (Board::CurrentBoard[i][xx].GetID() != 0)
-								{
-									countUp++;
-								}
-								if (countUp == 2)
-								{
-									upx = xx;
-									upy = i;
-									break;
-								}
-							}
-							if ((redCaptainX == rightx && redCaptainY == righty && countRight == 2) || (redCaptainX == leftx && redCaptainY == lefty && countLeft == 2) || (redCaptainX == upx && redCaptainY == upy && countUp == 2) || (redCaptainX == downx && redCaptainY == downy && countDown == 2))
-							{
-
-								if (countLeft == 2)
-								{
-									redWillLose = 1;
-
-								}
-								if (countRight == 2)
-								{
-									redWillLose = 1;
-								}
-								if (countDown == 2)
+								if ((redCaptainX == rightx && redCaptainY == righty && countRight == 2) || (redCaptainX == leftx && redCaptainY == lefty && countLeft == 2) || (redCaptainX == upx && redCaptainY == upy && countUp == 2) || (redCaptainX == downx && redCaptainY == downy && countDown == 2))
 								{
 
+									if (countLeft == 2)
+									{
+										redWillLose = 1;
 
-									redWillLose = 1;
+									}
+									if (countRight == 2)
+									{
+										redWillLose = 1;
+									}
+									if (countDown == 2)
+									{
+
+
+										redWillLose = 1;
+
+									}
+									if (countUp == 2)
+									{
+										redWillLose = 1;
+									}
 
 								}
-								if (countUp == 2)
-								{
-									redWillLose = 1;
-								}
-
-							}
 							}
 							else if (Board::CurrentBoard[yy][xx].GetID() == 7)
 							{
-							if ((abs(redCaptainX - xx) + abs(redCaptainY - yy) > 1))
-							{
+								if ((abs(redCaptainX - xx) + abs(redCaptainY - yy) > 1))
+								{
 
 								}
-							else if (yy < redCaptainY)
-							{
+								else if (yy < redCaptainY)
+								{
 
-							}
+								}
 								else
 								{
-								redWillLose = 1;	
+									redWillLose = 1;
 								}
 							}
 
@@ -462,7 +446,7 @@ void OperatingChess::gameStart()
 							}
 							else if (Board::CurrentBoard[yy][xx].GetID() == 12)
 							{
-								
+
 								int flag = 0;
 								if ((abs(xx - blackCaptainX) + abs(yy - blackCaptainY) == 3) && abs(xx - blackCaptainX) != 0 && abs(yy - blackCaptainY) != 0)
 								{
@@ -471,7 +455,7 @@ void OperatingChess::gameStart()
 										if (Board::CurrentBoard[yy][xx - 1].GetID() == 0)
 										{
 											flag = 1;
-											
+
 										}
 									}
 									else if (xx - blackCaptainX == -2)
@@ -501,91 +485,91 @@ void OperatingChess::gameStart()
 
 								}
 
-								if (flag )
+								if (flag)
 								{
 									blackWillLose = 1;
 								}
 							}
 							else if (Board::CurrentBoard[yy][xx].GetID() == 13)
 							{
-							int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
-							for (int i = xx + 1; i < 9; i++)
-							{
-								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+								for (int i = xx + 1; i < 9; i++)
 								{
-									countRight++;
+									if (Board::CurrentBoard[yy][i].GetID() != 0)
+									{
+										countRight++;
+									}
+									if (countRight == 2)
+									{
+										rightx = i;
+										righty = yy;
+										break;
+									}
 								}
-								if (countRight == 2)
+								for (int i = xx - 1; i >= 0; i--)
 								{
-									rightx = i;
-									righty = yy;
-									break;
+									if (Board::CurrentBoard[yy][i].GetID() != 0)
+									{
+										countLeft++;
+									}
+									if (countLeft == 2)
+									{
+										leftx = i;
+										lefty = yy;
+										break;
+									}
 								}
-							}
-							for (int i = xx - 1; i >= 0; i--)
-							{
-								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								for (int i = yy + 1; i < 10; i++)
 								{
-									countLeft++;
+									if (Board::CurrentBoard[i][xx].GetID() != 0)
+									{
+										countDown++;
+									}
+									if (countDown == 2)
+									{
+										downx = xx;
+										downy = i;
+										break;
+									}
 								}
-								if (countLeft == 2)
+								for (int i = yy - 1; i >= 0; i--)
 								{
-									leftx = i;
-									lefty = yy;
-									break;
+									if (Board::CurrentBoard[i][xx].GetID() != 0)
+									{
+										countUp++;
+									}
+									if (countUp == 2)
+									{
+										upx = xx;
+										upy = i;
+										break;
+									}
 								}
-							}
-							for (int i = yy + 1; i < 10; i++)
-							{
-								if (Board::CurrentBoard[i][xx].GetID() != 0)
-								{
-									countDown++;
-								}
-								if (countDown == 2)
-								{
-									downx = xx;
-									downy = i;
-									break;
-								}
-							}
-							for (int i = yy - 1; i >= 0; i--)
-							{
-								if (Board::CurrentBoard[i][xx].GetID() != 0)
-								{
-									countUp++;
-								}
-								if (countUp == 2)
-								{
-									upx = xx;
-									upy = i;
-									break;
-								}
-							}
-							if ((blackCaptainX == rightx && blackCaptainY == righty && countRight == 2) || (blackCaptainX == leftx && blackCaptainY == lefty && countLeft == 2) || (blackCaptainX == upx && blackCaptainY == upy && countUp == 2) || (blackCaptainX == downx && blackCaptainY == downy && countDown == 2))
-							{
-
-								if (countLeft == 2)
-								{
-									blackWillLose = 1;
-
-								}
-								if (countRight == 2)
-								{
-									blackWillLose = 1;
-								}
-								if (countDown == 2)
+								if ((blackCaptainX == rightx && blackCaptainY == righty && countRight == 2) || (blackCaptainX == leftx && blackCaptainY == lefty && countLeft == 2) || (blackCaptainX == upx && blackCaptainY == upy && countUp == 2) || (blackCaptainX == downx && blackCaptainY == downy && countDown == 2))
 								{
 
+									if (countLeft == 2)
+									{
+										blackWillLose = 1;
 
-									blackWillLose = 1;
+									}
+									if (countRight == 2)
+									{
+										blackWillLose = 1;
+									}
+									if (countDown == 2)
+									{
+
+
+										blackWillLose = 1;
+
+									}
+									if (countUp == 2)
+									{
+										blackWillLose = 1;
+									}
 
 								}
-								if (countUp == 2)
-								{
-									blackWillLose = 1;
-								}
-
-							}
 							}
 							else if (Board::CurrentBoard[yy][xx].GetID() == 14)
 							{
@@ -602,7 +586,7 @@ void OperatingChess::gameStart()
 									blackWillLose = 1;
 								}
 							}
-							
+
 						}
 					}
 					if (blackWillLose)
@@ -628,42 +612,42 @@ void OperatingChess::gameStart()
 					}
 					CurrentCursonX = Board::ConvertToBoardPoint().x;
 					CurrentCursonY = Board::ConvertToBoardPoint().y;
-					
+
 					if (temp3.GetID() != 0)//當前游標有棋子的話
 					{
 
 						if (temp3.GetTeam() != temp1.GetTeam())//如果棋種不相同
 						{
 							ChessWalking temp;
-									Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x] = previousChess;
-									if ((previousChess.GetID() == 6 || previousChess.GetID() == 13) && Board::ConvertToBoardPoint().x == powBarrierX && Board::ConvertToBoardPoint().y == powBarrierY)
-									{
+							Board::CurrentBoard[Board::ConvertToBoardPoint().y][Board::ConvertToBoardPoint().x] = previousChess;
+							if ((previousChess.GetID() == 6 || previousChess.GetID() == 13) && Board::ConvertToBoardPoint().x == powBarrierX && Board::ConvertToBoardPoint().y == powBarrierY)
+							{
 
-									}
-									else
-									{
-										int tempX = pos.X;
-										int tempY = pos.Y;
-										temp.printText(Board::ConvertToBoardPoint().y, Board::ConvertToBoardPoint().x, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), pos, previousChess);
-										pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
-										Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
-										HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-										SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
-										SetConsoleCursorPosition(hin, pos);
-										
-										wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
-										record.clearWhereCanGO();
-										pos.X = tempX;
-										pos.Y = tempY;
-										
-										SetConsoleCursorPosition(hin, pos);
-
-										isChoosed = 0;
-
-									}								
 							}
-						
+							else
+							{
+								int tempX = pos.X;
+								int tempY = pos.Y;
+								temp.printText(Board::ConvertToBoardPoint().y, Board::ConvertToBoardPoint().x, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), pos, previousChess);
+								pos = temp2.ConvertToConsolePoint(previousCursonX, previousCursonY);
+								Board::CurrentBoard[previousCursonY][previousCursonX] = Chess(0, L'\0', false);
+								HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+								SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+								SetConsoleCursorPosition(hin, pos);
+
+								wcout << Board::CurrentBoard.GetGraphicStr(previousCursonX, previousCursonY);
+								record.clearWhereCanGO();
+								pos.X = tempX;
+								pos.Y = tempY;
+
+								SetConsoleCursorPosition(hin, pos);
+
+								isChoosed = 0;
+
+							}
 						}
+
+					}
 					else//當前游標沒棋子的話
 					{
 
@@ -679,9 +663,111 @@ void OperatingChess::gameStart()
 						pos.Y = tempY;
 						SetConsoleCursorPosition(hin, pos);
 						isChoosed = 0;
-						
-						
+
+
 					}
+					if (step == 1)
+					{
+						Sleep(1500);
+						if (Board::CurrentBoard[8][3].GetID() == 11)
+						{
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[7][7] = Chess::GetChessByID(0);
+							Board::CurrentBoard[1][7] = Chess::GetChessByID(6);
+							pos = Board::ConvertToConsolePoint(7, 7);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[7][7].GetText();
+							pos = Board::ConvertToConsolePoint(7, 1);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[1][7].GetText();
+						
+							step++;
+						}
+						else if (Board::CurrentBoard[7][7].GetID() == 11)
+						{
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[9][8] = Chess::GetChessByID(0);
+							Board::CurrentBoard[9][7] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(7, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][7].GetText();
+							pos = Board::ConvertToConsolePoint(8, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][8].GetText();
+							
+							step++;
+						}//預設外
+						else
+						{
+							
+						}
+
+					}
+				
+					else if (step == 2)
+					{
+						
+						if (Board::CurrentBoard[7][5].GetID() == 11&& Board::CurrentBoard[9][7].GetID()==7)
+						{
+							
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[9][7] = Chess::GetChessByID(0);
+							Board::CurrentBoard[9][6] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(7, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][7].GetText();
+							pos = Board::ConvertToConsolePoint(6, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][6].GetText();
+							step++;
+							
+						}
+						else if (Board::CurrentBoard[9][7].GetID() == 11)
+						{
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[9][8] = Chess::GetChessByID(0);
+							Board::CurrentBoard[9][7] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(7, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][7].GetText();
+							pos = Board::ConvertToConsolePoint(8, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][8].GetText();
+							step++;
+
+						}//預設外
+						else
+						{
+
+						}
+
+					}
+				
+					record.clearWhereCanGO();
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
 					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
@@ -690,7 +776,7 @@ void OperatingChess::gameStart()
 					ShowD temp;
 					temp.showTurn();
 				}
-				
+
 			}
 		}
 		else if (command == 27)//esc
