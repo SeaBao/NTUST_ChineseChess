@@ -673,6 +673,9 @@ void hardGame::gameStart()
 
 
 					}
+
+					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
+
 					if (step == 1)
 					{
 						Sleep(1500);
@@ -692,6 +695,8 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard[1][7].GetText();
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[1][7].GetText(), 7, 7, 7, 1, Board::CurrentBoard[1][7].GetTeam());
 						
 							step++;
 						}
@@ -713,6 +718,7 @@ void hardGame::gameStart()
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard.GetGraphicStr(8, 9);
 							
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[9][7].GetText(), 8, 9, 7, 9, Board::CurrentBoard[9][7].GetTeam());
 							step++;
 						}//¹w³]¥~
 						else
@@ -764,6 +770,7 @@ void hardGame::gameStart()
 										SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).X, Board::CurrentBoard.ConvertToConsolePoint(myPos.x + deltaX, myPos.y + deltaY).Y);
 										wcout << Board::CurrentBoard[myPos.y + deltaY][myPos.x + deltaX].GetText();
 
+										LogPanel::CurrentPanel.AddLog(chess.GetText(), myPos.x, myPos.y, myPos.x + deltaX, myPos.y + deltaY, chess.GetTeam());
 										isMoved = true;
 									}
 								}
@@ -799,6 +806,8 @@ void hardGame::gameStart()
 							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard[9][6].GetText();
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[9][6].GetText(), 7, 9, 6, 9, Board::CurrentBoard[9][6].GetTeam());
 							step++;
 							
 						}
@@ -818,7 +827,9 @@ void hardGame::gameStart()
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[3][8].GetText();
+							wcout << Board::CurrentBoard.GetGraphicStr(8, 3);
+
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[4][8].GetText(), 8, 3, 8, 4, Board::CurrentBoard[4][8].GetTeam());
 							step++;
 
 						}
@@ -923,7 +934,7 @@ void hardGame::gameStart()
 					record.clearWhereCanGO();
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
-					LogPanel::CurrentPanel.AddLog(temp1.GetText(), GetPreviousCursonX(), GetPreviousCursonY(), GetCurrentCursonX(), GetCurrentCursonY(), temp1.GetTeam());
+					
 					Regret::roundCount++;
 					ShowD::roundCount++;
 					ShowD temp;
