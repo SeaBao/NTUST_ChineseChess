@@ -2,6 +2,7 @@
 #include "Utility.h"
 #include "ShowD.h"
 #include "LogPanel.h"
+#include "Menu.h"
 #include <Windows.h>
 #include <iostream>
 #include <algorithm>
@@ -168,6 +169,7 @@ void Board::ReadFile(string path)
 		if (row == 10) {
 			if (line == "1") {
 				isRedFirst = true;
+				Menu::redFirst = true;
 			}
 			break;
 		}

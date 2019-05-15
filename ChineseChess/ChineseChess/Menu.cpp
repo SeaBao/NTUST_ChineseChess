@@ -5,6 +5,8 @@
 #include "regret.h"
 #include "ShowD.h"
 
+bool Menu::redFirst = false;
+
 void Menu::printMenu()
 {
 	COORD pos;
