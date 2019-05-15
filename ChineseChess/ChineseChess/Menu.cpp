@@ -131,9 +131,10 @@ void Menu::EnterTwo()
 	Regret::roundCount = 0;
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
 	ShowConsoleCursor(true);
-	ShowD temp;
-	ShowD::roundCount = 1;
-	temp.showTurn();
+	Board temp;
+	ShowD::roundCount = redFirst;
+	ShowD showturn;
+	showturn.showTurn();
 	Board::CurrentBoard.StartGame();
 }
 

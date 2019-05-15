@@ -23,6 +23,7 @@ void ShowD::showTurn()
 		Position.X = 65;
 		Position.Y = 5;
 		SetConsoleCursorPosition(hOut, Position);
+		SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		wcout << L"¶Â¤è ¤U´Ñ";
 	}
 
