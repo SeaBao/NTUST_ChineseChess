@@ -460,6 +460,8 @@ void Board::mainScreen()
 			}
 			else if (pos.Y == 19) //殘局模式
 			{
+				Menu::isFirstOne = false;
+
 				system("cls");
 				system("del /Q History\\*.txt > nul 2> nul");
 				
@@ -475,6 +477,8 @@ void Board::mainScreen()
 			}
 			else if (pos.Y == 17) //遊戲開始
 			{
+				Menu::isFirstOne = true;
+				
 				system("cls");
 				system("del /Q History\\*.txt > nul 2> nul");
 

@@ -12,6 +12,7 @@
 
 
 bool Menu::redFirst = false;
+bool Menu::isFirstOne = true;
 
 void Menu::printMenu()
 {
@@ -133,7 +134,14 @@ void Menu::EnterOne()
 void Menu::EnterTwo()
 {
 	startTurnFix();
-	Board::CurrentBoard.ReadFile("Board.txt");
+	if (Menu::isFirstOne)
+	{
+		Board::CurrentBoard.ReadFile("Board.txt");
+	}
+	else
+	{
+		Board::CurrentBoard.ReadFile("EndGame_1.txt");
+	}
 	LogPanel::CurrentPanel.ClearPanel(true);
 	system("del /Q History\\*.txt > nul 2> nul");
 	Board::ChessSteps = 0;
