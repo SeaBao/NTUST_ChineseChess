@@ -96,19 +96,40 @@ void LogPanel::PrintLogs()
 		else {
 			if (_logArr[i].toY - _logArr[i].fromY > 0) {
 				if (_logArr[i].Team) {
-					wcout << digitArr[_logArr[i].fromX] << L" 進 " << digitArr[abs(_logArr[i].toY - _logArr[i].fromY) - 1];
+					if (_logArr[i].ChessName == L'馬' || _logArr[i].ChessName == L'象') {
+						wcout << digitArr[_logArr[i].fromX] << L" 進 " << digitArr[_logArr[i].toX];
+					}
+					else {
+						wcout << digitArr[_logArr[i].fromX] << L" 進 " << digitArr[abs(_logArr[i].toY - _logArr[i].fromY) - 1];
+					}
 				}
 				else {
-					wcout << chineseArr[_logArr[i].fromX] << L" 退 " << chineseArr[8 - abs(_logArr[i].toY - _logArr[i].fromY) + 1];
+					if (_logArr[i].ChessName == L'傌' || _logArr[i].ChessName == L'相') {
+						wcout << chineseArr[_logArr[i].fromX] << L" 退 " << chineseArr[_logArr[i].toX];
+					}
+					else {
+						wcout << chineseArr[_logArr[i].fromX] << L" 退 " << chineseArr[8 - abs(_logArr[i].toY - _logArr[i].fromY) + 1];
+					}
 				}
 
 			}
 			else {
 				if (_logArr[i].Team) {
-					wcout << digitArr[_logArr[i].fromX] << L" 退 " << digitArr[abs(_logArr[i].toY - _logArr[i].fromY) - 1];
+					if (_logArr[i].ChessName == L'馬' || _logArr[i].ChessName == L'象') {
+						wcout << digitArr[_logArr[i].fromX] << L" 退 " << digitArr[_logArr[i].toX];
+					}
+					else {
+						wcout << digitArr[_logArr[i].fromX] << L" 退 " << digitArr[abs(_logArr[i].toY - _logArr[i].fromY) - 1];
+					}
 				}
 				else {
-					wcout << chineseArr[_logArr[i].fromX] << L" 進 " << chineseArr[8 - abs(_logArr[i].toY - _logArr[i].fromY) + 1];
+					if (_logArr[i].ChessName == L'傌' || _logArr[i].ChessName == L'相') {
+						wcout << chineseArr[_logArr[i].fromX] << L" 進 " << chineseArr[_logArr[i].toX];
+					}
+					else {
+						wcout << chineseArr[_logArr[i].fromX] << L" 進 " << chineseArr[8 - abs(_logArr[i].toY - _logArr[i].fromY) + 1];
+					}
+					
 				}
 			}
 		}

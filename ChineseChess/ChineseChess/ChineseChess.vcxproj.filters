@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="資源檔\EndGame">
+      <UniqueIdentifier>{092a2b86-be4e-41d7-9ea5-938ea2f387b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="clear.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="ShowD.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
@@ -71,10 +77,16 @@
     <ClInclude Include="LogPanel.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="ShowD.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Board.txt">
       <Filter>資源檔</Filter>
+    </Text>
+    <Text Include="EndGame_1.txt">
+      <Filter>資源檔\EndGame</Filter>
     </Text>
   </ItemGroup>
 </Project>

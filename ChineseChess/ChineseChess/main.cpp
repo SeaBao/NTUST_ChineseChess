@@ -13,7 +13,7 @@ int main() {
 	HWND consoleWindow = GetConsoleWindow();
 
 	setlocale(LC_ALL, "zh_TW.UTF-8");
-	SetConsoleTitle("NTUST Chinese Chess VER. 0.0.1");
+	SetConsoleTitle("NTUST Chinese Chess");
 	SetWindow(WindowWidth + 2, WindowHeight + 1);
 	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
 	ShowScrollBar(consoleWindow, SB_BOTH, FALSE);

@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Menu.h"
 #include "LogPanel.h"
+#include"ShowD.h"
 #include "regret.h"
 #include "Utility.h"
 #include <conio.h>
@@ -142,6 +143,8 @@ void OperatingChess::gameStart()
 				
 				if (now.walk(temp1.GetID(), Board::ConvertToBoardPoint().x, Board::ConvertToBoardPoint().y, previousCursonX, previousCursonY, Board::CurrentBoard[previousCursonY][previousCursonX].GetText(), temp1,x,y,flag))
 				{
+					int redWillLose = 0, blackWillLose = 0;
+					
 					Board::CurrentBoard[previousCursonY][previousCursonX] = Chess::GetChessByID(0);
 					int blackCaptainX = 0, blackCaptainY = 0, redCaptainX = 0, redCaptainY = 0, hasChess = 0;
 					for (int i = 3; i <= 5; i++)
@@ -187,7 +190,440 @@ void OperatingChess::gameStart()
 							temp.redWins();
 						}
 					}
-					
+					for (int xx = 0; xx <= 8; xx++)
+					{
+						for (int yy = 0; yy <= 9; yy++)
+						{
+							if (Board::CurrentBoard[yy][xx].GetID() == 4)
+							{
+								int flag = 1;
+								if (xx == redCaptainX)
+								{
+									if (yy > redCaptainY)
+									{
+										for (int i = redCaptainY + 1; i < yy; i++)
+										{
+											if (Board::CurrentBoard[i][xx].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+									}
+									else if (yy < redCaptainY)
+									{
+										for (int i = yy + 1; i < redCaptainY; i++)
+										{
+											if (Board::CurrentBoard[i][xx].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+
+									}
+								}
+								else if (yy == redCaptainY)
+								{
+									if (xx > redCaptainX)
+									{
+										for (int i = redCaptainX + 1; i < xx; i++)
+										{
+											if (Board::CurrentBoard[yy][i].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+									}
+									else if (xx < redCaptainX)
+									{
+										for (int i = xx + 1; i < redCaptainX; i++)
+										{
+											if (Board::CurrentBoard[yy][i].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+
+									}
+								}
+								if (flag==0)
+								{
+									redWillLose = 1;
+								}
+
+							}
+							else if (Board::CurrentBoard[yy][xx].GetID() == 5)
+							{
+								int flag = 0;
+								if ((abs(xx - redCaptainX) + abs(yy - redCaptainY) == 3) && abs(xx - redCaptainX) != 0 && abs(yy - redCaptainY) != 0)
+								{
+									if (xx - redCaptainX == 2)
+									{
+										if (Board::CurrentBoard[yy][xx - 1].GetID() == 0)
+										{
+											flag = 1;
+										}
+									}
+									else if (xx - redCaptainX == -2)
+									{
+										if (Board::CurrentBoard[yy][xx + 1].GetID() == 0)
+										{
+											 flag = 1;
+										}
+									
+									}
+									if (yy - redCaptainY == 2)
+									{
+										if (Board::CurrentBoard[yy - 1][xx].GetID() == 0)
+										{
+											flag = 1;
+										}
+										
+									}
+									else if (yy - redCaptainY == -2)
+									{
+										if (Board::CurrentBoard[yy+ 1][xx].GetID() == 0)
+										{
+											 flag = 1;
+										}
+										
+									}
+
+								}
+
+								if (flag )
+								{
+									redWillLose = 1;
+								}
+							}
+							else if (Board::CurrentBoard[yy][xx].GetID() == 6)
+							{
+							int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+							for (int i = xx + 1; i < 9; i++)
+							{
+								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								{
+									countRight++;
+								}
+								if (countRight == 2)
+								{
+									rightx = i;
+									righty = yy;
+									break;
+								}
+							}
+							for (int i = xx - 1; i >= 0; i--)
+							{
+								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								{
+									countLeft++;
+								}
+								if (countLeft == 2)
+								{
+									leftx = i;
+									lefty = yy;
+									break;
+								}
+							}
+							for (int i = yy + 1; i < 10; i++)
+							{
+								if (Board::CurrentBoard[i][xx].GetID() != 0)
+								{
+									countDown++;
+								}
+								if (countDown == 2)
+								{
+									downx = xx;
+									downy = i;
+									break;
+								}
+							}
+							for (int i = yy - 1; i >= 0; i--)
+							{
+								if (Board::CurrentBoard[i][xx].GetID() != 0)
+								{
+									countUp++;
+								}
+								if (countUp == 2)
+								{
+									upx = xx;
+									upy = i;
+									break;
+								}
+							}
+							if ((redCaptainX == rightx && redCaptainY == righty && countRight == 2) || (redCaptainX == leftx && redCaptainY == lefty && countLeft == 2) || (redCaptainX == upx && redCaptainY == upy && countUp == 2) || (redCaptainX == downx && redCaptainY == downy && countDown == 2))
+							{
+
+								if (countLeft == 2)
+								{
+									redWillLose = 1;
+
+								}
+								if (countRight == 2)
+								{
+									redWillLose = 1;
+								}
+								if (countDown == 2)
+								{
+
+
+									redWillLose = 1;
+
+								}
+								if (countUp == 2)
+								{
+									redWillLose = 1;
+								}
+
+							}
+							}
+							else if (Board::CurrentBoard[yy][xx].GetID() == 7)
+							{
+							if ((abs(redCaptainX - xx) + abs(redCaptainY - yy) > 1))
+							{
+
+								}
+							else if (y < previousCursonY)
+							{
+
+							}
+								else
+								{
+								redWillLose = 1;	
+								}
+							}
+
+							if (Board::CurrentBoard[yy][xx].GetID() == 11)
+							{
+								int flag = 1;
+								if (xx == blackCaptainX)
+								{
+									if (yy > blackCaptainY)
+									{
+										for (int i = blackCaptainY + 1; i < yy; i++)
+										{
+											if (Board::CurrentBoard[i][xx].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+									}
+									else if (yy < blackCaptainY)
+									{
+										for (int i = yy + 1; i < blackCaptainY; i++)
+										{
+											if (Board::CurrentBoard[i][xx].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+
+									}
+								}
+								else if (yy == blackCaptainY)
+								{
+									if (xx > blackCaptainX)
+									{
+										for (int i = blackCaptainX + 1; i < xx; i++)
+										{
+											if (Board::CurrentBoard[yy][i].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+									}
+									else if (xx < blackCaptainX)
+									{
+										for (int i = xx + 1; i < blackCaptainX; i++)
+										{
+											if (Board::CurrentBoard[yy][i].GetID() != 0)
+											{
+												flag = 0;
+												break;
+											}
+										}
+
+									}
+								}
+								if (flag==0)
+								{
+									ShowD temp;
+									temp.blackShowCheckmate();
+									blackWillLose = 1;
+								}
+							}
+							else if (Board::CurrentBoard[yy][xx].GetID() == 12)
+							{
+								
+								int flag = 0;
+								if ((abs(xx - blackCaptainX) + abs(yy - blackCaptainY) == 3) && abs(xx - blackCaptainX) != 0 && abs(yy - blackCaptainY) != 0)
+								{
+									if (xx - blackCaptainX == 2)
+									{
+										if (Board::CurrentBoard[yy][xx - 1].GetID() == 0)
+										{
+											flag = 1;
+											
+										}
+									}
+									else if (xx - blackCaptainX == -2)
+									{
+										if (Board::CurrentBoard[yy][xx + 1].GetID() == 0)
+										{
+											flag = 1;
+										}
+
+									}
+									if (yy - blackCaptainY == 2)
+									{
+										if (Board::CurrentBoard[yy - 1][xx].GetID() == 0)
+										{
+											flag = 1;
+										}
+
+									}
+									else if (yy - blackCaptainY == -2)
+									{
+										if (Board::CurrentBoard[yy + 1][xx].GetID() == 0)
+										{
+											flag = 1;
+										}
+
+									}
+
+								}
+
+								if (flag )
+								{
+									blackWillLose = 1;
+								}
+							}
+							else if (Board::CurrentBoard[yy][xx].GetID() == 13)
+							{
+							int rightx = 0, righty = 0, upx = 0, upy = 0, leftx = 0, lefty = 0, downx = 0, downy = 0, countRight = 0, countUp = 0, countLeft = 0, countDown = 0;
+							for (int i = xx + 1; i < 9; i++)
+							{
+								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								{
+									countRight++;
+								}
+								if (countRight == 2)
+								{
+									rightx = i;
+									righty = yy;
+									break;
+								}
+							}
+							for (int i = xx - 1; i >= 0; i--)
+							{
+								if (Board::CurrentBoard[yy][i].GetID() != 0)
+								{
+									countLeft++;
+								}
+								if (countLeft == 2)
+								{
+									leftx = i;
+									lefty = yy;
+									break;
+								}
+							}
+							for (int i = yy + 1; i < 10; i++)
+							{
+								if (Board::CurrentBoard[i][xx].GetID() != 0)
+								{
+									countDown++;
+								}
+								if (countDown == 2)
+								{
+									downx = xx;
+									downy = i;
+									break;
+								}
+							}
+							for (int i = yy - 1; i >= 0; i--)
+							{
+								if (Board::CurrentBoard[i][xx].GetID() != 0)
+								{
+									countUp++;
+								}
+								if (countUp == 2)
+								{
+									upx = xx;
+									upy = i;
+									break;
+								}
+							}
+							if ((blackCaptainX == rightx && blackCaptainY == righty && countRight == 2) || (blackCaptainX == leftx && blackCaptainY == lefty && countLeft == 2) || (blackCaptainX == upx && blackCaptainY == upy && countUp == 2) || (blackCaptainX == downx && blackCaptainY == downy && countDown == 2))
+							{
+
+								if (countLeft == 2)
+								{
+									blackWillLose = 1;
+
+								}
+								if (countRight == 2)
+								{
+									blackWillLose = 1;
+								}
+								if (countDown == 2)
+								{
+
+
+									blackWillLose = 1;
+
+								}
+								if (countUp == 2)
+								{
+									blackWillLose = 1;
+								}
+
+							}
+							}
+							else if (Board::CurrentBoard[yy][xx].GetID() == 14)
+							{
+								if (abs(blackCaptainX - xx) + abs(blackCaptainY - yy) > 1)
+								{
+
+								}
+								else if (blackCaptainY > yy)
+								{
+
+								}
+								else
+								{
+									blackWillLose = 1;
+								}
+							}
+							
+						}
+					}
+					if (blackWillLose)
+					{
+						ShowD temp;
+						temp.blackShowCheckmate();
+					}
+					else
+					{
+						ShowD temp;
+						temp.blackCancelCheckmate();
+					}
+					if (redWillLose)
+					{
+						ShowD temp;
+						temp.redShowCheckmate();
+					}
+					else
+					{
+						ShowD temp;
+						temp.redCancelCheckmate();
+
+					}
 					CurrentCursonX = Board::ConvertToBoardPoint().x;
 					CurrentCursonY = Board::ConvertToBoardPoint().y;
 					
