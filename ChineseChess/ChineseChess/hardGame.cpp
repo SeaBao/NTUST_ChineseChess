@@ -20,6 +20,17 @@ int GetRandomNumber(int max) {
 
 hardGame::hardGame()
 {
+	auto currentPos = GetCursorPosition();
+	HANDLE hOut;
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD Position;
+	Position.X = 65;
+	Position.Y = 5;
+	SetConsoleCursorPosition(hOut, Position);
+	SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+	wcout << L"         ";
+	SetCursorPosistion(currentPos.X, currentPos.Y);
+
 	previousCursonX = -1;
 	previousCursonY = -1;
 	CurrentCursonX = -1;
@@ -446,8 +457,6 @@ void hardGame::gameStart()
 								else flag = 0;
 								if (flag)
 								{
-									ShowD temp;
-									temp.blackShowCheckmate();
 									blackWillLose = 1;
 								}
 							}
@@ -598,24 +607,15 @@ void hardGame::gameStart()
 					}
 					if (blackWillLose)
 					{
-						ShowD temp;
-						temp.blackShowCheckmate();
 					}
 					else
 					{
-						ShowD temp;
-						temp.blackCancelCheckmate();
 					}
 					if (redWillLose)
 					{
-						ShowD temp;
-						temp.redShowCheckmate();
 					}
 					else
 					{
-						ShowD temp;
-						temp.redCancelCheckmate();
-
 					}
 					CurrentCursonX = Board::ConvertToBoardPoint().x;
 					CurrentCursonY = Board::ConvertToBoardPoint().y;
@@ -1395,9 +1395,6 @@ void hardGame::gameStart()
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
 					
 					Regret::roundCount++;
-					ShowD::roundCount++;
-					ShowD temp;
-					temp.showTurn();
 				}
 
 			}
@@ -1415,9 +1412,6 @@ void hardGame::gameStart()
 			if (Regret::roundCount >= 1)
 			{
 				temp.readLastStore();
-				ShowD temp1;
-				temp1.roundCount--;
-				temp1.showTurn();
 			}
 		}
 		else if (command == '.')//>
