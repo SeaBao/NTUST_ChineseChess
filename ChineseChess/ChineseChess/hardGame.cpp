@@ -718,7 +718,7 @@ void hardGame::gameStart()
 				
 					else if (step == 2)
 					{
-						
+						Sleep(1500);
 						if (Board::CurrentBoard[7][5].GetID() == 11&& Board::CurrentBoard[9][7].GetID()==7)
 						{
 							
@@ -745,18 +745,38 @@ void hardGame::gameStart()
 							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 							HANDLE hin;
 							int winID = Board::CurrentBoard[y][x].GetID();
-							Board::CurrentBoard[9][8] = Chess::GetChessByID(0);
-							Board::CurrentBoard[9][7] = Chess::GetChessByID(7);
-							pos = Board::ConvertToConsolePoint(7, 9);
+							Board::CurrentBoard[8][3] = Chess::GetChessByID(0);
+							Board::CurrentBoard[8][4] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(4, 8);
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[9][7].GetText();
-							pos = Board::ConvertToConsolePoint(8, 9);
+							wcout << Board::CurrentBoard[8][4].GetText();
+							pos = Board::ConvertToConsolePoint(3, 8);
 							hin = GetStdHandle(STD_OUTPUT_HANDLE);
 							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 							SetConsoleCursorPosition(hin, pos);
-							wcout << Board::CurrentBoard[9][8].GetText();
+							wcout << Board::CurrentBoard[3][8].GetText();
+							step++;
+
+						}
+						else if (Board::CurrentBoard[8][4].GetID() == 11&& (Board::CurrentBoard[1][7].GetID()==6))
+						{
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[1][7] = Chess::GetChessByID(0);
+							Board::CurrentBoard[1][4] = Chess::GetChessByID(6);
+							pos = Board::ConvertToConsolePoint(4, 1);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[1][4].GetText();
+							pos = Board::ConvertToConsolePoint(7, 1);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[1][7].GetText();
 							step++;
 
 						}//預設外
@@ -766,7 +786,78 @@ void hardGame::gameStart()
 						}
 
 					}
-				
+					else if (step == 3)
+					{
+						Sleep(1500);
+						if (Board::CurrentBoard[8][5].GetID() == 8 && Board::CurrentBoard[9][6].GetID() == 7)
+						{
+
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[8][3] = Chess::GetChessByID(0);
+							Board::CurrentBoard[8][4] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(3, 8);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[8][3].GetText();
+							pos = Board::ConvertToConsolePoint(4, 8);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[8][4].GetText();
+							step++;
+
+						}
+						else if (Board::CurrentBoard[8][7].GetID() == 11&& (Board::CurrentBoard[8][4].GetID() == 7))
+						{
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[8][4] = Chess::GetChessByID(0);
+							Board::CurrentBoard[9][4] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(4, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][4].GetText();
+							pos = Board::ConvertToConsolePoint(4, 8);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[4][8].GetText();
+							step++;
+
+						}//預設外
+						else if (Board::CurrentBoard[8][6].GetID() == 11 && (Board::CurrentBoard[1][4].GetID() == 6))
+						{
+							HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+							HANDLE hin;
+							int winID = Board::CurrentBoard[y][x].GetID();
+							Board::CurrentBoard[8][4] = Chess::GetChessByID(0);
+							Board::CurrentBoard[9][4] = Chess::GetChessByID(7);
+							pos = Board::ConvertToConsolePoint(4, 9);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_INTENSITY);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[9][4].GetText();
+							pos = Board::ConvertToConsolePoint(4, 8);
+							hin = GetStdHandle(STD_OUTPUT_HANDLE);
+							SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
+							SetConsoleCursorPosition(hin, pos);
+							wcout << Board::CurrentBoard[4][8].GetText();
+							step++;
+
+						}//預設外
+						else
+						{
+
+						}
+
+					}
+					
+					
 					record.clearWhereCanGO();
 					Board::CurrentBoard.WriteFile(to_string(++Board::ChessSteps) + ".txt", "History");
 					Board::CurrentBoard.WriteFile("debug.txt", "History");
