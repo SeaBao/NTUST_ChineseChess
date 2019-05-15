@@ -249,7 +249,8 @@ void OperatingChess::gameStart()
 
 									}
 								}
-								if (flag==0)
+								else flag = 0;
+								if (flag)
 								{
 									redWillLose = 1;
 								}
@@ -451,7 +452,8 @@ void OperatingChess::gameStart()
 
 									}
 								}
-								if (flag==0)
+								else flag = 0;
+								if (flag)
 								{
 									ShowD temp;
 									temp.blackShowCheckmate();

@@ -1848,6 +1848,7 @@ void ChessWalking::clearWhereCanGO()
 }
 void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 {
+	
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	HANDLE hin;
 	int winID= Board::CurrentBoard[y][x].GetID();
@@ -1864,17 +1865,18 @@ void ChessWalking::printText(int y, int x, wchar_t text, COORD post, Chess temp)
 
 	SetConsoleCursorPosition(hin, post);
 	wcout << text;
-	if (winID== 1)
+	if (winID== 1&& temp.GetID()!=1)
 	{
 		Menu temp;
 		temp.redWins();
 	}
-	else if (winID == 8)
+	else if (winID == 8&&temp.GetID() != 8)
 	{
 		Menu temp;
 		temp.blackWins();
 	}
 	clearWhereCanGO();
+	
 }
 ChessWalking::~ChessWalking()
 {
