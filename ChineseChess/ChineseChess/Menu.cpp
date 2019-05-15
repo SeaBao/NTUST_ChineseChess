@@ -344,7 +344,7 @@ void Menu::wantNext()
 		{
 			if (pos.X == 46)
 			{
-				EnterOne();
+				EnterThree();
 				break;
 			}
 			else if (pos.X == 40)

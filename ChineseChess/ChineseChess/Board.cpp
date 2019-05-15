@@ -187,6 +187,9 @@ void Board::ReadFile(string path)
 	_opChess = OperatingChess();
 	SetCursorPosistion(Board::CurrentBoard.ConvertToConsolePoint(4, 9).X, Board::CurrentBoard.ConvertToConsolePoint(4, 9).Y);
 	_opChess.SetTurn(isRedFirst);
+	ShowD::roundCount = isRedFirst;
+	ShowD showturn;
+	showturn.showTurn();
 }
 
 void Board::WriteFile(string FileName, string FolderName = "")
