@@ -390,7 +390,7 @@ void OperatingChess::gameStart()
 							{
 
 								}
-							else if (y < previousCursonY)
+							else if (yy < redCaptainY)
 							{
 
 							}

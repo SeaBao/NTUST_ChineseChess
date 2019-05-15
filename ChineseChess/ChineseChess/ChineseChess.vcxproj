@@ -77,6 +77,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -98,6 +101,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -119,6 +123,7 @@
     <ClCompile Include="Chess.cpp" />
     <ClCompile Include="ChessWalking.cpp" />
     <ClCompile Include="clear.cpp" />
+    <ClCompile Include="hardGame.cpp" />
     <ClCompile Include="LogPanel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -131,6 +136,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Chess.h" />
     <ClInclude Include="ChessWalking.h" />
+    <ClInclude Include="hardGame.h" />
     <ClInclude Include="LogPanel.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="OperatingChess.h" />
