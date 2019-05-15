@@ -181,16 +181,11 @@ void hardGame::gameStart()
 					else if (blackCaptainX != redCaptainX)hasChess++;
 					if (hasChess == 0)
 					{
-						if (turn % 2 == 0)
-						{
+						
 							Menu temp;
 							temp.blackWins();
-						}
-						else
-						{
-							Menu temp;
-							temp.redWins();
-						}
+						
+						
 					}
 					for (int xx = 0; xx <= 8; xx++)
 					{
@@ -850,7 +845,7 @@ void hardGame::gameStart()
 							SetConsoleCursorPosition(hin, pos);
 							wcout << Board::CurrentBoard.GetGraphicStr(8, 3);
 
-							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[4][8].GetText(), 8, 3, 8, 4, Board::CurrentBoard[4][8].GetTeam());
+							LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[8][4].GetText(), 3,8, 4, 8, Board::CurrentBoard[8][4].GetTeam());
 							step++;
 
 						}
@@ -1301,7 +1296,8 @@ void hardGame::gameStart()
 						SetConsoleTextAttribute(hOut, BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | 0x00);
 						SetConsoleCursorPosition(hin, pos);
 						wcout << Board::CurrentBoard.GetGraphicStr(xxx+1, 9);
-					
+						
+						LogPanel::CurrentPanel.AddLog(Board::CurrentBoard[9][xxx].GetText(), xxx+1, 9, xxx, 9, Board::CurrentBoard[9][xxx].GetTeam());
 
 					}//¹w³]¥~
 					else
@@ -1419,6 +1415,7 @@ void hardGame::gameStart()
 			Regret temp;
 			temp.readNextStore();
 		}
+
 
 		command = _getch();
 	}
