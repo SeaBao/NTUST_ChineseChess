@@ -10,6 +10,7 @@ using namespace std;
 class Menu
 {
 public:
+	static bool isFirstOne;
 	static bool redFirst;
 	void printMenu();
 	void printWord(int y);
